@@ -2,14 +2,16 @@
 <html>
 	<style>
 	body {
-	background-color: rgb(255,255,255);
-	font-family: verdana;
-	color: black;
-	font-size: 100%;
+		background-color: rgb(255,255,255);
+		font-family: verdana;
+		color: black;
+		font-size: 100%;
 	}
 
-	nav {
+	div {
 		background-color: rgb(53,134,0);
+		margin: -8px;
+		padding: 0;
 	}
 	
 	a {
@@ -24,7 +26,7 @@
 	ul {
 	  list-style-type: none;
 	  margin: 0;
-	  padding: 0;
+	  padding: 20px 0px;
 	  overflow: hidden;
 	  background-color: rgb(53,134,0);
 	}
@@ -37,8 +39,9 @@
 	  display: block;
 	  color: white;
 	  text-align: center;
-	  padding: 10px 16px;
+	  padding: 10px 25px;
 	  text-decoration: none;
+	  margin: 0px;
 	}
 
 	li a:hover:not(.active) {
@@ -50,17 +53,17 @@
 	  background-color: #04AA6D;
 	</style>
 <header>
-  <title>
-  Task 1 Website
-  </title>
+	<title>
+		Task 1 Website
+	</title>
 </header>
 <body>
-	<nav id="main_nav">	
+	<div class="navbar">	
 		<ul>
-            <li><a href="/Login/">Login</a></li>
-            <li><a href="/Signup/">Signup</a></li>
-            <li><a href="/Profile/">Profile</a></li>
-        </ul>
-	</nav>
+	            <li><a href="/Login/">Login</a></li>
+	            <li><a href="/Signup/">Signup</a></li>
+	            <li><a href="/Profile/">Profile</a></li>
+        	</ul>
+	</div>
 </body>
 </html>
