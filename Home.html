@@ -1,10 +1,66 @@
 <!DOCTYPE html>
 <html>
+	<style>
+	body {
+	background-color: rgb(255,255,255);
+	font-family: verdana;
+	color: black;
+	font-size: 100%;
+	}
+
+	nav {
+		background-color: rgb(53,134,0);
+	}
+	
+	a {
+		color: white;
+	}
+	
+	p {
+		margin-left: 5%;
+		margin-right: 10%;
+	}
+	
+	ul {
+	  list-style-type: none;
+	  margin: 0;
+	  padding: 0;
+	  overflow: hidden;
+	  background-color: rgb(53,134,0);
+	}
+
+	li {
+	  float: right;
+	}
+
+	li a {
+	  display: block;
+	  color: white;
+	  text-align: center;
+	  padding: 10px 16px;
+	  text-decoration: none;
+	}
+
+	li a:hover:not(.active) {
+	  background-color: rgb(99,193,50);
+	  color: black;
+	}
+	
+	.active {
+	  background-color: #04AA6D;
+	</style>
 <header>
   <title>
   Task 1 Website
   </title>
 </header>
 <body>
+	<nav id="main_nav">	
+		<ul>
+            <li><a href="/Login/">Login</a></li>
+            <li><a href="/Signup/">Signup</a></li>
+            <li><a href="/Profile/">Profile</a></li>
+        </ul>
+	</nav>
 </body>
 </html>
