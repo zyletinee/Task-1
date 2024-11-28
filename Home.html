@@ -16,12 +16,7 @@
 		margin: 0px -8px;
 		top: 0;
 	}
-		
-	p {
-		margin-left: 5%;
-		margin-right: 10%;
-	}
-	
+
 	.navbar a {
 		display: block;
 		color: white;
@@ -37,8 +32,20 @@
 		color: black;
 	}
 	
+	.navbar p {
+		float: left;
+		color: white;
+		margin-left: 20px;
+	}
+	
+	.search {
+		float: left;
+		margin-top: 15px;
+		margin-left: 15px;
+	}
+	
 	.main {
-		margin-top: 45px;
+		margin-top: 65px;
 	}
 	</style>
 <header>
@@ -49,10 +56,15 @@
 
 <body>
 	<div class="navbar" autofocus>	
+		<p>Game Reviews Now!</p>
 		<a href="/Login/">Login</a></li>
 		<a href="/Signup/">Signup</a></li>
 		<a href="/Profile/">Profile</a></li>
+		<div class="search">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+		</div> 
 	</div>
+	
 	
 	<div class="main">
 		<marquee>
