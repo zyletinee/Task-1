@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, 'Public')));
 
 // Serve the search.html file when accessing the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'search.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'Home.html'));
 });
 
 // Database path
