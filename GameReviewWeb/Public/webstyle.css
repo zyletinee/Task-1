@@ -1,0 +1,241 @@
+html {
+    scrollbar-width: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.content {
+    margin: auto;
+    width: 70%;
+}
+
+.identifiers {
+    color: black;
+    font-size: 30;
+}
+
+.bodytext {
+    color: rgb(78, 78, 78);
+    font-size: 25;
+}
+
+
+.titletext {
+    color: 286400;
+    font-size: 45;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.result {
+    list-style-type: none;
+    padding: 10px;
+    display: flex;
+    width: 97%;
+    height: automatic;
+    overflow: hidden;
+    background-color: D9D9D9;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.result:hover {
+    box-shadow: 0 0 5px 2px rgb(0, 76, 0);
+}
+
+.resulttext {
+    flex-direction: column;
+    margin-left: 20px;
+    overflow-wrap: anywhere;
+    margin-top: -40px;
+    width: 65%;
+}
+
+#noresult {
+    list-style-type: none;
+    font-size: 40;
+    font-weight: 20;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.miscinfo {
+    float: right;
+    border-color: black;
+    width: 25%;
+    margin-right: 30px;
+    color: grey;
+    text-align: right;
+    font-size: 25;
+}
+
+.thumbnailsearch {
+    padding: 5px;
+    width: 400px;
+    height: 250px;
+    border-radius: 20px;
+}
+
+.filtercontainer {
+    margin-left: 30px;
+    display: inline-block;
+}
+
+.filtercontainer:hover button{
+    background-color: lightgreen;
+}
+
+.filtercontainer button{
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: black solid transparent;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.filtercontainer .filters {
+    position: absolute;
+    background-color: white;
+    min-width: 250px;
+    box-shadow: 0px 10px 30px 5px grey ;
+    display: none; 
+    flex-direction: column; 
+    height: auto; 
+    border-radius: 5px;
+}
+
+.filtercontainer:hover .filters {
+    display: grid;
+}
+
+.filtercontainer .filters ul{
+    list-style-type: none;
+    display: block;
+    padding: 5px 7px;
+    background-color: white;
+}
+
+.filtercontainer .filters ul li label {
+    cursor: pointer;
+    display: block;
+}
+
+.filtercontainer .filters .filterlabeltext {
+    margin-left: 2px;
+    font-size: 20px;
+}
+
+.filtercontainer .filters .filtercount {
+    float: right;
+    margin-right: 2px;
+    font-size: 20px;
+    color: rgb(170, 170, 170);
+}
+
+.filtercontainer .filters .orderoption {
+    border: none;
+    background-color: white;
+    border-radius: 0px;
+}
+
+.filtercontainer .filters .orderoption:hover {
+    background-color: lightgreen;
+}
+
+.minmaxrange {
+    position: relative;
+    height: 30px; /* Total height of the component */
+    width: 100%;
+}
+
+.rangefill {
+    position: absolute;
+    height: 6px;
+    background-color: lightgreen;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2; /* Above the gray bar but below the handles */
+    border-radius: 3px;
+}
+
+.range-bar {
+    position: absolute;
+    height: 6px;
+    background-color: lightgrey;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; /* Below everything else */
+    border-radius: 3px;
+    width: 100%;
+}
+
+.range {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent; /* No background for the slider track */
+    width: 100%;
+    height: 25px; /* Large enough clickable area */
+    z-index: 3;
+    pointer-events: none;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: green;
+    cursor: pointer;
+    z-index: 4;
+    pointer-events: auto; /* Allow interaction */
+    position: relative;
+    top: -5px; /* Adjust for vertical alignment */
+    left: -2px
+}
+
+.range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: transparent;
+    border-radius: 3px;
+}
+
+.minmax {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.minmax div {
+    display: flex;
+    flex-direction: column; /* Align label and input vertically */
+    margin-left: -10px; 
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.minmax input {
+    width: 50px; /* Set a reasonable width for inputs */
+    text-align: center; /* Center-align input text */
+    margin-left: 8.5px;
+    width: 70px;
+    height: 25px;
+    font-size: 15px;
+}
+
+#slidernum {
+    font-size: 20px;
+}
