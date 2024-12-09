@@ -2,65 +2,76 @@
 <html>
 	<style>
 	body {
-	background-color: rgb(255,255,255);
-	font-family: verdana;
-	color: black;
-	font-size: 100%;
+		background-color: rgb(255,255,255);
+		font-family: verdana;
+		color: black;
+		font-size: 100%;
 	}
 
-	nav {
+	.navbar {
 		background-color: rgb(53,134,0);
+		position: fixed;
+		width: 100%;
+		overflow: hidden;
+		margin: 0px -8px;
+		top: 0;
 	}
-	
-	a {
+
+	.navbar a {
+		display: block;
 		color: white;
-	}
-	
-	p {
-		margin-left: 5%;
-		margin-right: 10%;
-	}
-	
-	ul {
-	  list-style-type: none;
-	  margin: 0;
-	  padding: 0;
-	  overflow: hidden;
-	  background-color: rgb(53,134,0);
+		text-align: center;
+		padding: 14px 16px;
+		margin-right: 20px;
+		text-decoration: none;
+		float: right;
 	}
 
-	li {
-	  float: right;
-	}
-
-	li a {
-	  display: block;
-	  color: white;
-	  text-align: center;
-	  padding: 10px 16px;
-	  text-decoration: none;
-	}
-
-	li a:hover:not(.active) {
-	  background-color: rgb(99,193,50);
-	  color: black;
+	.navbar a:hover {
+		background-color: rgb(99,193,50);
+		color: black;
 	}
 	
-	.active {
-	  background-color: #04AA6D;
+	.navbar p {
+		float: left;
+		color: white;
+		margin-left: 20px;
+	}
+	
+	.search {
+		float: left;
+		margin-top: 15px;
+		margin-left: 15px;
+	}
+	
+	.main {
+		margin-top: 65px;
+	}
 	</style>
 <header>
-  <title>
-  Task 1 Website
-  </title>
+	<title>
+	Task 1 Website
+	</title>
 </header>
+
 <body>
-	<nav id="main_nav">	
-		<ul>
-            <li><a href="/Login/">Login</a></li>
-            <li><a href="/Signup/">Signup</a></li>
-            <li><a href="/Profile/">Profile</a></li>
-        </ul>
-	</nav>
+	<div class="navbar" autofocus>	
+		<p>Game Reviews Now!</p>
+		<a href="/Login/">Login</a></li>
+		<a href="/Signup/">Signup</a></li>
+		<a href="/Profile/">Profile</a></li>
+		<div class="search">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+		</div> 
+	</div>
+	
+	
+	<div class="main">
+		<marquee>
+			MKBHd
+		</marquee>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		skibidi
+	</div>
 </body>
 </html>
