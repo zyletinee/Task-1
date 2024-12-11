@@ -66,13 +66,14 @@
 		z-index: 1;
 	}
 	
-	.slider img:nth-child(2_ {
+	.slider img:nth-child(2) {
 		z-index: 0;
 	}
 	
-	.slider-button {
+	.navigation-button {
 		text-align: center;
 		position: relative;
+		background-color: rgb(0,0,0);
 	}
 
 	.dot {
@@ -80,13 +81,13 @@
 		height: 15px;
 		width: 15px;
 		margin: 0 2px;
-		background-color: #000000;
+		background-color: rgb(75,75,75);
 		border-radius: 50%;
 		display: inline-block;
 	}
 
 	.active,.dot:hover {
-		background-color: #717171;
+		background-color: rgb(100,100,100);
 	}
 	</style>
 <header>
@@ -119,18 +120,47 @@
 	<div class="main">
 	<!-- image slider -->
 		<div class="slider">
-			<img id="img-1" src="C:\Users\Lewen\Pictures\reaction pictures\therefore i am.jpg" alt="Green">
-			<img id="img-2" src="C:\Users\Lewen\Pictures\reaction pictures\specter built different.jpg" alt="Specter">
-			<img id="img-3" src="C:\Users\Lewen\Pictures\reaction pictures\rui explodes your balls.png" alt="Rui">
+			<img id="img-1" src="C:\Users\Lewen\Pictures\reaction pictures\therefore i am.jpg" alt="Green"/>
+			<img id="img-2" src="C:\Users\Lewen\Pictures\reaction pictures\specter built different.jpg" alt="Specter"/>
+			<img id="img-3" src="C:\Users\Lewen\Pictures\reaction pictures\rui explodes your balls.png" alt="Rui"/>
 		</div>
-		<div class="slider-button">
+		<div class="navigation-button">
 			<span class="dot active" onclick="changeSlide(0)"></span>
 			<span class="dot" onclick="changeSlide(1)"></span>
 			<span class="dot" onclick="changeSlide(2)"></span>
 		</div>
+		<!-- image slider js -->
+		<script>
+			var imgs = document.querySelectorAll('.slider img');
+			var dots = document.querySelectorAll('.dot');
+			var currentImg = 0; // index of the first image 
+			const interval = 5000; // duration(speed) of the slide
+			var timer = setInterval(changeSlide, interval);	
+			
+			function changeSlide(n) {
+				for (var i = 0; i < imgs.length; i++) { // reset
+					imgs[i].style.opacity = 0; // makes inactive images invisible
+					dots[i].className = dots[i].className.replace(' active', '');
+				}
+
+				currentImg = (currentImg + 1) % imgs.length; // update the index number
+
+				if (n != undefined) { // if a button is clicked
+					clearInterval(timer);
+					timer = setInterval(changeSlide, interval);
+					currentImg = n;
+}
+
+			  imgs[currentImg].style.opacity = 1;
+			  dots[currentImg].className += ' active';
+			}
+		</script>
 		
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		skibidi
+		<div>
+			<p style="text-align: center; font-size: 48px;">
+				review games now or else
+			</p>
+		</div>
 	</div>
 </body>
 </html>
