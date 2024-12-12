@@ -1,3 +1,120 @@
-<!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="webstyle.css">
+        <title id="tabtitle">Search</title>
+    </head>
+
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.7.0/sql-wasm.js"></script>
+        
+        <div class="navbar" autofocus>	
+            <p>Game Reviews Now!</p>
+            <a href="/Login/">Login</a></li>
+            <a href="/Signup/">Signup</a></li>
+            <a href="/Profile/">Profile</a></li>
+            <div class="search">
+                <input type="text" name="search" id="search" placeholder="Search" autocomplete="off" oninput="loadSearchResults(event)">
+            </div> 
+        </div>
+        <br>
+        <br>
+        <div class="content">
+            <p id="displayresult" style="margin-left: 50px; font-size: 35;"></p>
+            <div class="filtercontainer" style="margin-left: 50px;">
+                <button class="filterbutton">Genre ▾</button>
+                <div class="filters" id="genres">
+                    <!-- Add Select All button -->
+                    <button id="genSel" class="selectAllButton" onclick="selectAll('genreList', 'genres', this, 'select')">Select All</button>
+                    <ul id="genreList">
+                        <!-- Filter options will be inserted here -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="filtercontainer">
+                <button class="filterbutton">Dev ▾</button>
+                <div class="filters" id="developers">
+                    <!-- Add Select All button -->
+                    <button id="devSel" class="selectAllButton" onclick="selectAll('devList', 'developers', this, 'select')">Select All</button>
+                    <ul id="devList">
+                        <!-- Filter options will be inserted here -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="filtercontainer">
+                <button class="filterbutton">Platform ▾</button>
+                <div class="filters" id="platforms">
+                    <!-- Add Select All button -->
+                    <button id="platSel" class="selectAllButton" onclick="selectAll('platList', 'platforms', this, 'select')">Select All</button>
+                    <ul id="platList">
+                        <!-- Filter options will be inserted here -->
+                    </ul>
+                </div>
+            </div>          
+            
+            <div class="filtercontainer">
+                <button class="filterbutton">Score ▾</button>
+                <div class="filters" style="padding: 10px 10px 15px;">
+                    <center><p id="slidernum"></p></center>
+                    <div class="minmaxrange">
+                        <div class="range-bar"></div> <!-- Static gray bar -->
+                        <div class="rangefill"></div> <!-- Dynamic green fill -->
+                        <input type="range" id="minSlider" class="range" min="0" max="50" value="0">
+                        <input type="range" id="maxSlider" class="range" min="0" max="50" value="50">
+                    </div>                             
+                    <div class="minmax">
+                        <div>
+                            <label>Minimum</label>
+                            <input type="number" id="minvalue" min="0" max="4.9" step="0.1" value="0">
+                        </div>
+                        <div>
+                            <label>Maximum</label>
+                            <input type="number" id="maxvalue" min="0.1" max="5" step="0.1" value="5">
+                        </div>
+                    </div>                
+                </div>
+            </div>
+            <span style="margin-left: 30px; font-size: 20px;">Sort By:</span>
+            <div class="filtercontainer" style="margin-left: 0px;">
+                <button id="sortorder"  class="filterbutton">Relevance ▾</button>
+                <div class="filters" id="ordercontainer">
+                    <button class="orderoption" id="relevance" name="sort" onclick="loadSearchResults(event)">Relevance</button>
+                    <button class="orderoption" id="a-z" name="sort" onclick="loadSearchResults(event)">Title: A-Z</button>
+                    <button class="orderoption" id="z-a" name="sort" onclick="loadSearchResults(event)">Title: Z-A</button>
+                    <button class="orderoption" id="low-high" name="sort" onclick="loadSearchResults(event)">Rating: Low-High</button>
+                    <button class="orderoption" id="high-low" name="sort" onclick="loadSearchResults(event)">Rating: High-Low</button>
+                    <button class="orderoption" id="new-old" name="sort" onclick="loadSearchResults(event)">Release Date: New-Old</button>
+                    <button class="orderoption" id="old-new" name="sort" onclick="loadSearchResults(event)">Release Date: Old-New</button>
+                </div>
+            </div>
+            <div id="resultscontainer" class="container">
+                <ul id="containerlist">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <li class="result">
+                            <img class="thumbnailsearch" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/88f96d9a-a019-4143-92fc-3930c0d31767/dhg5inv-19ee6231-c81a-40ef-b78d-18678355aae9.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzg4Zjk2ZDlhLWEwMTktNDE0My05MmZjLTM5MzBjMGQzMTc2N1wvZGhnNWludi0xOWVlNjIzMS1jODFhLTQwZWYtYjc4ZC0xODY3ODM1NWFhZTkucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.a33CSyF1T96UNAH1D9CTDn1cNxmduuuJcsZG84L1FzY">
+                            <div class="resulttext">
+                                <p class="titletext">zakkkkkkkkkkkkkkkkkkkkkkkkk</p>
+                                <p class="identifiers">Dev | Publisher</p>
+                                <p class="bodytext">this is a game description</p>
+                            </div>
+                            <div class="miscinfo">
+                                <p>04/12/2024</p>
+                                <p>Rating: 69/420</p>
+                                <div class="platdiv">
+                                    <img class="platimg" src="Assets/Xbox.png">
+                                    <img class="platimg" src="Assets/PS5.png">
+                                    <img class="platimg" src="Assets/N64.png">
+                                    <img class="platimg" src="Assets/Wii_U.png">
+                                    <img class="platimg" src="Assets/Windows.png">
+                                </div>
+                            </div>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <script src="search.js"></script>
+    </body>
 </html>
+
