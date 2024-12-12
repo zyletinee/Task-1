@@ -12,12 +12,14 @@
 		background-color: rgb(53,134,0);
 		position: fixed;
 		width: 100%;
+		height: 50px;
 		overflow: hidden;
 		margin: 0px -8px;
 		top: 0;
+		z-index: 2;
 	}
 
-	.navbar a {
+	.navbar_buttons {
 		display: block;
 		color: white;
 		text-align: center;
@@ -27,7 +29,7 @@
 		float: right;
 	}
 
-	.navbar a:hover {
+	.navbar_buttons:hover {
 		background-color: rgb(99,193,50);
 		color: black;
 	}
@@ -99,9 +101,9 @@
 <body>
 <!-- navbar (signed out) -->
 	<div class="navbar" autofocus>	
-		<!-- <img id="logo" src=/> -->
-		<a href="/Login/">Login</a></li>
-		<a href="/Signup/">Signup</a></li>
+		<a href="/Home/"><img id="logo" src="Assets\grn logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="/Login/" class="navbar_buttons">Login</a></li>
+		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
@@ -120,9 +122,9 @@
 	<div class="main">
 	<!-- image slider -->
 		<div class="slider">
-			<img id="img-1" src="C:\Users\Lewen\Pictures\reaction pictures\therefore i am.jpg" alt="Green"/>
-			<img id="img-2" src="C:\Users\Lewen\Pictures\reaction pictures\specter built different.jpg" alt="Specter"/>
-			<img id="img-3" src="C:\Users\Lewen\Pictures\reaction pictures\rui explodes your balls.png" alt="Rui"/>
+			<img id="img-1" src="Assets\therefore i am.jpg" alt="Green"/>
+			<img id="img-2" src="Assets\specter built different.jpg" alt="Specter"/>
+			<img id="img-3" src="Assets\rui explodes your balls.png" alt="Rui"/>
 		</div>
 		<div class="navigation-button">
 			<span class="dot active" onclick="changeSlide(0)"></span>
