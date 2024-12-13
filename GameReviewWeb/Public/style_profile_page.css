@@ -3,15 +3,409 @@ body {
 	font-family: verdana;
 	color: black;
 	font-size: 100%;
+  }
+
+/* nav bar classes */
+.navbar {
+	background-color: rgb(53,134,0);
+	position: fixed;
+	width: 100%;
+	height: 50px;
+	overflow: hidden;
+	margin: 0px -8px;
+	top: 0;
+	z-index: 2;
 }
 
-nav {
-	background-color: rgb(53,134,0);
+.navbar_buttons {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	margin-right: 20px;
+	text-decoration: none;
+	float: right;
 }
+
+.navbar_buttons:hover {
+	background-color: rgb(99,193,50);
+	color: black;
+}
+
+.navbar p {
+	float: left;
+	color: white;
+	margin-left: 20px;
+}
+
+.search {
+	float: left;
+	margin-top: 15px;
+	margin-left: 15px;
+}
+
+.main {
+	margin-top: 65px;
+}
+
+.slider {
+	width: 100%;
+	height: 510px;
+	position: relative;
+}
+
+.slider img {
+	width: 100%;
+	height: 500px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.slider img:first-child {
+	z-index: 1;
+}
+
+.slider img:nth-child(2) {
+	z-index: 0;
+}
+
+.navigation-button {
+	text-align: center;
+	position: relative;
+	background-color: rgb(0,0,0);
+}
+
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: rgb(75,75,75);
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.active,.dot:hover {
+	background-color: rgb(100,100,100);
+}
+
+.search {
+    float: left;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+/* top container + contents */
+.topContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	justify-content: flex-start;
+	flex-flow: row wrap;
+
+}
+
+.avatarItem {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+}	
 
 .pfp {
-    background-color:aliceblue;
-    margin-top: 5%;
-    margin-left: 5%;
     border-radius: 50%;
+	width: 100%;
+	height: 100%;
+}
+
+/* Top right container and items */
+.infoContainer {
+	display: flex;
+	width: 76%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	margin-top: 2%;
+	flex-direction: column;
+}
+
+#usernameContainer {
+	background-color: #9EE37D;
+	border-radius: 20px;
+}
+
+#usernameText {
+	margin-left: 3%;
+}
+
+.platformsContainer {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+}
+
+.platformsItemContainer {
+	margin: 2%;
+	margin-left: 0;
+	display: flex;
+	background-color:#9EE37D;
+	width: 8%;
+	height: auto;
+	border-radius:50%;
+	justify-content: center;
+	vertical-align: center;
+}
+
+.platformsItem {
+	width: 70%;
+	height: 70%;
+	
+}
+.bioContainer {
+	background-color:#9EE37D;
+	border-radius:20px;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 2%;
+}
+
+.bioContents {
+	margin: 3%;
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+}
+	
+/* bottom container */
+
+.bottomContainerText {
+	margin-left: 2%;
+	height: auto;
+}
+
+.reviewsContainer {
+	display: flex;
+	height: auto;
+	margin-left: 2%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.reviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.reviewItem {
+	list-style-type: none;
+    display: flex;
+    width: 98%;
+    height: auto;
+    background-color: #D9D9D9;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.thumbnailContainer {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+	border-radius: 5px;
+}
+
+.thumbnailImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+.reviewInfoContainer {
+	background-color: white;
+	border-radius: 5px;
+	margin: 2%;
+	margin-left: 0;
+	width:  98%;
+	height: auto;
+}
+
+.reviewInfoText {
+	margin-left: 2%;
+	overflow: wrap;
+}
+
+/* Settings Classes */
+
+.settingsContentContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	margin-left: 0.9%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.settingsHeaderContainer {
+	background-color: #D9D9D9;
+	margin: 2%;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 0;
+}
+
+.settingsHeaderText {
+	margin-left: 2%
+}
+
+.settingsOptionsContainer {
+	background-color: #D9D9D9;
+	border-radius: 0 0 10px 10px;
+	margin: 2%;
+	margin-top: 0;
+}
+
+.profileOptionsContainer {
+	width: auto;
+	height: auto;
+}
+
+.profileOptionsItem {
+	background-color:aquamarine;
+	margin-left: 4%;
+	margin-bottom: 2%;
+}
+
+.privacyOptionsContainer {
+	width: auto;
+	height: auto;
+}
+
+.privacyOptionsItem {
+	background-color:lightgoldenrodyellow;
+	margin-left: 4%;
+	margin-bottom: 2%;
+}
+
+/* Game page classes */
+.gameTopContainer {
+	display: flex;
+	width: 96%;
+	height: 40%;
+	margin: 2%;
+	margin-bottom: 0;
+	margin-top: 50px;
+	justify-content: flex-start;
+	flex-flow: row wrap;
+}
+
+.gameCoverArtContainer {
+	width: 20%;
+	height: auto;
+	margin: 2%;
+	margin-right:0;
+	margin-left: 7%;
+	box-shadow: 2px -1px 20px 5px grey;
+}
+
+.gameCoverArtItem {
+	width: 100%;
+	height: 100%;
+}
+
+.gameInfoContainer {
+	background-color: #D9D9D9;
+	display: flex;
+	width: 65%;
+	height: fit-content;
+	flex-flow: column wrap;
+	margin-left: 8%;
+	margin-top: 2%;
+	margin-right: 0;
+	border-radius: 5px;
+}
+
+.gameHeaderContainer {
+	height: fit-content;
+	width: auto;
+}
+
+.gameInfoText {
+	margin-left:2%;
+	margin-top: 0;
+}
+
+.gameDescription {
+	margin: 2%;
+	margin-top: 0.75%;
+	background-color: white;
+	border-radius: 5px;
+}
+
+.gameDescriptionText {
+	margin: 2%;
+}
+
+.gameGenres {
+	display: flex;
+	gap: 10px;
+	margin-left: 2%;
+	margin-bottom: 2%;
+}
+
+.gameGenreItem {
+	background-color: #ffffff;
+	color: #155724;
+	padding: 5px 10px;
+	border-radius: 15px;
+	font-size: 0.9em;
+}
+
+.gameBottomContainer {
+	width: 100%;
+}
+
+.gameBottomContainer {
+	display: flex;
+	height: auto;
+	width: 96%;
+	margin-left: 2%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.gameReviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.gameReviewItem {
+	list-style-type: none;
+    display: flex;
+    width: 100%;
+    height: auto;
+    background-color: #D9D9D9;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.gameReviewInfoContainer {
+	background-color: white;
+	border-radius: 5px;
+	margin: 2%;
+	margin-left: 0;
+	width:  98%;
+	height: auto;
+}
+
+.gameReviewInfoText {
+	margin-left: 2%;
+	overflow: wrap;
 }
