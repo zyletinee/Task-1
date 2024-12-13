@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Review Page</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=TmfZ716xOFY751TxPzQHgtdtrecDiiHyK0GadKhmmi4I9NdNxEdmESCGfhOrW_D9UjmcC_40yv35PpXrYHVTM5YsvCMeWPvM_hCGMkHyt5WO0LmH8ulYeQL4sSnxgXNLnhLxvFGpXRlSTmomAjuuHTVTvFGkI6cy67UwZPdcMmL_gLwRqnNttkk4uTPBEfjirwwGqTngsKkI-HM_zjaeN2WH1Pc825xttmTur9EbZCVRmdG2AfgaKnfs5obPKY5j0Upzqd-XxxbfNtnJ9gmlOQ" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvMTI1NTA1MjAwMjIwMzkzMDc1NS8xMzE2NzQ5NjAxNTExOTY4Nzk4L0dhbWVQYWdlLmh0bWw_ZXg9Njc1YzJlMjEmaXM9Njc1YWRjYTEmaG09MzkxODYzZjg5MjNmMGE3ZDE4NTgyNTg0MmJjMTYyY2YzOGYxM2VkNTQxMTcxNjJkNjZhZDZlZWJkZGE2OTJlNCY"/><style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    .header {
+      background-color: #4CAF50;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    .header .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .header .search-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .header .search-bar input {
+      padding: 5px;
+      font-size: 1em;
+      border: none;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .header .auth-links {
+      font-size: 0.9em;
+    }
+
+    .header .auth-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+
+    /* Main content */
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 20px;
+    }
+
+    .game-image {
+      background-color: #8FBC8F;
+      width: 200px;
+      height: 300px;
+      margin-right: 20px;
+    }
+
+    .game-details {
+      max-width: 600px;
+    }
+
+    .game-title {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .game-info {
+      margin: 10px 0;
+    }
+
+    .game-description {
+      margin: 20px 0;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    .genres {
+      display: flex;
+      gap: 10px;
+    }
+
+    .genre {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.9em;
+    }
+
+    /* Reviews */
+    .reviews {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .review-search input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .review {
+      display: flex;
+      background-color: #f8f9fa;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 4px;
+      align-items: flex-start;
+    }
+
+    .review .review-image {
+      background-color: #8FBC8F;
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .review .review-content {
+      flex: 1;
+    }
+
+    .review .review-title {
+      font-weight: bold;
+    }
+
+    .review .review-text {
+      margin: 5px 0;
+    }
+
+    .review .rating {
+      color: #FFC107;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">Website Name</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+    </div>
+    <div class="auth-links">
+      <a href="#">Login</a>
+      <a href="#">Sign Up</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="content">
+    <div class="game-image"></div>
+    <div class="game-details">
+      <div class="game-title">Title</div>
+      <div class="game-info">Publisher | Developer</div>
+      <div class="game-description">
+        Short game description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rutrum varius maximus.
+      </div>
+      <div class="genres">
+        <div class="genre">Genre 1</div>
+        <div class="genre">Genre 2</div>
+        <div class="genre">Genre 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews -->
+  <div class="reviews">
+    <div class="review-search">
+      <input type="text" placeholder="Search reviews...">
+    </div>
+
+    <div class="review">
+      <div class="review-image"></div>
+      <div class="review-content">
+        <div class="review-title">User's review Title</div>
+        <div class="review-text">[placeholder text] game was very fun 10/10 definitely recommend</div>
+        <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; 5/5</div>
+      </div>
+    </div>
+
+    <div class="review">
+      <div class="review-image"></div>
+      <div class="review-content">
+        <div class="review-title">User's review Title</div>
+        <div class="review-text">[placeholder text] top 10 cash grabs</div>
+        <div class="rating">&#9733;&#9734;&#9734;&#9734;&#9734; 2/5</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
