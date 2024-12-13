@@ -1,53 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<style>
-	body {
-		background-color: rgb(255,255,255);
-		font-family: verdana;
-		color: black;
-		font-size: 100%;
-	}
-
-	.navbar {
-		background-color: rgb(53,134,0);
-		position: fixed;
-		width: 100%;
-		overflow: hidden;
-		margin: 0px -8px;
-		top: 0;
-	}
-
-	.navbar a {
-		display: block;
-		color: white;
-		text-align: center;
-		padding: 14px 16px;
-		margin-right: 20px;
-		text-decoration: none;
-		float: right;
-	}
-
-	.navbar a:hover {
-		background-color: rgb(99,193,50);
-		color: black;
-	}
-	
-	.navbar p {
-		float: left;
-		color: white;
-		margin-left: 20px;
-	}
-	
-	.search {
-		float: left;
-		margin-top: 15px;
-		margin-left: 15px;
-	}
-	
-	.main {
-		margin-top: 65px;
-	}
-	</style>
+	<link rel="stylesheet" href="webstyle.css">
 <header>
 	<title>
 	Task 1 Website
@@ -55,23 +8,70 @@
 </header>
 
 <body>
+<!-- navbar (signed out) -->
 	<div class="navbar" autofocus>	
-		<p>Game Reviews Now!</p>
-		<a href="/Login/">Login</a></li>
-		<a href="/Signup/">Signup</a></li>
-		<a href="/Profile/">Profile</a></li>
+		<a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="/Login/" class="navbar_buttons">Login</a></li>
+		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
 	</div>
 	
+<!-- navbar (signed in(figure out how to make it detect))
+	<div class="navbar" autofocus>	
+		<p>Game Reviews Now!</p>
+		<a href="/Profile/">Profile</a></li>
+		<div class="search">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+		</div> 
+	</div> -->
 	
+<!-- main content -->
 	<div class="main">
-		<marquee>
-			MKBHd
-		</marquee>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		skibidi
+	<!-- image slider -->
+		<div class="slider">
+			<img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/>
+			<img id="img-2" src="Assets\specter_built_different.jpg" alt="Specter"/>
+			<img id="img-3" src="Assets\rui_explodes_your_balls.png" alt="Rui"/>
+		</div>
+		<div class="navigation-button">
+			<span class="dot active" onclick="changeSlide(0)"></span>
+			<span class="dot" onclick="changeSlide(1)"></span>
+			<span class="dot" onclick="changeSlide(2)"></span>
+		</div>
+		<!-- image slider js -->
+		<script>
+			var imgs = document.querySelectorAll('.slider img');
+			var dots = document.querySelectorAll('.dot');
+			var currentImg = 0; // index of the first image 
+			const interval = 5000; // duration(speed) of the slide
+			var timer = setInterval(changeSlide, interval);	
+			
+			function changeSlide(n) {
+				for (var i = 0; i < imgs.length; i++) { // reset
+					imgs[i].style.opacity = 0; // makes inactive images invisible
+					dots[i].className = dots[i].className.replace(' active', '');
+				}
+
+				currentImg = (currentImg + 1) % imgs.length; // update the index number
+
+				if (n != undefined) { // if a button is clicked
+					clearInterval(timer);
+					timer = setInterval(changeSlide, interval);
+					currentImg = n;
+}
+
+			  imgs[currentImg].style.opacity = 1;
+			  dots[currentImg].className += ' active';
+			}
+		</script>
+		
+		<div>
+			<p style="text-align: center; font-size: 48px;">
+				review games now or else
+			</p>
+		</div>
 	</div>
 </body>
 </html>
