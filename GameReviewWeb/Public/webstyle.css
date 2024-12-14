@@ -92,15 +92,6 @@ body {
 
 .active,.dot:hover {
 	background-color: rgb(100,100,100);
-
-.search {
-    float: left;
-    margin-top: 15px;
-    margin-left: 15px;
-}
-
-.main {
-    margin-top: 65px;
 }
 
 .content {
