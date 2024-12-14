@@ -31,11 +31,11 @@
 	<div class="main">
 	<!-- image slider -->
 		<div class="slider">
-			<img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/>
+			<a id="slider-link" href="#"><img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/></a>
 			<img id="img-2" src="Assets\specter_built_different.jpg" alt="Specter"/>
 			<img id="img-3" src="Assets\rui_explodes_your_balls.png" alt="Rui"/>
 		</div>
-		<div class="navigation-button">
+		<div class="slider_button">
 			<span class="dot active" onclick="changeSlide(0)"></span>
 			<span class="dot" onclick="changeSlide(1)"></span>
 			<span class="dot" onclick="changeSlide(2)"></span>
@@ -44,9 +44,16 @@
 		<script>
 			var imgs = document.querySelectorAll('.slider img');
 			var dots = document.querySelectorAll('.dot');
+			var link = document.getElementById('slider-link');
 			var currentImg = 0; // index of the first image 
 			const interval = 5000; // duration(speed) of the slide
 			var timer = setInterval(changeSlide, interval);	
+			
+			const links = [
+				"Home.html", // Link for the first image
+				"search.html", // Link for the second image
+				"GamePage.html"  // Link for the third image
+			];
 			
 			function changeSlide(n) {
 				for (var i = 0; i < imgs.length; i++) { // reset
@@ -62,8 +69,9 @@
 					currentImg = n;
 }
 
-			  imgs[currentImg].style.opacity = 1;
-			  dots[currentImg].className += ' active';
+				imgs[currentImg].style.opacity = 1;
+				dots[currentImg].className += ' active';
+				link.href = links[currentImg];
 			}
 		</script>
 		
@@ -74,6 +82,11 @@
 			<div class="homeButtons">
 				<a href="Search.html">
 					Review a Game
+				</a>
+			</div>
+			<div class="homeButtons">
+				<a href="Home.html">
+					Suggest a Game
 				</a>
 			</div>
 		</div>
