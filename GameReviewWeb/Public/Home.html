@@ -1,97 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<style>
-	body {
-		background-color: rgb(255,255,255);
-		font-family: verdana;
-		color: black;
-		font-size: 100%;
-	}
-
-	.navbar {
-		background-color: rgb(53,134,0);
-		position: fixed;
-		width: 100%;
-		height: 50px;
-		overflow: hidden;
-		margin: 0px -8px;
-		top: 0;
-		z-index: 2;
-	}
-
-	.navbar_buttons {
-		display: block;
-		color: white;
-		text-align: center;
-		padding: 14px 16px;
-		margin-right: 20px;
-		text-decoration: none;
-		float: right;
-	}
-
-	.navbar_buttons:hover {
-		background-color: rgb(99,193,50);
-		color: black;
-	}
-	
-	.navbar p {
-		float: left;
-		color: white;
-		margin-left: 20px;
-	}
-	
-	.search {
-		float: left;
-		margin-top: 15px;
-		margin-left: 15px;
-	}
-	
-	.main {
-		margin-top: 65px;
-	}
-	
-	.slider {
-		width: 100%;
-		height: 510px;
-		position: relative;
-	}
-	
-	.slider img {
-		width: 100%;
-		height: 500px;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-	
-	.slider img:first-child {
-		z-index: 1;
-	}
-	
-	.slider img:nth-child(2) {
-		z-index: 0;
-	}
-	
-	.navigation-button {
-		text-align: center;
-		position: relative;
-		background-color: rgb(0,0,0);
-	}
-
-	.dot {
-		cursor: pointer;
-		height: 15px;
-		width: 15px;
-		margin: 0 2px;
-		background-color: rgb(75,75,75);
-		border-radius: 50%;
-		display: inline-block;
-	}
-
-	.active,.dot:hover {
-		background-color: rgb(100,100,100);
-	}
-	</style>
+	<link rel="stylesheet" href="/webstyle.css">
 <header>
 	<title>
 	Task 1 Website
@@ -99,14 +8,23 @@
 </header>
 
 <body>
-<!-- navbar (signed out) -->
+	<!-- navbar (signed out) -->
 	<div class="navbar" autofocus>	
-		<a href="/Home/"><img id="logo" src="Assets\grn logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
 		<a href="/Login/" class="navbar_buttons">Login</a></li>
 		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
+			<p style="text-align: center; font-size: 48px;">
+				review games now or else
+			</p>
+			<div class="homeButtons">
+				<a href="Search.html">
+					Review a Game
+				</a>
+			</div>
+		</div>
 	</div>
 	
 <!-- navbar (signed in(figure out how to make it detect))
@@ -122,9 +40,9 @@
 	<div class="main">
 	<!-- image slider -->
 		<div class="slider">
-			<img id="img-1" src="Assets\therefore i am.jpg" alt="Green"/>
-			<img id="img-2" src="Assets\specter built different.jpg" alt="Specter"/>
-			<img id="img-3" src="Assets\rui explodes your balls.png" alt="Rui"/>
+			<img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/>
+			<img id="img-2" src="Assets\specter_built_different.jpg" alt="Specter"/>
+			<img id="img-3" src="Assets\rui_explodes_your_balls.png" alt="Rui"/>
 		</div>
 		<div class="navigation-button">
 			<span class="dot active" onclick="changeSlide(0)"></span>
@@ -156,13 +74,38 @@
 			  imgs[currentImg].style.opacity = 1;
 			  dots[currentImg].className += ' active';
 			}
+			// Get the search input field
+			var searchInput = document.getElementById('search');
+
+			// Add event listener for keyup event
+			searchInput.addEventListener('keyup', function(event) {
+				// Check if the Enter key is pressed
+				if (event.key === 'Enter') {
+					// Get the search query
+					var query = searchInput.value.trim();
+
+					// Check if the query is not empty
+					if (query !== '') {
+						// Redirect to the search page with the query parameter
+						window.location.href = '/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=' + encodeURIComponent(query);
+					}
+				}
+			});
+
 		</script>
 		
 		<div>
 			<p style="text-align: center; font-size: 48px;">
 				review games now or else
 			</p>
+			<div class="homeButtons">
+				<a href="Search.html">
+					Review a Game
+				</a>
+			</div>
 		</div>
 	</div>
 </body>
 </html>
+
+ 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Animal Crossing: City Folk - Game Reviews Now!</title>
+	<link rel="stylesheet" href="/webstyle.css">
+</head>
+
+<body>
+	<!-- nav bar -->
+	<div class="navbar" autofocus>
+		<a href="/Home/"><img id="logo" src="/Assets/grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="/Login/" class="navbar_buttons">Login</a></li>
+		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
+		<div class="search">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+		</div>
+	</div>
+	<button id="backButton" onclick="goBack()">Back To Search</button>
+	<div class="content">
+		
+		<!-- Page Divs -->
+		<!-- Holds game thumbnail, game info-->
+		<div class="gameTopContainer">
+			<!-- Container for cover art -->
+
+			<img class="gameCoverArtItem" id="coverArt">
+
+			<!-- Info about displayed game -->
+			<div class="gameInfoContainer">
+				<h1 class="gameInfoText" id="title"></h1>
+				<div class="gameDescription">
+					<p id="descriptionText"></p>
+				</div>
+				<div class="categories">
+					<ul class="categoryList">
+						<li class="categoryItem">
+							<p>Average Rating: <span class="categInfo" id="avgRating"><a id="ratingLink" href="#reviewListTitle"></a></span></p>
+						</li>
+						<li class="categoryItem">
+                            <p>Release date: <span class="categInfo" id="releaseDate"></span></p>
+                        </li>
+						<li class="categoryItem">
+                            <p>Developer: <span class="categInfo" id="developer"><a id="devLink"></a></span></p>
+                        </li>
+						<li class="categoryItem">
+							<p>Publisher: <span class="categInfo" id="publisher"><a id="pubLink"></a></span></p>
+						</li>
+						<li class="categoryItem">
+                            <p>Genre: <span class="categInfo" id="genre"></span></p>
+                        </li>
+						<li class="categoryItem">
+							<p>Platforms: <span class="categInfo" id="platforms"></span></p>
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Holds reviews -->
+		<div class="gameBottomContainer">
+			<h1 id="reviewListTitle">Reviews</h1>
+			<ul class="gameReviewsList">
+				<!-- first iteration of a review box -->
+				<li id="gameItem1">
+					<div class="gameReviewItem" id="gameItem1">
+						<!-- Link leading to game page from game thumbnail -->
+						<div class="avatarItem">
+							<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+								<img class="pfp" src="/Assets/vflower_fanart_pfp_icon.jpeg">
+							</a>
+						</div>
+
+						<!-- Contents of Review -->
+						<div class="gameReviewInfoContainer">
+							<h1 class="gameReviewInfoText" id="gameReviewTitle">review title</h1>
+							<h3 class="gameReviewInfoText" id="gameReviewDate">date</h3>
+							<p class="gameReviewInfoText" id="gameReviewBody">review text</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="/GamePage.js"></script>
+</body>
+
+</html>
