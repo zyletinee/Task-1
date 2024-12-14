@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<link rel="stylesheet" href="webstyle.css">
+<header>
+	<title>
+	Task 1 Website
+	</title>
+</header>
+
+<body>
+<!-- navbar (signed out) -->
+	<div class="navbar">	
+		<a href="Home.html"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="Login.html" class="navbar_buttons">Login</a></li>
+		<a href="Signup.html" class="navbar_buttons">Signup</a></li>
+		<div class="search">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+		</div> 
+	</div>
+	
+<!-- navbar (signed in(figure out how to make it detect))
+	<div class="navbar" autofocus>	
+		<p>Game Reviews Now!</p>
+		<a href="/Profile/">Profile</a></li>
+		<div class="search">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+		</div> 
+	</div> -->
+	
+<!-- main content -->
+	<div class="main">
+	<!-- image slider -->
+		<div class="slider">
+			<img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/>
+			<img id="img-2" src="Assets\specter_built_different.jpg" alt="Specter"/>
+			<img id="img-3" src="Assets\rui_explodes_your_balls.png" alt="Rui"/>
+		</div>
+		<div class="navigation-button">
+			<span class="dot active" onclick="changeSlide(0)"></span>
+			<span class="dot" onclick="changeSlide(1)"></span>
+			<span class="dot" onclick="changeSlide(2)"></span>
+		</div>
+		<!-- image slider js -->
+		<script>
+			var imgs = document.querySelectorAll('.slider img');
+			var dots = document.querySelectorAll('.dot');
+			var currentImg = 0; // index of the first image 
+			const interval = 5000; // duration(speed) of the slide
+			var timer = setInterval(changeSlide, interval);	
+			
+			function changeSlide(n) {
+				for (var i = 0; i < imgs.length; i++) { // reset
+					imgs[i].style.opacity = 0; // makes inactive images invisible
+					dots[i].className = dots[i].className.replace(' active', '');
+				}
+
+				currentImg = (currentImg + 1) % imgs.length; // update the index number
+
+				if (n != undefined) { // if a button is clicked
+					clearInterval(timer);
+					timer = setInterval(changeSlide, interval);
+					currentImg = n;
+}
+
+			  imgs[currentImg].style.opacity = 1;
+			  dots[currentImg].className += ' active';
+			}
+		</script>
+		
+		<div>
+			<p style="text-align: center; font-size: 48px;">
+				review games now or else
+			</p>
+			<div class="homeButtons">
+				<a href="Search.html">
+					Review a Game
+				</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+ 
