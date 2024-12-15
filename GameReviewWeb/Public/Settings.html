@@ -2,49 +2,51 @@
 <html>
 <header>
     <title>Username - Settings</title>
-    <link rel="stylesheet" href="style_profile_page.css">
+    <link rel="stylesheet" href="webstyle.css">
 </header>
 
 <body>
     <!-- nav bar -->
-    <div class="navbar" autofocus>	
-		<a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
-		<a href="/Login/" class="navbar_buttons">Login</a></li>
-		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
+<div class="navbar" autofocus>	
+    <a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+    <a href="/Login/" class="navbar_buttons">Login</a></li>
+    <a href="/Signup/" class="navbar_buttons">Signup</a></li>
+  
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
+</div>
+
+<!-- Page Divs -->
+
+<!-- Container holding all content -->
+<div class="settingsContentContainer">
+    <!-- Page Title -->
+    <div class="settingsHeaderContainer">
+        <h1 class="settingsHeaderText">Settings</h1>
     </div>
 
-    <!-- Page Divs -->
-
-    <!-- Container holding all content -->
-    <div class="settingsContentContainer">
-        <!-- Page Title -->
-        <div class="settingsHeaderContainer">
-            <h1 class="settingsHeaderText">Settings</h1>
+    <!-- Option Container -->
+    <div class="settingsOptionsContainer">
+        <div class="profileOptionsContainer">
+            <h1 class="settingsHeaderText">Profile Options</h1>
+            <div class="profileOptionsItem" id="pfp">
+                Pfp Button
+            </div>
+            <div class="profileOptionsItem" id="bio">
+                <form> <!-- Add "action" attribute later -->
+                    <input type="text" id="bio" name="userBio" size="500"><br><br>
+                    <input type="submit" value="Save!">
+                </form>
+            </div>
         </div>
-
-        <!-- Option Container -->
-         <div class="settingsOptionsContainer">
-            <div class="profileOptionsContainer">
-                <h1 class="settingsHeaderText">Profile Options</h1>
-                <div class="profileOptionsItem" id="pfp">
-                    Pfp Button
-                </div>
-                <div class="profileOptionsItem" id="bio">
-                    Bio Editor
-                    <!--Use a form here-->
-                </div>
+        <div class="privacyOptionsContainer">
+            <h1 class="settingsHeaderText">Privacy Options</h1>
+            <div class="privacyOptionsItem">
+                Change Password
             </div>
-            <div class="privacyOptionsContainer">
-                <h1 class="settingsHeaderText">Privacy Options</h1>
-                <div class="privacyOptionsItem">
-                    Change Password
-                </div>
-            </div>
-         </div>
-    </div>
+        </div>
+     </div>
+</div>
 </body>
-
 </html>

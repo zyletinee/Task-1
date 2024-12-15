@@ -3,44 +3,98 @@
 
 <head>
     <title>Username - Website Name</title>
-    <link rel="stylesheet" href="style_profile_page.css">
+    <link rel="stylesheet" href="webstyle.css">
 </head>
 
 <body>
-</body>
 <!--Navbar Placeholder-->
-<div id="navbar" style="width:1920px;height:75px;background-color:cornflowerblue;float:left">
-    <p>
-        Add nav bar here later
-    </p>
-</div>
-<!--Creating page divs-->
-<div id="top left" style="flex-grow: 1; flex-basis: 250px;">
-    <!--top left will contain pfp image ONLY-->
-    <!--flex-basis sets the size of the pfp box-->
-    <img class="pfp" id="user pfp" src="vflower fanart pfp icon.jpeg">
+<div class="navbar" autofocus>	
+    <a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+    <a href="/Login/" class="navbar_buttons">Login</a></li>
+    <a href="/Signup/" class="navbar_buttons">Signup</a></li>
+    <div class="search">
+        <input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+    </div> 
 </div>
 
-<div id="top right">
-    <!--top right will contain username, preferred platforms and bio if I can do it-->
-    <div id="username" >
+<!--Creating page divs-->
+
+<!-- Holding all profile elements -->
+<div class="topContainer" id="top">
+    <div class="avatarItem" id="avatar">
+        <!--top left will contain pfp image ONLY-->
+        <img class="pfp" id="userPfp" src="Assets/vflower_fanart_pfp_icon.jpeg">
+    </div>
+    
+    <div class="infoContainer" id="infoContainer" >
         <!--contains username-->
-        <div id="platforms">
-            <!--contains each preferred profile-->
-            <div class="platform 1">
-                <!--platform-->
-            </div>
-            <div class="platform 2">
-                <!--platform-->
+        <div id="usernameContainer">
+            <h1 id="usernameText">zyletinee</h1>  
+        </div>
+
+        <!-- contains bio elements -->
+        <div class="bioContainer" id="bioContainer">
+            <div class="bioContents" id="bioContents">
+                <!-- user's bio here -->
+                <h1>zyletinee's Bio</h1>
+                <h3>osu!taiko // tetr.io</h3>
+                <p>i'm a big fan of breakcore and hyperpop</p>
+                <p>i also like IA</p>
             </div>
         </div>
     </div>
 </div>
 
-<div id="bottom">
-    <!--bottom will contain all of the user's reviews-->
-    <div class="review">
-        <!--css review box?-->
+<!-- Holding all of user's reviews -->
+
+    <!-- Reviews Title -->
+    <div class="bottomContainerText">
+        <h1 style="color:#ffffff">zyletinee's Reviews</h1>
     </div>
+
+<!-- Reviews Display -->
+<div class="reviewsContainer">
+    <!-- Reviews -->
+    <ul class="reviewsList">
+        <!-- first iteration of a review box -->
+        <li id="item1">
+            <div class="reviewItem" id="reviewItem1">
+                <!-- Link leading to game page from game thumbnail -->
+                <div class="thumbnailContainer">
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                    <img class="thumbnailImage" src=https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRy79iouaTCQ_HsGk-6pzjXDZaMFioommRxvYYObi1ukuj8h1S4n0aaG_R5Jw7pn6nILs78jQ>
+                    </a>
+                </div> 
+
+                <!-- Contents of Review -->
+                <div class="reviewInfoContainer">
+                    <div class="reviewTitleContainer">
+                        <h1 class="reviewInfoText" id="reviewTitle">review title</h1>    
+                    </div>
+
+                    <div class="reviewRatingContainer">
+                        <div class="reviewRating">
+                            <h2 class="reviewInfoText" id="reviewScore" >Score: 5/5</h2>
+                        </div>
+                        
+                        <div class="reviewRecommend">
+                            <h2 class="reviewInfoText" id="recommend">Recommended: Yes</h2> 
+                        </div>
+                    </div>
+                    
+                    <div class="reviewBodyContainer">
+                        <h3 class="reviewInfoText"id="reviewDate">date</h3>
+                        <p class="reviewInfoText" id="reviewBody">Animal Crossing: City Folk[a], released as Animal Crossing: Let's Go to the City in PAL territories, is a 2008 social simulation video game developed and published by Nintendo for the Wii console and the third game in the Animal Crossing series. It is also one of the first titles that was re-released as a part of the Nintendo Selects collection in 2011.
+
+                            In City Folk, the player character lives in a rural village populated with anthropomorphic animals, taking part in various activities such as collecting and planting. Similar to other games in the Animal Crossing series the game is synced to the Wii system clock and calendar, allowing the game to be played in real-time and affecting the occurrence of in-game events based on the current time of day or season. City Folk utilizes Nintendo Wi-Fi Connection, allowing players to visit one another's villages via online play. The game is the first Wii title to be compatible with the Wii Speak accessory, which enables voice chat.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+    </ul>
+    
 </div>
+
+</body>
 </html>
