@@ -4,9 +4,10 @@
  * @param {string} body - The description of the game.
  * @param {string|null} href - The hyperlink URL for the game (if any).
  * @param {number} date - The release date of the game.
- * @param {string} dev - The developer of the game.
+ * @param {string} developer - The developer of the game.
  * @param {string} publisher - The publisher of the game.
  * @param {Array<string>} genres - A list of genres for the game.
+ * @param {Array<string>} platforms - A list of platforms for the game.
  * @param {number} id - The id of the game
  * @param {number} averagescore - The score of the game
  * @returns {HTMLElement} - A styled anchor (`<a>`) element containing the result.
@@ -57,24 +58,22 @@ const genreIDs = {
     9: "Racing",
     10: "Strategy",
     11: "Rhythm",
-    12: "Social"
+    12: "Social",
+    13: "Platformer",
+    14: "Mech",
+    15: "Sandbox"
 };
 
-
-const gameThumbnails = {
-    1: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSN5kyGXRsJTnCvfM371Ycg8u7k9viw1gW-g&s"
-};
-
-function generateStyledLI(idx, title, href, date, dev, genre, publisher, score, plat) {
+function generateStyledLI(idx, title, date, dev, genre, publisher, score, plat) {
     const newHyperlink = document.createElement("a");
-    newHyperlink.href = href || "#"; // Set the hyperlink URL or default to "#"
+    newHyperlink.href = `/game/${idx}/${title.replace(/ /g, "-")}`; 
 
     const newLI = document.createElement("li");
     newLI.classList.add("result");
 
     const img = document.createElement("img");
     img.classList.add("thumbnailsearch");
-    img.src = gameThumbnails[idx];
+    img.src = `/Assets/cvimg_${idx}.png`;
 
     const divresult = document.createElement("div");
     divresult.classList.add("resulttext");
@@ -153,15 +152,41 @@ function removePunctuation(str) {
 let filters = {
     genres: [],
     developers: [],
+    publishers: [],
     scores: [],
     platforms: [],
-    sort: "Relevance"
+    sort: "Relevance",
+    searchTerm: ""
+};
+
+function updateURLWithFilters() {
+    const url = new URL(window.location);
+    url.searchParams.set('genres', filters.genres.join(','));
+    url.searchParams.set('developers', filters.developers.join(','));
+    url.searchParams.set('publishers', filters.publishers.join(','));
+    url.searchParams.set('scores', filters.scores.join(','));
+    url.searchParams.set('platforms', filters.platforms.join(','));
+    url.searchParams.set('sort', filters.sort);
+    url.searchParams.set('search', filters.searchTerm);
+    window.history.pushState({}, '', url);
 }
+
+function loadFiltersFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    filters.genres = urlParams.get('genres') ? urlParams.get('genres').split(',') : [];
+    filters.developers = urlParams.get('developers') ? urlParams.get('developers').split(',') : [];
+    filters.publishers = urlParams.get('publishers') ? urlParams.get('publishers').split(',') : [];
+    filters.scores = urlParams.get('scores') ? urlParams.get('scores').split(',').map(Number) : [0, 5];
+    filters.platforms = urlParams.get('platforms') ? urlParams.get('platforms').split(',') : [];
+    filters.sort = urlParams.get('sort') || 'Relevance';
+    filters.searchTerm = urlParams.get('search') || '';
+}
+
 
 function selectAll(listId, filterType, button) { 
     const filterList = document.getElementById(listId);
     const checkboxes = filterList.querySelectorAll('input[type="checkbox"]');
-    
+
     // Check if any checkbox is currently selected
     const isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
@@ -183,32 +208,39 @@ function selectAll(listId, filterType, button) {
         button.textContent = "Clear All";  // Update button text to "Clear All"
     }
 
+    // Update URL with new filters
+    updateURLWithFilters();
+
     // Reload search results
     loadSearchResults();
 }
 
+
 function countFilters(results) {
     let countedGenres = {};
     let countedDevs = {};
+    let countedPubs = {};
     let countedPlats = {};
-    
+
     results.forEach(result => {
         const genres = result.genres.split(' ');
         const plats = result.platforms.split(' ');
         const dev = result.developer;
+        const pub = result.publisher;
 
         genres.forEach(genre => {
             const relevantGenre = genreIDs[genre];
             countedGenres[relevantGenre] = countedGenres[relevantGenre] + 1 || 1;
         });
         countedDevs[dev] = countedDevs[dev] + 1 || 1;
+        countedPubs[pub] = countedPubs[pub] + 1 || 1;
         plats.forEach(plat => {
             const relevantPlats = platformIDs[plat];
             countedPlats[relevantPlats] = countedPlats[relevantPlats] + 1 || 1;
         });
     });
 
-    return { countedGenres, countedDevs, countedPlats };
+    return { countedGenres, countedDevs, countedPubs, countedPlats };
 };
 
 function generateFilters(numFilters, filterType, filterID) {
@@ -244,28 +276,38 @@ function generateFilters(numFilters, filterType, filterID) {
         filterList.appendChild(listItem);
     }
 }
-
 async function loadSearchResults(event) {
+    // Load filters from URL on initial load
+    if (!event) {
+        loadFiltersFromURL();
+    }
+
     let displayresult = document.getElementById("displayresult");
-    let searchTerm = "";
-    let truncated = "";
+    let searchTerm = filters.searchTerm;
+    let truncated = removePunctuation(searchTerm.toLowerCase().trim());
+    const tabTitle = document.getElementById("tabtitle");
+    tabTitle.textContent = "Game Reviews Now!"
 
     if (event != null) {
-        const eventtype = event.target.name
+        const eventtype = event.target.name;
         if (eventtype == "search") {
             searchTerm = event.target.value;
+            filters.searchTerm = searchTerm;
             truncated = removePunctuation(searchTerm.toLowerCase().trim());
+            if (truncated != "") {
+                tabTitle.textContent = `"${searchTerm}" - Game Reviews Now!`;
+            }
         } else if (eventtype != "sort") {
             const checked = event.target.checked;
             const selectedCateg = document.getElementById(eventtype);
-            const selectButton = selectedCateg.querySelectorAll(".selectAllButton")[0]
+            const selectButton = selectedCateg.querySelectorAll(".selectAllButton")[0];
             if (checked) {
                 filters[eventtype].push(event.target.id);
-                selectButton.textContent = "Clear All"
+                selectButton.textContent = "Clear All";
             } else {
                 filters[eventtype] = filters[eventtype].filter(e => e !== event.target.id);
                 if (filters[eventtype].length === 0) {
-                    selectButton.textContent = "Select All"
+                    selectButton.textContent = "Select All";
                 }
             }
         } else {
@@ -274,32 +316,36 @@ async function loadSearchResults(event) {
             document.getElementById("sortorder").innerHTML = sortby + " ▾";
         }
 
+        // Update URL with new filters
+        updateURLWithFilters();
     }
 
-    displayresult.style.color = truncated ? "rgb(78, 78, 78)" : "black";
+    displayresult.style.color = truncated ? "lightgreen" : "white";
     displayresult.textContent = truncated ? `Showing results for: ${searchTerm}` : "Popular Games:";
 
     let keywords = truncated.split(" ");
 
     try {
-        const response = await fetch('/api/results');
+        const response = await fetch('/api/gameresults');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const results = await response.json();
 
-        let matchingResults = results.filter(result => {
-            const nameMatch = result.name.toLowerCase().includes(truncated) || 
-                              keywords.some(keyword => result.name.toLowerCase().includes(keyword));
-
+        let keywordRegex = new RegExp(keywords.join('|'), 'i');
+        let namesMatch = results.filter(result => {
+            const nameMatch = keywordRegex.test(result.name);
+            return nameMatch;
+        });
+        let matchingResults = namesMatch.filter(result => {
             let gens = [];
             result.genres.split(" ").forEach(genre => {
-                const translated = genreIDs[genre]
+                const translated = genreIDs[genre];
                 gens.push(translated);
             });
-            const genreMatch = filters.genres.length === 0 ||
-                               filters.genres.some(genre => gens.includes(genre));
+            const genreMatch = filters.genres.length === 0 || filters.genres.some(genre => gens.includes(genre));
 
-            const developerMatch = filters.developers.length === 0 || 
-                                   filters.developers.includes(result.developer);
+            const developerMatch = filters.developers.length === 0 || filters.developers.includes(result.developer);
+
+            const publisherMatch = filters.publishers.length === 0 || filters.publishers.includes(result.publisher);
 
             let plats = [];
             result.platforms.split(" ").forEach(plat => {
@@ -307,29 +353,37 @@ async function loadSearchResults(event) {
                 plats.push(translated);
             });
 
-            const platformMatch = filters.platforms.length === 0 || 
-                                  filters.platforms.some(platform => plats.includes(platform));
+            const platformMatch = filters.platforms.length === 0 || filters.platforms.some(platform => plats.includes(platform));
 
             const scoreMatch = result.averagescore >= filters.scores[0] && result.averagescore <= filters.scores[1];
 
-            return nameMatch && genreMatch && developerMatch && platformMatch && scoreMatch;
+            return genreMatch && developerMatch && publisherMatch && platformMatch && scoreMatch;
         });
-
-        const { countedGenres, countedDevs, countedPlats } = countFilters(results);
+        
+        const { countedGenres, countedDevs, countedPubs, countedPlats } = countFilters(namesMatch);
         generateFilters(countedGenres, "genres", "genreList");
         generateFilters(countedDevs, "developers", "devList");
         generateFilters(countedPlats, "platforms", "platList");
+        generateFilters(countedPubs, "publishers", "pubList");
 
         const list = document.getElementById("containerlist");
         list.innerHTML = "";
+        const existingNoResults = document.getElementById("noresult");
+        if (existingNoResults) {
+            existingNoResults.remove();
+        };
+
         if (matchingResults.length === 0) {
-            const noResults = document.createElement("li");
-            noResults.id = "noresult";
-            noResults.textContent = "No matching results found.";
-            list.appendChild(noResults);
+            const noResultsDiv = document.createElement("div");
+            const noResults = document.createElement("h1");
+            noResultsDiv.id = "noresult";
+            noResults.textContent = "No matching results found. Please try searching for what you need or apply less filters.";
+            noResultsDiv.appendChild(noResults);
+            const content = document.querySelector(".content");
+            content.appendChild(noResultsDiv);
 
         } else {
-            const selectedSort = filters.sort
+            const selectedSort = filters.sort;
         
             matchingResults.sort((a, b) => {
                 if (selectedSort === "Relevance") {
@@ -355,7 +409,7 @@ async function loadSearchResults(event) {
 
             matchingResults.forEach(result => {
                 const newItem = generateStyledLI(
-                    1, result.name, null, 
+                    result.id, result.name, 
                     result["release date"], result.developer, 
                     result.genres, result.publisher, result.averagescore, result.platforms
                 );
@@ -363,14 +417,13 @@ async function loadSearchResults(event) {
             });
         };
         
-
         const slidernum = document.getElementById("slidernum");
         slidernum.textContent = `${matchingResults.length} Results`;
 
     } catch (error) {
         console.error("Failed to load search results:", error);
     }
-};
+}
 
 const minSlider = document.getElementById("minSlider");
 const maxSlider = document.getElementById("maxSlider");
@@ -379,17 +432,29 @@ const minValue = document.getElementById("minvalue");
 const maxValue = document.getElementById("maxvalue");
 
 // Update the range fill position and width
-function updateRange() {
-    const min = parseFloat(minSlider.value);
-    const max = parseFloat(maxSlider.value);
+function updateRange(initial=false) {
+    loadFiltersFromURL()
+    let min = filters.scores[0] * 10;
+    let max = filters.scores[1] * 10;
+    if (initial == false || min > max) {
+        min = parseFloat(minSlider.value);
+        max = parseFloat(maxSlider.value);
+    } else {
+        minSlider.value = min
+        maxSlider.value = max
+    };
+    
     const minPercent = (min / minSlider.max) * 100;
     const maxPercent = (max / maxSlider.max) * 100;
 
     rangeFill.style.left = `${minPercent}%`;
     rangeFill.style.width = `${maxPercent - minPercent}%`;
-    minValue.value = min/10;
-    maxValue.value = max/10;
-    filters.scores = [minValue.value, maxValue.value]; 
+    
+    minValue.value = (min / 10).toFixed(1);
+    maxValue.value = (max / 10).toFixed(1);
+    filters.scores = [parseFloat(minValue.value), parseFloat(maxValue.value)];
+    updateURLWithFilters();
+        
     loadSearchResults(null);
 }
 
@@ -433,9 +498,14 @@ maxValue.addEventListener("input", () => {
     updateRange();
 });
 
+updateRange(true);
 
-// Initialize the range fill
-updateRange();
-
-// Load initial results when the DOM content is fully loaded
-document.addEventListener("DOMContentLoaded", loadSearchResults(null));
+Object.entries(filters).forEach(([k, v]) => {
+    if (typeof(v) !== "string" && v.length !== 0) {
+        const relevant = document.getElementById(k);
+        if (relevant) {
+            const sAllBtn = relevant.querySelector(".selectAllButton");
+            sAllBtn.textContent = "Clear All";
+        }
+    }
+});
