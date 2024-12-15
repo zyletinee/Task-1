@@ -1,3 +1,11 @@
+
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
+const app = express();
+const PORT = 3000;
+let gamesDict = {};
+
 // Serve static files from the "Public" directory
 app.use(express.static(path.join(__dirname, 'Public')));
 
@@ -8,6 +16,13 @@ app.use(express.json());
 app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'Home.html'));
 	@@ -25,17 +22,7 @@ app.get('/search', (req, res) => {
+
+});
+
+// Serve the search page
+app.get('/search', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Public', 'search.html'));
+});
 
 // Serve the login page
 app.get('/login', (req, res) => {
@@ -25,7 +40,22 @@ app.get('/settings', (req, res) => {
 });
 
 // Handle game page requests
-	@@ -59,59 +46,90 @@ app.get('/game/:gameID/:gameName?', (req, res) => {
+app.get('/game/:gameID/:gameName?', (req, res) => {
+    const gameID = req.params.gameID;
+    const game = gamesDict[gameID];
+    if (game) {
+        // Redirect to the correct game URL if gameName is missing or incorrect
+        const correctGameName = game.name.replace(/ /g, "-");
+        if (!req.params.gameName || req.params.gameName.toLowerCase() !== correctGameName.toLowerCase()) {
+            res.redirect(`/game/${gameID}/${correctGameName}`);
+        } else {
+            res.sendFile(path.join(__dirname, 'Public', 'GamePage.html'));
+        }
+    } else {
+        res.redirect('/search');
+    }
+});
+ 
 // Database path
 const dbPath = path.join(__dirname, 'Databases', 'grn.db');
 
