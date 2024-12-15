@@ -7,48 +7,46 @@
 
 <body>
     <!-- nav bar -->
-    <div class="navbar" autofocus>	
-		<a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
-		<a href="/Login/" class="navbar_buttons">Login</a></li>
-		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
+<div class="navbar" autofocus>	
+    <a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+    <a href="/Login/" class="navbar_buttons">Login</a></li>
+    <a href="/Signup/" class="navbar_buttons">Signup</a></li>
+  
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
-	</div>
+</div>
 
-    <!-- Page Divs -->
+<!-- Page Divs -->
 
-    <!-- Container holding all content -->
-    <div class="settingsContentContainer">
-        <!-- Page Title -->
-        <div class="settingsHeaderContainer">
-            <h1 class="settingsHeaderText">Settings</h1>
-        </div>
-
-        <!-- Option Container -->
-         <div class="settingsOptionsContainer">
-            <div class="profileOptionsContainer">
-                <h1 class="settingsHeaderText">Profile Options</h1>
-                <div class="profileOptionsItem" id="pfp">
-                    Pfp Button
-                </div>
-                <div class="profileOptionsItem" id="bio">
-                    <form> <!-- Add "action" attribute later -->
-                        <input type="text" id="bio" name="userBio" size="500"><br><br>
-                        <input type="submit" value="Save!">
-                      </form>
-                      
-
-                </div>
-            </div>
-            <div class="privacyOptionsContainer">
-                <h1 class="settingsHeaderText">Privacy Options</h1>
-                <div class="privacyOptionsItem">
-                    Change Password
-                </div>
-            </div>
-         </div>
+<!-- Container holding all content -->
+<div class="settingsContentContainer">
+    <!-- Page Title -->
+    <div class="settingsHeaderContainer">
+        <h1 class="settingsHeaderText">Settings</h1>
     </div>
-</body>
 
+    <!-- Option Container -->
+    <div class="settingsOptionsContainer">
+        <div class="profileOptionsContainer">
+            <h1 class="settingsHeaderText">Profile Options</h1>
+            <div class="profileOptionsItem" id="pfp">
+                Pfp Button
+            </div>
+            <div class="profileOptionsItem" id="bio">
+                <form> <!-- Add "action" attribute later -->
+                    <input type="text" id="bio" name="userBio" size="500"><br><br>
+                    <input type="submit" value="Save!">
+                </form>
+            </div>
+        </div>
+        <div class="privacyOptionsContainer">
+            <h1 class="settingsHeaderText">Privacy Options</h1>
+            <div class="privacyOptionsItem">
+                Change Password
+            </div>
+        </div>
+     </div>
+</div>
+</body>
 </html>
