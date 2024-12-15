@@ -2,7 +2,7 @@
 <html>
 <header>
     <title>Username - Settings</title>
-    <link rel="stylesheet" href="style_profile_page.css">
+    <link rel="stylesheet" href="webstyle.css">
 </header>
 
 <body>
@@ -33,8 +33,12 @@
                     Pfp Button
                 </div>
                 <div class="profileOptionsItem" id="bio">
-                    Bio Editor
-                    <!--Use a form here-->
+                    <form> <!-- Add "action" attribute later -->
+                        <input type="text" id="bio" name="userBio" size="500"><br><br>
+                        <input type="submit" value="Save!">
+                      </form>
+                      
+
                 </div>
             </div>
             <div class="privacyOptionsContainer">
