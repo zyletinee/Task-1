@@ -1,3 +1,4 @@
+
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
@@ -15,6 +16,7 @@ app.use(express.json());
 app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'Home.html'));
 	@@ -25,17 +22,7 @@ app.get('/search', (req, res) => {
+
 });
 
 // Serve the search page
@@ -53,6 +55,7 @@ app.get('/game/:gameID/:gameName?', (req, res) => {
         res.redirect('/search');
     }
 });
+ 
 // Database path
 const dbPath = path.join(__dirname, 'Databases', 'grn.db');
 
