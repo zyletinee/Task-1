@@ -3,7 +3,7 @@ Storyboard link available [here](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6
 
 # Running the website
 
-1. Download `node.js` through [this link](https://nodejs.org/en/download/package-manager).
+1. Download the node.js installer through [this link](https://nodejs.org/en/download/prebuilt-installer) and run the file.
 2. Install SQLite using the command line using `npm install sqlite3`.
 3. Similarly, install the 'require' module using the command `npm install require` and the 'express' module using `npm install express`.
 4. Run `node [full filepath]\server.js`.
