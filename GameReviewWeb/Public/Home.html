@@ -9,11 +9,11 @@
 </head>
 
 <body>
-	<!-- navbar (signed out) -->
-	<div class="navbar" autofocus>	
-		<a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
-		<a href="/Login/" class="navbar_buttons">Login</a></li>
-		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
+<!-- navbar (signed out) -->
+	<div class="navbar">	
+		<a href="Home.html"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="Login.html" class="navbar_buttons">Login</a></li>
+		<a href="Signup.html" class="navbar_buttons">Signup</a></li>
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
@@ -41,11 +41,11 @@
 	<div class="main">
 	<!-- image slider -->
 		<div class="slider">
-			<img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/>
+			<a id="slider-link" href="#"><img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/></a>
 			<img id="img-2" src="Assets\specter_built_different.jpg" alt="Specter"/>
 			<img id="img-3" src="Assets\rui_explodes_your_balls.png" alt="Rui"/>
 		</div>
-		<div class="navigation-button">
+		<div class="slider_button">
 			<span class="dot active" onclick="changeSlide(0)"></span>
 			<span class="dot" onclick="changeSlide(1)"></span>
 			<span class="dot" onclick="changeSlide(2)"></span>
@@ -54,9 +54,16 @@
 		<script>
 			var imgs = document.querySelectorAll('.slider img');
 			var dots = document.querySelectorAll('.dot');
+			var link = document.getElementById('slider-link');
 			var currentImg = 0; // index of the first image 
 			const interval = 5000; // duration(speed) of the slide
 			var timer = setInterval(changeSlide, interval);	
+			
+			const links = [
+				"Home.html", // Link for the first image
+				"search.html", // Link for the second image
+				"GamePage.html"  // Link for the third image
+			];
 			
 			function changeSlide(n) {
 				for (var i = 0; i < imgs.length; i++) { // reset
@@ -72,8 +79,9 @@
 					currentImg = n;
 }
 
-			  imgs[currentImg].style.opacity = 1;
-			  dots[currentImg].className += ' active';
+				imgs[currentImg].style.opacity = 1;
+				dots[currentImg].className += ' active';
+				link.href = links[currentImg];
 			}
 			// Get the search input field
 			var searchInput = document.getElementById('search');
@@ -102,6 +110,11 @@
 			<div class="homeButtons">
 				<a href="Search.html">
 					Review a Game
+				</a>
+			</div>
+			<div class="homeButtons">
+				<a href="Home.html">
+					Suggest a Game
 				</a>
 			</div>
 		</div>
