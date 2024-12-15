@@ -3,19 +3,37 @@
 	<link rel="stylesheet" href="webstyle.css">
 <header>
 	<title>
-	Task 1 Website
+	Game Reviews Now!
 	</title>
 </header>
 
 <body>
 <!-- navbar (signed out) -->
 	<div class="navbar">	
-		<a href="Home.html"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
-		<a href="Login.html" class="navbar_buttons">Login</a></li>
-		<a href="Signup.html" class="navbar_buttons">Signup</a></li>
+		<a href="/Home"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="/Login" class="navbar_buttons">Login</a></li>
+		<a href="/Signup" class="navbar_buttons">Signup</a></li>
 		<div class="search">
-			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
+			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off" required>
 		</div> 
+		<script>
+			var searchInput = document.getElementById('search');
+
+            // Add event listener for keyup event
+            searchInput.addEventListener('keyup', function(event) {
+                // Check if the Enter key is pressed
+                if (event.key === 'Enter') {
+                    // Get the search query
+                    var query = searchInput.value.trim();
+
+                    // Check if the query is not empty
+                    if (query !== '') {
+                        // Redirect to the search page with the query parameter
+                        window.location.href = '/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=' + encodeURIComponent(query);
+                    }
+                }
+            });
+		</script>
 	</div>
 	
 <!-- navbar (signed in(figure out how to make it detect))
@@ -50,9 +68,9 @@
 			var timer = setInterval(changeSlide, interval);	
 			
 			const links = [
-				"Home.html", 
-				"search.html", 
-				"GamePage.html"  
+				"/Home", 
+				"/search", 
+				"/GamePage"  
 			];
 			
 			function changeSlide(n) {
@@ -73,50 +91,32 @@
 				dots[currentImg].className += ' active';
 				link.href = links[currentImg];
 			}
-			// Get the search input field
-			var searchInput = document.getElementById('search');
-
-			// Add event listener for keyup event
-			searchInput.addEventListener('keyup', function(event) {
-				// Check if the Enter key is pressed
-				if (event.key === 'Enter') {
-					// Get the search query
-					var query = searchInput.value.trim();
-
-					// Check if the query is not empty
-					if (query !== '') {
-						// Redirect to the search page with the query parameter
-						window.location.href = '/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=' + encodeURIComponent(query);
-					}
-				}
-			});
 		</script>
 	<!-- image slider end -->	
+	<div style="height: 50px;"></div>
 		<div>
-			<p style="text-align: center; font-size: 48px;">
-				review games now or else
-			</p>
-			<a href="Search.html">
+			<a href="/Search" class="homeButtons">
 				<div class="homeButtons">
 					<p>
 						Review a Game
 					</p>
 				</div>
 			</a>
-			<a href="Home.html">
-				<div class="homeButtons">
+			<a href="/Home" class="homeButtons">
+				<div>
 					<p>
 						Suggest a Game
 					</p>
 				</div>
 			</a>
 		</div>
-	</div>
 	<div style="height: 100px;"></div>
+	</div>
 	<footer>
 		<a href="https://www.youtube.com/watch?v=EtgNPaI8S60">About Us</a><br><br>
 		<a href="https://www.youtube.com/watch?v=2dbR2JZmlWo">Contact Us</a>
 	</footer>
+</body>
 </html>
 
  
