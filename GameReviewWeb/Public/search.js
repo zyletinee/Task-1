@@ -122,7 +122,12 @@ function generateStyledLI(idx, title, date, dev, genre, publisher, score, plat) 
     const dateP = document.createElement("p");
     dateP.textContent = styleDate(date.toString());
     const rateP = document.createElement("p");
-    rateP.textContent = `Rating: ${score}/5`;
+    if (score !== null) {
+        rateP.textContent = `Rating: ${score}/5`;
+    } else {
+        rateP.textContent = "No Reviews";
+    }
+    
 
     divmisc.appendChild(dateP);
     divmisc.appendChild(rateP);
@@ -329,11 +334,12 @@ async function loadSearchResults(event) {
         const response = await fetch('/api/gameresults');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const results = await response.json();
-
         let keywordRegex = new RegExp(keywords.join('|'), 'i');
-        let matchingResults = results.filter(result => {
+        let namesMatch = results.filter(result => {
             const nameMatch = keywordRegex.test(result.name);
-
+            return nameMatch;
+        });
+        let matchingResults = namesMatch.filter(result => {
             let gens = [];
             result.genres.split(" ").forEach(genre => {
                 const translated = genreIDs[genre];
@@ -355,10 +361,10 @@ async function loadSearchResults(event) {
 
             const scoreMatch = result.averagescore >= filters.scores[0] && result.averagescore <= filters.scores[1];
 
-            return nameMatch && genreMatch && developerMatch && publisherMatch && platformMatch && scoreMatch;
+            return genreMatch && developerMatch && publisherMatch && platformMatch && scoreMatch;
         });
-
-        const { countedGenres, countedDevs, countedPubs, countedPlats } = countFilters(results);
+        
+        const { countedGenres, countedDevs, countedPubs, countedPlats } = countFilters(namesMatch);
         generateFilters(countedGenres, "genres", "genreList");
         generateFilters(countedDevs, "developers", "devList");
         generateFilters(countedPlats, "platforms", "platList");
@@ -366,11 +372,19 @@ async function loadSearchResults(event) {
 
         const list = document.getElementById("containerlist");
         list.innerHTML = "";
+        const existingNoResults = document.getElementById("noresult");
+        if (existingNoResults) {
+            existingNoResults.remove();
+        };
+
         if (matchingResults.length === 0) {
-            const noResults = document.createElement("li");
-            noResults.id = "noresult";
-            noResults.textContent = "No matching results found.";
-            list.appendChild(noResults);
+            const noResultsDiv = document.createElement("div");
+            const noResults = document.createElement("h1");
+            noResultsDiv.id = "noresult";
+            noResults.textContent = "No matching results found. Please try searching for what you need or apply less filters.";
+            noResultsDiv.appendChild(noResults);
+            const content = document.querySelector(".content");
+            content.appendChild(noResultsDiv);
 
         } else {
             const selectedSort = filters.sort;

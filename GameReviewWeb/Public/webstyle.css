@@ -6,6 +6,7 @@ html {
 
 body {
     background-color: rgb(255,255,255);
+    font-family: verdana;
     color: black;
     font-size: 100%;
     background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
@@ -18,19 +19,19 @@ body {
 	background-color: rgb(53,134,0);
 	position: fixed;
 	width: 100%;
-	height: 50px;
+	height: 60px;
 	overflow: hidden;
 	margin: 0px -8px;
+	margin-bottom: 60px;
 	top: 0;
 	z-index: 2;
-    box-shadow: 0px 5px 15px black;
 }
 
 .navbar_buttons {
 	display: block;
 	color: white;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 20px 16px;
 	margin-right: 20px;
 	text-decoration: none;
 	float: right;
@@ -47,18 +48,105 @@ body {
 	margin-left: 20px;
 }
 
+footer {
+	background-color: #286400;
+	height: 120px;
+	margin: -10px -8px;
+	padding-top: 35px;
+}
+
+footer a {
+	color: #FFFFFF;
+	margin-left: 2%;
+	margin-bottom: 15px;
+}
+
 .search {
-	float: left;
 	margin-top: 15px;
-	margin-left: 15px;
+}
+
+.search input {
+	height: 30px;
+	width: 250px;
+	display: block;
+	margin: auto;
+}
+
+.login_box {
+	background-color: #D9D9D9;
+	width: 30%;
+	margin-left:auto;
+	margin-right:auto;
+	padding-top: 10px;
+	border-radius: 10px;
+	filter: drop-shadow(0 0 0.5rem black);
+}
+
+.credentials input {
+	display: block;
+	margin-left:auto;
+	margin-right:auto;
+	width: 90%;
+	height: 30px;
+	margin-top: 10px;
 }
 
 .main {
-	margin-top: 65px;
-	margin-top: 50px;
+	margin-top: 60px;
 }
 
-.homeButtons a {
+.slider {
+	width: 100%;
+	height: 510px;
+	position: relative;
+}
+
+.slider img {
+	width: 101%;
+	height: 500px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin: 0 -8px;
+	margin-bottom: -10px;
+}
+
+.slider img:first-child {
+	z-index: 1;
+}
+
+.slider img:nth-child(2) {
+	z-index: 0;
+}
+
+.slider_button {
+	text-align: center;
+	position: relative;
+	background-color: #D9D9D9;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin: -10px -8px;
+	
+}
+
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	margin-top: 1px;
+	background-color: #286400;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.active, .dot:hover {
+	background-color: #63C132;
+}
+
+.homeButtons {
 	background-color: #9EE37D;
 	display: block;
 	color: white;
@@ -67,14 +155,20 @@ body {
 	width: 300px;
 	height: 75px;
 	line-height: 75px;
-	margin-left:auto;
-	margin-right:auto;
+	margin: auto;
+	margin-bottom: 20px;
+	filter: drop-shadow(0 0 0.5rem grey);
+}
+
+.homeButtons a {
+	color: white;
 }
 
 .content {
     margin: auto;
-    width: 1800px;
+    max-width: 55%;
     height: 90%;
+    min-width: 1200px;
 }
 
 .identifiers {
@@ -90,7 +184,7 @@ body {
 
 .titletext {
     color: 286400;
-    font-size: 45px;
+    font-size: 45;
 }
 
 .container {
@@ -109,7 +203,7 @@ body {
     width: 97%;
     height: automatic;
     overflow: hidden;
-    background-color: D9D9D9;
+    background-color: #D9D9D9;
     margin-bottom: 20px;
     border-radius: 25px;
     flex-direction: row;
@@ -125,7 +219,7 @@ body {
     margin-left: 20px;
     overflow-wrap: anywhere;
     width: 65%;
-    gap: 0; /* No spacing between grid items */
+    gap: 0; 
 }
 
 .resulttext > * {
@@ -135,22 +229,10 @@ body {
 
 
 #noresult {
-    position: absolute;
-    max-width: 70%;
-    font-size: 20;
+    list-style-type: none;
+    font-size: 40;
+    font-weight: 20;
     text-align: center;
-    color: red;
-    margin-left: auto;
-    margin-top: -30%;
-    background-color: white;
-    border-radius: 10px;
-    border: 10px solid black;
-    padding: 20px;
-}
-
-#noresult h1 {
-    width: 80%;
-    margin: auto;
 }
 
 a {
@@ -165,7 +247,7 @@ a {
 
 .platimgborder {
     background-color: rgba(167, 192, 194, 0.764);
-    padding: 0px 5px;
+    padding: 5px;
     margin-right: 10px;
     max-width: 250px;
     max-height: 60px;
@@ -202,6 +284,7 @@ a {
     width: 225px;
     height: 300px;
     border-radius: 20px;
+    flex-shrink: 0;
 }
 
 .filtercontainer {
@@ -254,9 +337,6 @@ a {
     display: block;
     padding: 5px 7px;
     background-color: white;
-    max-height: 250px;
-    overflow-y: scroll;
-    scrollbar-width: thin;
 }
 
 .filtercontainer .filters ul li label {
@@ -397,11 +477,12 @@ a {
 }
 
 .gameCoverArtItem {
-    width: 500px;
+    width: 400px;
     max-height: 700px;
     overflow-x: hidden;
     margin-right:0;
     box-shadow: 0px 0px 20px 5px #414141;
+    flex-shrink: 0;
 }
 
 .gameInfoContainer {
@@ -459,7 +540,7 @@ a {
 }
 
 .reviewFormContainer {
-    background-color: #9EE37D;
+    background-color: #D9D9D9;
     width: 100%;
     margin: auto;
     margin-top: 50px;
@@ -475,7 +556,7 @@ a {
     width: 100%;
     height: 200px;
     resize: none;
-    background-color: #dfffd1;
+    background-color: white;
     color: black;
     font-size: 20px;
 }
@@ -502,7 +583,7 @@ a {
     height: 30px;
     padding: 5px;
     font-size: 20px;
-    background-color: #dfffd1;
+    background-color: white;
     color: black;
 }
 
@@ -530,12 +611,6 @@ a {
     cursor: pointer;
 }
 
-input[type="radio"]:checked + label {
-    background-color: #4CAF50;
-    color: white;
-}
-
-
 #recommendContainer {
     display: grid;
 }
@@ -559,48 +634,228 @@ input[type="radio"]:checked + label {
     display: grid;
 }
 
-.gameBottomContainer {
+/* profile css */
+
+.topContainer {
+	margin-top: 90px;
+	display: flex;
 	width: 100%;
+	height: fit-content;
+	margin-bottom: 0;
+    justify-content: space-between;
+    color: #0b6000;
+
 }
 
-.gameBottomContainer {
+.avatarItem {
+    width: 400px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right:0;
+    flex-shrink: 0;
+    margin: auto;
+}	
+
+.pfp {
+    display: flex;
+    margin: auto;
+    border-radius: 50%;
+	width: 300px;
+	height: 300px;
+    background-color: white;
+}
+
+#reviewUsernameText {
+    text-align: center;
+    font-size: 30px;
+}
+
+/* Top right container and items */
+.infoContainer {
+	display: flex;
+	width: 76%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	margin-top: 50px;
+	flex-direction: column;
+	gap: 25px;
+}
+
+#usernameContainer {
+	background-color: #9EE37D;
+	border-radius: 20px;
+}
+
+#usernameText {
+	padding-left: 30px;
+}
+
+.bioContainer {
+	background-color:#9EE37D;
+	border-radius:20px;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 2%;
+}
+
+.biocontainer h1 {
+    padding-left: 30px;
+}
+
+.bioContents {
+	padding: 0px 0px 30px 30px;
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.reviewsContainer {
+
 	display: flex;
 	height: auto;
-	width: 96%;
-	margin-left: 2%;
 	justify-content: flex-start;
 	flex-flow: column wrap;
 }
 
-.gameReviewsList {
+.reviewsList {
 	list-style-type: none;
 	margin-left: 0;
 	padding-left: 0;
 }
 
-.gameReviewItem {
+.reviewItem {
 	list-style-type: none;
-	display: flex;
-	width: 100%;
-	height: auto;
-	background-color: #9EE37D;
-	margin-bottom: 20px;
-	border-radius: 25px;
-	flex-direction: row;
-	justify-content: flex-start;
-	color: black;
+    padding: 10px;
+    display: flex;
+    width: 97%;
+    height: automatic;
+    overflow: hidden;
+    background-color: #9EE37D;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.gameReviewInfoContainer {
-	background-color: #ffffff;
+.thumbnailContainer {
+	width: 300px;
 	border-radius: 5px;
+    padding: 30px;
+    flex-shrink: 0;
+}
+
+.thumbnailImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.reviewInfoContainer {
+	display: grid;
+    overflow-wrap: anywhere;
+    width: 100%;
+}
+
+.reviewInfoText {
+	margin-left: 25px;
+	overflow: wrap;
+    padding-right: 20px;
+}
+
+.reviewTitleContainer {
+    width: fit-content;
+}
+
+.reviewRatingContainer {
+    margin-top: 20px;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 25px;
+}
+
+.reviewRating {
+    background-color: #dfffd1;
+    border-radius: 5px;
+    width: fit-content;
+    padding-right: 40px;
+}
+
+.reviewRecommend {
+    background-color: #dfffd1;
+    border-radius: 5px;
+    width: fit-content;
+    padding-right: 40px;
+}
+
+.reviewBodyContainer {
+    background-color: #dfffd1;
+    border-radius: 5px;
+    width: 100%;
+    height: 270px;
+}
+
+/* settings css */
+
+.settingsContentContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	margin-left: 0.9%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.settingsHeaderContainer {
+	background-color: #D9D9D9;
 	margin: 2%;
-	margin-left: 0;
-	width:  98%;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 0;
+}
+
+.settingsHeaderText {
+	margin-left: 2%
+}
+
+.settingsOptionsContainer {
+	background-color: #D9D9D9;
+	border-radius: 0 0 10px 10px;
+	margin: 2%;
+	margin-top: 0;
+}
+
+.profileOptionsContainer {
+	width: auto;
 	height: auto;
 }
 
-.gameReviewInfoText {
-	margin-left: 2%;
-	overflow: wrap;
+.profileOptionsItem {
+	background-color:aquamarine;
+	margin-left: 4%;
+	margin-bottom: 2%;
+}
+
+.bioEditor {
+	width: 96%;
+	padding: 10px;
+	font-size: 1em;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	size: 96%
+}
+
+.privacyOptionsContainer {
+	width: auto;
+	height: auto;
+}
+
+.privacyOptionsItem {
+	background-color:lightgoldenrodyellow;
+	margin-left: 4%;
+	margin-bottom: 2%;
 }
