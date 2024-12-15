@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/webstyle.css">
-    <link rel="manifest" href="/manifest.json">
-    <title>Home - Game Reviews Now!</title>
-</head>
+<html>
+	<link rel="stylesheet" href="webstyle.css">
+<header>
+	<title>
+	Task 1 Website
+	</title>
+</header>
 
 <body>
 <!-- navbar (signed out) -->
@@ -17,15 +16,6 @@
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
-			<p style="text-align: center; font-size: 48px;">
-				review games now or else
-			</p>
-			<div class="homeButtons">
-				<a href="Search.html">
-					Review a Game
-				</a>
-			</div>
-		</div>
 	</div>
 	
 <!-- navbar (signed in(figure out how to make it detect))
@@ -60,9 +50,9 @@
 			var timer = setInterval(changeSlide, interval);	
 			
 			const links = [
-				"Home.html", // Link for the first image
-				"search.html", // Link for the second image
-				"GamePage.html"  // Link for the third image
+				"Home.html", 
+				"search.html", 
+				"GamePage.html"  
 			];
 			
 			function changeSlide(n) {
@@ -83,43 +73,33 @@
 				dots[currentImg].className += ' active';
 				link.href = links[currentImg];
 			}
-			// Get the search input field
-			var searchInput = document.getElementById('search');
-
-			// Add event listener for keyup event
-			searchInput.addEventListener('keyup', function(event) {
-				// Check if the Enter key is pressed
-				if (event.key === 'Enter') {
-					// Get the search query
-					var query = searchInput.value.trim();
-
-					// Check if the query is not empty
-					if (query !== '') {
-						// Redirect to the search page with the query parameter
-						window.location.href = '/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=' + encodeURIComponent(query);
-					}
-				}
-			});
-
 		</script>
-		
+	<!-- image slider end -->	
 		<div>
 			<p style="text-align: center; font-size: 48px;">
 				review games now or else
 			</p>
-			<div class="homeButtons">
-				<a href="Search.html">
-					Review a Game
-				</a>
-			</div>
-			<div class="homeButtons">
-				<a href="Home.html">
-					Suggest a Game
-				</a>
-			</div>
+			<a href="Search.html">
+				<div class="homeButtons">
+					<p>
+						Review a Game
+					</p>
+				</div>
+			</a>
+			<a href="Home.html">
+				<div class="homeButtons">
+					<p>
+						Suggest a Game
+					</p>
+				</div>
+			</a>
 		</div>
 	</div>
-</body>
+	<div style="height: 100px;"></div>
+	<footer>
+		<a href="https://www.youtube.com/watch?v=EtgNPaI8S60">About Us</a><br><br>
+		<a href="https://www.youtube.com/watch?v=2dbR2JZmlWo">Contact Us</a>
+	</footer>
 </html>
 
  
