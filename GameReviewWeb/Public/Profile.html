@@ -3,7 +3,7 @@
 
 <head>
     <title>Username - Website Name</title>
-    <link rel="stylesheet" href="style_profile_page.css">
+    <link rel="stylesheet" href="webstyle.css">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
 <div class="topContainer" id="top">
     <div class="avatarItem" id="avatar">
         <!--top left will contain pfp image ONLY-->
-        <img class="pfp" id="userPfp" src="vflower fanart pfp icon.jpeg">
+        <img class="pfp" id="userPfp" src="Assets/vflower_fanart_pfp_icon.jpeg">
     </div>
     
     <div class="infoContainer" id="infoContainer" >
@@ -31,18 +31,7 @@
         <div id="usernameContainer">
             <h1 id="usernameText">zyletinee</h1>  
         </div>
-        <!-- contains platforms -->
-        <div class="platformsContainer" id="platforms">
-            <!--contains each preferred platform-->
-            <div class="platformsItemContainer">
-                <img class="platformsItem" id="platform1" src="625px-Apple_logo_black.png">
-            </div>
 
-            <div class="platformsItemContainer">
-                <img class="platformsItem" id="platform2" src="625px-Apple_logo_black.png">
-            </div>
-
-        </div>
         <!-- contains bio elements -->
         <div class="bioContainer" id="bioContainer">
             <div class="bioContents" id="bioContents">
@@ -60,7 +49,7 @@
 
     <!-- Reviews Title -->
     <div class="bottomContainerText">
-        <h1>zyletinee's Reviews</h1>
+        <h1 style="color:#ffffff">zyletinee's Reviews</h1>
     </div>
 
 <!-- Reviews Display -->
@@ -69,7 +58,7 @@
     <ul class="reviewsList">
         <!-- first iteration of a review box -->
         <li id="item1">
-            <div class="reviewItem" id="item1">
+            <div class="reviewItem" id="reviewItem1">
                 <!-- Link leading to game page from game thumbnail -->
                 <div class="thumbnailContainer">
                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
@@ -79,9 +68,27 @@
 
                 <!-- Contents of Review -->
                 <div class="reviewInfoContainer">
-                    <h1 class="reviewInfoText" id="reviewTitle">review title</h1>
-                    <h3 class="reviewInfoText"id="reviewDate">date</h3>
-                    <p class="reviewInfoText" id="reviewBody">review text</p>
+                    <div class="reviewTitleContainer">
+                        <h1 class="reviewInfoText" id="reviewTitle">review title</h1>    
+                    </div>
+
+                    <div class="reviewRatingContainer">
+                        <div class="reviewRating">
+                            <h2 class="reviewInfoText" id="reviewScore" >Score: 5/5</h2>
+                        </div>
+                        
+                        <div class="reviewRecommend">
+                            <h2 class="reviewInfoText" id="recommend">Recommended: Yes</h2> 
+                        </div>
+                    </div>
+                    
+                    <div class="reviewBodyContainer">
+                        <h3 class="reviewInfoText"id="reviewDate">date</h3>
+                        <p class="reviewInfoText" id="reviewBody">Animal Crossing: City Folk[a], released as Animal Crossing: Let's Go to the City in PAL territories, is a 2008 social simulation video game developed and published by Nintendo for the Wii console and the third game in the Animal Crossing series. It is also one of the first titles that was re-released as a part of the Nintendo Selects collection in 2011.
+
+                            In City Folk, the player character lives in a rural village populated with anthropomorphic animals, taking part in various activities such as collecting and planting. Similar to other games in the Animal Crossing series the game is synced to the Wii system clock and calendar, allowing the game to be played in real-time and affecting the occurrence of in-game events based on the current time of day or season. City Folk utilizes Nintendo Wi-Fi Connection, allowing players to visit one another's villages via online play. The game is the first Wii title to be compatible with the Wii Speak accessory, which enables voice chat.</p>
+                    </div>
+                    
                 </div>
             </div>
         </li>
