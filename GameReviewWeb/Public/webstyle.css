@@ -1,20 +1,19 @@
 html {
     scrollbar-width: none;
     font-family: Arial, Helvetica, sans-serif;
+    scroll-behavior: smooth;
 }
 
 body {
-	background-color: rgb(255,255,255);
-	font-family: Arial, Helvetica, sans-serif;
-	color: black;
-	font-size: 100%;
-	background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
+    background-color: rgb(255,255,255);
+    color: black;
+    font-size: 100%;
+    background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
-  }
+}
 
-/* nav bar classes */
 .navbar {
 	background-color: rgb(53,134,0);
 	position: fixed;
@@ -24,6 +23,7 @@ body {
 	margin: 0px -8px;
 	top: 0;
 	z-index: 2;
+    box-shadow: 0px 5px 15px black;
 }
 
 .navbar_buttons {
@@ -55,13 +55,26 @@ body {
 
 .main {
 	margin-top: 65px;
+	margin-top: 50px;
+}
+
+.homeButtons a {
+	background-color: #9EE37D;
+	display: block;
+	color: white;
+	text-align: center;
+	font-size: 25px;
+	width: 300px;
+	height: 75px;
+	line-height: 75px;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 .content {
     margin: auto;
-    max-width: 55%;
+    width: 1800px;
     height: 90%;
-    min-width: 1200px;
 }
 
 .identifiers {
@@ -77,7 +90,7 @@ body {
 
 .titletext {
     color: 286400;
-    font-size: 45;
+    font-size: 45px;
 }
 
 .container {
@@ -122,109 +135,26 @@ body {
 
 
 #noresult {
-    list-style-type: none;
-    font-size: 40;
-    font-weight: 20;
+    position: absolute;
+    max-width: 70%;
+    font-size: 20;
     text-align: center;
+    color: red;
+    margin-left: auto;
+    margin-top: -30%;
+    background-color: white;
+    border-radius: 10px;
+    border: 10px solid black;
+    padding: 20px;
+}
+
+#noresult h1 {
+    width: 80%;
+    margin: auto;
 }
 
 a {
     text-decoration: none;
-}
-
-.slider {
-	width: 100%;
-	height: 510px;
-	position: relative;
-}
-
-.slider img {
-	width: 100%;
-	height: 500px;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.slider img:first-child {
-	z-index: 1;
-}
-
-.slider img:nth-child(2) {
-	z-index: 0;
-}
-
-.navigation-button {
-	text-align: center;
-	position: relative;
-	background-color: rgb(0,0,0);
-}
-
-.dot {
-	cursor: pointer;
-	height: 15px;
-	width: 15px;
-	margin: 0 2px;
-	background-color: rgb(75,75,75);
-	border-radius: 50%;
-	display: inline-block;
-}
-
-.active,.dot:hover {
-	background-color: rgb(100,100,100);
-}
-
-.search {
-    float: left;
-    margin-top: 15px;
-    margin-left: 15px;
-}
-
-
-
-/* top container + contents */
-.topContainer {
-	display: flex;
-	width: 98%;
-	height: 40%;
-	margin-top: 50px;
-	justify-content: flex-start;
-	flex-flow: row wrap;
-
-}
-
-.avatarItem {
-	width: 20%;
-	height: 20%;
-	margin: 2%;
-}	
-
-.pfp {
-    border-radius: 50%;
-	width: 100%;
-	height: 100%;
-}
-
-/* Top right container and items */
-.infoContainer {
-	display: flex;
-	width: 76%;
-	height: auto;
-	margin: 0;
-	padding: 0;
-	margin-top: 2%;
-	flex-direction: column;
-	gap: 25px;
-}
-
-#usernameContainer {
-	background-color: #9EE37D;
-	border-radius: 20px;
-}
-
-#usernameText {
-	margin-left: 3%;
-
 }
 
 .platdiv {
@@ -253,238 +183,380 @@ a {
     max-height: 40px;
     width: auto;
     height: auto;
-    padding: 0px 5px;
+    padding: 5px;
 }
 
-.bioContainer {
-	background-color:#9EE37D;
-	border-radius:20px;
-	width: 100%;
-	height: 100%;
-	margin-bottom: 2%;
+
+.miscinfo {
+    float: right;
+    border-color: black;
+    width: 25%;
+    margin-right: 30px;
+    color: grey;
+    text-align: right;
+    font-size: 25;
 }
 
-.bioContents {
-	margin: 3%;
-	margin-top: 0;
-	width: 100%;
-	height: 100%;
-}
-	
-/* bottom container */
-
-.bottomContainerText {
-	margin-left: 2%;
-	height: auto;
+.thumbnailsearch {
+    padding: 5px;
+    width: 225px;
+    height: 300px;
+    border-radius: 20px;
 }
 
-.reviewsContainer {
-	display: flex;
-	height: auto;
-	margin-left: 2%;
-	justify-content: flex-start;
-	flex-flow: column wrap;
+.filtercontainer {
+    margin-left: 30px;
+    display: inline-block;
 }
 
-.reviewsList {
-	list-style-type: none;
-	margin-left: 0;
-	padding-left: 0;
+.filtercontainer:hover .filterbutton{
+    background-color: lightgreen;
 }
 
-.reviewItem {
-	list-style-type: none;
+.filtercontainer button{
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: black solid transparent;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.filters .selectAllButton {
+    font-size: 15px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.filters .selectAllButton:hover {
+    background-color: lightgreen;
+}
+
+.filtercontainer .filters {
+    position: absolute;
+    background-color: white;
+    min-width: 250px;
+    box-shadow: 0px 10px 30px 5px grey ;
+    display: none; 
+    flex-direction: column; 
+    height: auto; 
+    border-radius: 5px;
+}
+
+.filtercontainer:hover .filters {
+    display: grid;
+}
+
+.filtercontainer .filters ul{
+    list-style-type: none;
+    display: block;
+    padding: 5px 7px;
+    background-color: white;
+    max-height: 250px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.filtercontainer .filters ul li label {
+    cursor: pointer;
+    display: block;
+}
+
+.filtercontainer .filters .filterlabeltext {
+    margin-left: 2px;
+    font-size: 20px;
+}
+
+.filtercontainer .filters .filtercount {
+    float: right;
+    margin-right: 2px;
+    font-size: 20px;
+    color: rgb(170, 170, 170);
+}
+
+.filtercontainer .filters .orderoption {
+    border: none;
+    background-color: white;
+    border-radius: 0px;
+}
+
+.filtercontainer .filters .orderoption:hover {
+    background-color: lightgreen;
+}
+
+.minmaxrange {
+    position: relative;
+    height: 30px; /* Total height of the component */
+    width: 100%;
+}
+
+.rangefill {
+    position: absolute;
+    height: 6px;
+    background-color: lightgreen;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2; /* Above the gray bar but below the handles */
+    border-radius: 3px;
+}
+
+.range-bar {
+    position: absolute;
+    height: 6px;
+    background-color: lightgrey;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; /* Below everything else */
+    border-radius: 3px;
+    width: 100%;
+}
+
+.range {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent; /* No background for the slider track */
+    width: 100%;
+    height: 25px; /* Large enough clickable area */
+    z-index: 3;
+    pointer-events: none;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: green;
+    cursor: pointer;
+    z-index: 4;
+    pointer-events: auto; /* Allow interaction */
+    position: relative;
+    top: -5px; /* Adjust for vertical alignment */
+    left: -2px
+}
+
+.range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: transparent;
+    border-radius: 3px;
+}
+
+.minmax {
     display: flex;
-	justify-content: flex-start;
-	flex-direction: row;
-    width: 98%;
-    height: auto;
-    background-color: #9EE37D;
-    border-radius: 25px;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.thumbnailContainer {
-	width: 20%;
-	height: 20%;
-	margin: 2%;
-	border-radius: 5px;
+.minmax div {
+    display: flex;
+    flex-direction: column; /* Align label and input vertically */
+    margin-left: -10px; 
+    padding-left: 10px;
+    font-size: 20px;
 }
 
-.thumbnailImage {
-	width: 100%;
-	height: 100%;
-	border-radius: 5px;
+.minmax input {
+    width: 50px; /* Set a reasonable width for inputs */
+    text-align: center; /* Center-align input text */
+    margin-left: 8.5px;
+    width: 70px;
+    height: 25px;
+    font-size: 15px;
 }
 
-.reviewInfoContainer {
-	display: flex;
-	align-items: flex-start;
-	flex-flow: column wrap;
-	gap: 15px;
-	margin: 2% 2% 2% 0;
-	width:  98%;
-	height: auto;
+#slidernum {
+    font-size: 20px;
 }
 
-.reviewInfoText {
-	margin-left: 25px;
-	overflow: wrap;
+#backButton {
+    position: fixed;
+    color: white;
+    font-size: 20px;
+    margin-left: 30px;
+    display: block;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px black;
+    background-color: red;
+    cursor: pointer;
 }
 
-.reviewTitleContainer {
-	background-color: white;
-	border-radius: 5px;
-	width: 100%;
-}
-
-.reviewRatingContainer {
-	width: 100%;
-	display: flex;
-	flex-flow: row nowrap;
-	gap: 15px;
-}
-
-.reviewRating {
-	background-color: white;
-	border-radius: 5px;
-	width: 25%;
-}
-
-.reviewRecommend {
-	background-color: white;
-	border-radius: 5px;
-	width: 25%;
-}
-
-.reviewBodyContainer {
-	background-color: white;
-	border-radius: 5px;
-	width: 100%;
-}
-
-/* Settings Classes */
-
-.settingsContentContainer {
-	display: flex;
-	width: 98%;
-	height: 40%;
-	margin-top: 50px;
-	margin-left: 0.9%;
-	justify-content: flex-start;
-	flex-flow: column wrap;
-}
-
-.settingsHeaderContainer {
-	background-color: #D9D9D9;
-	margin: 2%;
-	border-radius: 10px 10px 0 0;
-	margin-bottom: 0;
-}
-
-.settingsHeaderText {
-	margin-left: 2%
-}
-
-.settingsOptionsContainer {
-	background-color: #D9D9D9;
-	border-radius: 0 0 10px 10px;
-	margin: 2%;
-	margin-top: 0;
-}
-
-.profileOptionsContainer {
-	width: auto;
-	height: auto;
-}
-
-.profileOptionsItem {
-	background-color:aquamarine;
-	margin-left: 4%;
-	margin-bottom: 2%;
-}
-
-.bioEditor {
-	width: 96%;
-	padding: 10px;
-	font-size: 1em;
-	margin: 10px 0;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	size: 96%
-}
-
-.privacyOptionsContainer {
-	width: auto;
-	height: auto;
-}
-
-.privacyOptionsItem {
-	background-color:lightgoldenrodyellow;
-	margin-left: 4%;
-	margin-bottom: 2%;
-}
-
-/* Game page classes */
 .gameTopContainer {
+    margin-top: 90px;
 	display: flex;
 	width: 100%;
-	height: 40%;
+	height: fit-content;
 	margin-bottom: 0;
-	margin-top: 80px;
-	justify-content: space-between;
-	color: white;
+    justify-content: space-between;
+    color: #0b6000;
 }
 
 .gameCoverArtItem {
-	width: 700px;
-	height: auto;
-	margin-top: 50px;
-	margin-right:0;
-	box-shadow: 0px 0px 20px 5px #414141;
+    width: 500px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right:0;
+    box-shadow: 0px 0px 20px 5px #414141;
 }
 
 .gameInfoContainer {
 	background-color: #9EE37D;
 	display: grid;
 	width: 100%;
-	height: fit-content;
+	max-height: 700px;
 	margin-left: 30px;
-	margin-top: 50px;
 	border-radius: 10px;
-	font-size: 30px;
+    font-size: 30px;
+    padding: 15px;
 }
 
 .gameInfoText {
 	margin-left: 20px;
 	margin-top: 10px;
-	
+    font-size: 50px;
+    padding-bottom: 20px;
 }
 
 .gameDescription {
-	margin: 20px;
-	margin-top: 0;
-	background-color: white;
+	margin-top: -30px;
+	background-color: #dfffd1;
 	border-radius: 5px;
-	font-size: 25px;
+    font-size: 20px;
 }
 
-.gameDescription p {
-	padding: 0px 20px 0px 20px;
-	color: black;
+#descriptionText {
+    padding: 0px 10px 0px 10px;
 }
 
-.gameGenres {
-	display: flex;
-	gap: 10px;
-	margin-left: 20px;
-	padding: 0px 0px 10px ;
+.categories {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
-.gameGenreItem {
-	background-color: #d2fcff;
-	color: #155724;
-	padding: 5px 10px;
-	border-radius: 20px;
+.categoryList {
+    list-style-type: none;
+    margin-left: -36px;
+    font-size: 25px;
+}
+
+.categInfo {
+    color: #414141
+    ;
+}
+
+.categInfo a {
+    cursor: pointer;
+}
+
+.reviewListTitle {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
+.reviewFormContainer {
+    background-color: #9EE37D;
+    width: 100%;
+    margin: auto;
+    margin-top: 50px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviewFormContainer textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    background-color: #dfffd1;
+    color: black;
+    font-size: 20px;
+}
+
+.reviewFormContainer form {
+    width: 100%;
+    padding: 30px;
+    display: grid;
+}
+
+.reviewMisc {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewFormContainer form label {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.reviewFormContainer form input[type="text"] {
+    width: 30%;
+    height: 30px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: #dfffd1;
+    color: black;
+}
+
+.reviewFormContainer form select {
+    width: 80px;
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.reviewFormContainer form input[type="submit"] {
+    width: 220px;
+    height: 75px;
+    font-size: 30px;
+    float: right;
+}
+
+.recommendButton {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+#recommendContainer {
+    display: grid;
+}
+
+#recommendInput label {
+    padding: 10px 20px;
+    border: 2px solid #9EE37D;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    margin-right: 10px;
+}
+
+#recommendInput input[type="radio"] {
+    display: none;;
+}
+
+#ratingContainer {
+    display: grid;
 }
 
 .gameBottomContainer {

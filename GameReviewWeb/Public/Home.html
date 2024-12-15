@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html>
-	<link rel="stylesheet" href="webstyle.css">
-<header>
-	<title>
-	Task 1 Website
-	</title>
-</header>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webstyle.css">
+    <link rel="manifest" href="/manifest.json">
+    <title>Home - Game Reviews Now!</title>
+</head>
 
 <body>
-<!-- navbar (signed out) -->
+	<!-- navbar (signed out) -->
 	<div class="navbar" autofocus>	
-		<a href="Home.html"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
-		<a href="Login.html" class="navbar_buttons">Login</a></li>
-		<a href="Signup.html" class="navbar_buttons">Signup</a></li>
+		<a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
+		<a href="/Login/" class="navbar_buttons">Login</a></li>
+		<a href="/Signup/" class="navbar_buttons">Signup</a></li>
 		<div class="search">
 			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
 		</div> 
+			<p style="text-align: center; font-size: 48px;">
+				review games now or else
+			</p>
+			<div class="homeButtons">
+				<a href="Search.html">
+					Review a Game
+				</a>
+			</div>
+		</div>
 	</div>
 	
 <!-- navbar (signed in(figure out how to make it detect))
@@ -65,6 +75,24 @@
 			  imgs[currentImg].style.opacity = 1;
 			  dots[currentImg].className += ' active';
 			}
+			// Get the search input field
+			var searchInput = document.getElementById('search');
+
+			// Add event listener for keyup event
+			searchInput.addEventListener('keyup', function(event) {
+				// Check if the Enter key is pressed
+				if (event.key === 'Enter') {
+					// Get the search query
+					var query = searchInput.value.trim();
+
+					// Check if the query is not empty
+					if (query !== '') {
+						// Redirect to the search page with the query parameter
+						window.location.href = '/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=' + encodeURIComponent(query);
+					}
+				}
+			});
+
 		</script>
 		
 		<div>
