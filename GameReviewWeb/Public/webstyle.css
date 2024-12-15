@@ -4,12 +4,17 @@ html {
 }
 
 body {
-  background-color: rgb(255,255,255);
-  font-family: verdana;
-  color: black;
-  font-size: 100%;
-}
+	background-color: rgb(255,255,255);
+	font-family: Arial, Helvetica, sans-serif;
+	color: black;
+	font-size: 100%;
+	background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
 
+/* nav bar classes */
 .navbar {
 	background-color: rgb(53,134,0);
 	position: fixed;
@@ -49,64 +54,7 @@ body {
 }
 
 .main {
-	margin-top: 50px;
-}
-
-.slider {
-	width: 100%;
-	height: 510px;
-	position: relative;
-}
-
-.slider img {
-	width: 100%;
-	height: 500px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	padding: 0px;
-	margin: 0px;
-}
-
-.slider img:first-child {
-	z-index: 1;
-}
-
-.slider img:nth-child(2) {
-	z-index: 0;
-}
-
-.navigation-button {
-	text-align: center;
-	position: relative;
-	background-color: rgb(0,0,0);
-}
-
-.dot {
-	cursor: pointer;
-	height: 15px;
-	width: 15px;
-	margin: 0 2px;
-	background-color: rgb(75,75,75);
-	border-radius: 50%;
-	display: inline-block;
-}
-
-.active,.dot:hover {
-	background-color: rgb(100,100,100)
-}
-
-.homeButtons a {
-	background-color: #9EE37D;
-	display: block;
-	color: white;
-	text-align: center;
-	font-size: 25px;
-	width: 300px;
-	height: 75px;
-	line-height: 75px;
-	margin-left:auto;
-	margin-right:auto;
+	margin-top: 65px;
 }
 
 .content {
@@ -184,6 +132,101 @@ a {
     text-decoration: none;
 }
 
+.slider {
+	width: 100%;
+	height: 510px;
+	position: relative;
+}
+
+.slider img {
+	width: 100%;
+	height: 500px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.slider img:first-child {
+	z-index: 1;
+}
+
+.slider img:nth-child(2) {
+	z-index: 0;
+}
+
+.navigation-button {
+	text-align: center;
+	position: relative;
+	background-color: rgb(0,0,0);
+}
+
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: rgb(75,75,75);
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.active,.dot:hover {
+	background-color: rgb(100,100,100);
+}
+
+.search {
+    float: left;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+
+
+/* top container + contents */
+.topContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	justify-content: flex-start;
+	flex-flow: row wrap;
+
+}
+
+.avatarItem {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+}	
+
+.pfp {
+    border-radius: 50%;
+	width: 100%;
+	height: 100%;
+}
+
+/* Top right container and items */
+.infoContainer {
+	display: flex;
+	width: 76%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	margin-top: 2%;
+	flex-direction: column;
+	gap: 25px;
+}
+
+#usernameContainer {
+	background-color: #9EE37D;
+	border-radius: 20px;
+}
+
+#usernameText {
+	margin-left: 3%;
+
+}
+
 .platdiv {
     display: flex;
     max-width: 100%;
@@ -192,7 +235,7 @@ a {
 
 .platimgborder {
     background-color: rgba(167, 192, 194, 0.764);
-    padding: 5px;
+    padding: 0px 5px;
     margin-right: 10px;
     max-width: 250px;
     max-height: 60px;
@@ -210,188 +253,282 @@ a {
     max-height: 40px;
     width: auto;
     height: auto;
-    padding: 5px;
+    padding: 0px 5px;
 }
 
-
-.miscinfo {
-    float: right;
-    border-color: black;
-    width: 25%;
-    margin-right: 30px;
-    color: grey;
-    text-align: right;
-    font-size: 25;
+.bioContainer {
+	background-color:#9EE37D;
+	border-radius:20px;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 2%;
 }
 
-.thumbnailsearch {
-    padding: 5px;
-    width: 225px;
-    height: 300px;
-    border-radius: 20px;
+.bioContents {
+	margin: 3%;
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+}
+	
+/* bottom container */
+
+.bottomContainerText {
+	margin-left: 2%;
+	height: auto;
 }
 
-.filtercontainer {
-    margin-left: 30px;
-    display: inline-block;
+.reviewsContainer {
+	display: flex;
+	height: auto;
+	margin-left: 2%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
 }
 
-.filtercontainer:hover .filterbutton{
-    background-color: lightgreen;
+.reviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
 }
 
-.filtercontainer button{
-    background-color: white;
-    color: black;
-    padding: 10px 15px;
-    border: black solid transparent;
-    font-size: 20px;
-    border-radius: 5px;
-}
-
-.filters .selectAllButton {
-    font-size: 15px;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-}
-
-.filters .selectAllButton:hover {
-    background-color: lightgreen;
-}
-
-.filtercontainer .filters {
-    position: absolute;
-    background-color: white;
-    min-width: 250px;
-    box-shadow: 0px 10px 30px 5px grey ;
-    display: none; 
-    flex-direction: column; 
-    height: auto; 
-    border-radius: 5px;
-}
-
-.filtercontainer:hover .filters {
-    display: grid;
-}
-
-.filtercontainer .filters ul{
-    list-style-type: none;
-    display: block;
-    padding: 5px 7px;
-    background-color: white;
-}
-
-.filtercontainer .filters ul li label {
-    cursor: pointer;
-    display: block;
-}
-
-.filtercontainer .filters .filterlabeltext {
-    margin-left: 2px;
-    font-size: 20px;
-}
-
-.filtercontainer .filters .filtercount {
-    float: right;
-    margin-right: 2px;
-    font-size: 20px;
-    color: rgb(170, 170, 170);
-}
-
-.filtercontainer .filters .orderoption {
-    border: none;
-    background-color: white;
-    border-radius: 0px;
-}
-
-.filtercontainer .filters .orderoption:hover {
-    background-color: lightgreen;
-}
-
-.minmaxrange {
-    position: relative;
-    height: 30px; /* Total height of the component */
-    width: 100%;
-}
-
-.rangefill {
-    position: absolute;
-    height: 6px;
-    background-color: lightgreen;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2; /* Above the gray bar but below the handles */
-    border-radius: 3px;
-}
-
-.range-bar {
-    position: absolute;
-    height: 6px;
-    background-color: lightgrey;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1; /* Below everything else */
-    border-radius: 3px;
-    width: 100%;
-}
-
-.range {
-    position: absolute;
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent; /* No background for the slider track */
-    width: 100%;
-    height: 25px; /* Large enough clickable area */
-    z-index: 3;
-    pointer-events: none;
-}
-
-.range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background-color: green;
-    cursor: pointer;
-    z-index: 4;
-    pointer-events: auto; /* Allow interaction */
-    position: relative;
-    top: -5px; /* Adjust for vertical alignment */
-    left: -2px
-}
-
-.range::-webkit-slider-runnable-track {
-    height: 6px;
-    background: transparent;
-    border-radius: 3px;
-}
-
-.minmax {
+.reviewItem {
+	list-style-type: none;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+	justify-content: flex-start;
+	flex-direction: row;
+    width: 98%;
+    height: auto;
+    background-color: #9EE37D;
+    border-radius: 25px;
 }
 
-.minmax div {
-    display: flex;
-    flex-direction: column; /* Align label and input vertically */
-    margin-left: -10px; 
-    padding-left: 10px;
-    font-size: 20px;
+.thumbnailContainer {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+	border-radius: 5px;
 }
 
-.minmax input {
-    width: 50px; /* Set a reasonable width for inputs */
-    text-align: center; /* Center-align input text */
-    margin-left: 8.5px;
-    width: 70px;
-    height: 25px;
-    font-size: 15px;
+.thumbnailImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
 }
 
-#slidernum {
-    font-size: 20px;
+.reviewInfoContainer {
+	display: flex;
+	align-items: flex-start;
+	flex-flow: column wrap;
+	gap: 15px;
+	margin: 2% 2% 2% 0;
+	width:  98%;
+	height: auto;
+}
+
+.reviewInfoText {
+	margin-left: 25px;
+	overflow: wrap;
+}
+
+.reviewTitleContainer {
+	background-color: white;
+	border-radius: 5px;
+	width: 100%;
+}
+
+.reviewRatingContainer {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 15px;
+}
+
+.reviewRating {
+	background-color: white;
+	border-radius: 5px;
+	width: 25%;
+}
+
+.reviewRecommend {
+	background-color: white;
+	border-radius: 5px;
+	width: 25%;
+}
+
+.reviewBodyContainer {
+	background-color: white;
+	border-radius: 5px;
+	width: 100%;
+}
+
+/* Settings Classes */
+
+.settingsContentContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	margin-left: 0.9%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.settingsHeaderContainer {
+	background-color: #D9D9D9;
+	margin: 2%;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 0;
+}
+
+.settingsHeaderText {
+	margin-left: 2%
+}
+
+.settingsOptionsContainer {
+	background-color: #D9D9D9;
+	border-radius: 0 0 10px 10px;
+	margin: 2%;
+	margin-top: 0;
+}
+
+.profileOptionsContainer {
+	width: auto;
+	height: auto;
+}
+
+.profileOptionsItem {
+	background-color:aquamarine;
+	margin-left: 4%;
+	margin-bottom: 2%;
+}
+
+.bioEditor {
+	width: 96%;
+	padding: 10px;
+	font-size: 1em;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	size: 96%
+}
+
+.privacyOptionsContainer {
+	width: auto;
+	height: auto;
+}
+
+.privacyOptionsItem {
+	background-color:lightgoldenrodyellow;
+	margin-left: 4%;
+	margin-bottom: 2%;
+}
+
+/* Game page classes */
+.gameTopContainer {
+	display: flex;
+	width: 100%;
+	height: 40%;
+	margin-bottom: 0;
+	margin-top: 80px;
+	justify-content: space-between;
+	color: white;
+}
+
+.gameCoverArtItem {
+	width: 700px;
+	height: auto;
+	margin-top: 50px;
+	margin-right:0;
+	box-shadow: 0px 0px 20px 5px #414141;
+}
+
+.gameInfoContainer {
+	background-color: #9EE37D;
+	display: grid;
+	width: 100%;
+	height: fit-content;
+	margin-left: 30px;
+	margin-top: 50px;
+	border-radius: 10px;
+	font-size: 30px;
+}
+
+.gameInfoText {
+	margin-left: 20px;
+	margin-top: 10px;
+	
+}
+
+.gameDescription {
+	margin: 20px;
+	margin-top: 0;
+	background-color: white;
+	border-radius: 5px;
+	font-size: 25px;
+}
+
+.gameDescription p {
+	padding: 0px 20px 0px 20px;
+	color: black;
+}
+
+.gameGenres {
+	display: flex;
+	gap: 10px;
+	margin-left: 20px;
+	padding: 0px 0px 10px ;
+}
+
+.gameGenreItem {
+	background-color: #d2fcff;
+	color: #155724;
+	padding: 5px 10px;
+	border-radius: 20px;
+}
+
+.gameBottomContainer {
+	width: 100%;
+}
+
+.gameBottomContainer {
+	display: flex;
+	height: auto;
+	width: 96%;
+	margin-left: 2%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.gameReviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.gameReviewItem {
+	list-style-type: none;
+	display: flex;
+	width: 100%;
+	height: auto;
+	background-color: #9EE37D;
+	margin-bottom: 20px;
+	border-radius: 25px;
+	flex-direction: row;
+	justify-content: flex-start;
+	color: black;
+}
+
+.gameReviewInfoContainer {
+	background-color: #ffffff;
+	border-radius: 5px;
+	margin: 2%;
+	margin-left: 0;
+	width:  98%;
+	height: auto;
+}
+
+.gameReviewInfoText {
+	margin-left: 2%;
+	overflow: wrap;
 }
