@@ -447,3 +447,230 @@ a {
 #slidernum {
     font-size: 20px;
 }
+
+#backButton {
+    position: fixed;
+    color: white;
+    font-size: 20px;
+    margin-left: 30px;
+    display: block;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px black;
+    background-color: red;
+    cursor: pointer;
+}
+
+.gameTopContainer {
+    margin-top: 90px;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	margin-bottom: 0;
+    justify-content: space-between;
+    color: #0b6000;
+}
+
+.gameCoverArtItem {
+    width: 500px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right:0;
+    box-shadow: 0px 0px 20px 5px #414141;
+}
+
+.gameInfoContainer {
+	background-color: #9EE37D;
+	display: grid;
+	width: 100%;
+	max-height: 700px;
+	margin-left: 30px;
+	border-radius: 10px;
+    font-size: 30px;
+    padding: 15px;
+}
+
+.gameInfoText {
+	margin-left: 20px;
+	margin-top: 10px;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+.gameDescription {
+	margin-top: -30px;
+	background-color: #dfffd1;
+	border-radius: 5px;
+    font-size: 20px;
+}
+
+#descriptionText {
+    padding: 0px 10px 0px 10px;
+}
+
+.categories {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.categoryList {
+    list-style-type: none;
+    margin-left: -36px;
+    font-size: 25px;
+}
+
+.categInfo {
+    color: #414141
+    ;
+}
+
+.categInfo a {
+    cursor: pointer;
+}
+
+.reviewListTitle {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
+.reviewFormContainer {
+    background-color: #9EE37D;
+    width: 100%;
+    margin: auto;
+    margin-top: 50px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviewFormContainer textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    background-color: #dfffd1;
+    color: black;
+    font-size: 20px;
+}
+
+.reviewFormContainer form {
+    width: 100%;
+    padding: 30px;
+    display: grid;
+}
+
+.reviewMisc {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewFormContainer form label {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.reviewFormContainer form input[type="text"] {
+    width: 30%;
+    height: 30px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: #dfffd1;
+    color: black;
+}
+
+.reviewFormContainer form select {
+    width: 80px;
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.reviewFormContainer form input[type="submit"] {
+    width: 220px;
+    height: 75px;
+    font-size: 30px;
+    float: right;
+}
+
+.recommendButton {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#recommendContainer {
+    display: grid;
+}
+
+#recommendInput label {
+    padding: 10px 20px;
+    border: 2px solid #9EE37D;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    margin-right: 10px;
+}
+
+#recommendInput input[type="radio"] {
+    display: none;;
+}
+
+#ratingContainer {
+    display: grid;
+}
+
+.gameBottomContainer {
+	width: 100%;
+}
+
+.gameBottomContainer {
+	display: flex;
+	height: auto;
+	width: 96%;
+	margin-left: 2%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.gameReviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.gameReviewItem {
+	list-style-type: none;
+	display: flex;
+	width: 100%;
+	height: auto;
+	background-color: #9EE37D;
+	margin-bottom: 20px;
+	border-radius: 25px;
+	flex-direction: row;
+	justify-content: flex-start;
+	color: black;
+}
+
+.gameReviewInfoContainer {
+	background-color: #ffffff;
+	border-radius: 5px;
+	margin: 2%;
+	margin-left: 0;
+	width:  98%;
+	height: auto;
+}
+
+.gameReviewInfoText {
+	margin-left: 2%;
+	overflow: wrap;
+}
