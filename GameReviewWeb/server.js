@@ -1,10 +1,12 @@
-
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+
 const app = express();
 const PORT = 3000;
+
 let gamesDict = {};
+let usersDict = {};
 
 // Serve static files from the "Public" directory
 app.use(express.static(path.join(__dirname, 'Public')));
@@ -12,11 +14,13 @@ app.use(express.static(path.join(__dirname, 'Public')));
 // Middleware to parse JSON body
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.redirect('/home');
+});
+
 // Serve the home page
 app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'Home.html'));
-	@@ -25,17 +22,7 @@ app.get('/search', (req, res) => {
-
 });
 
 // Serve the search page
@@ -43,6 +47,7 @@ app.get('/settings', (req, res) => {
 app.get('/game/:gameID/:gameName?', (req, res) => {
     const gameID = req.params.gameID;
     const game = gamesDict[gameID];
+
     if (game) {
         // Redirect to the correct game URL if gameName is missing or incorrect
         const correctGameName = game.name.replace(/ /g, "-");
@@ -55,7 +60,25 @@ app.get('/game/:gameID/:gameName?', (req, res) => {
         res.redirect('/search');
     }
 });
- 
+
+//Handle profile page requests
+app.get('/profile/:userID/:username?', (req, res) => {
+    const userID = req.params.userID;
+    const user = usersDict[userID];
+
+    if (user) {
+        // Redirect to the correct profile URL if username is missing or incorrect
+        const correctUsername = user.username.replace(/ /g, "-");
+        if (!req.params.username || req.params.username.toLowerCase()!== correctUsername.toLowerCase()) {
+            res.redirect(`/profile/${userID}/${correctUsername}`);
+        } else {
+            res.sendFile(path.join(__dirname, 'Public', 'Profile.html'));
+        }
+    } else {
+        res.redirect('/home');
+    }
+});
+
 // Database path
 const dbPath = path.join(__dirname, 'Databases', 'grn.db');
 
@@ -85,6 +108,88 @@ app.get('/api/gameresults', (req, res) => {
     });
 });
 
+app.get('/api/gamereviews/:gameid', (req, res) => {
+    const gameId = req.params.gameid;
+    const query = 'SELECT * FROM reviews WHERE gameid = ?';
+    // Execute the query
+    db.all(query, [gameId], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to fetch reviews' });
+        }
+        
+        // Send the reviews as a JSON response
+        res.json(rows);
+    });
+
+})
+
+app.get('/api/userreviews/:userid', (req, res) => {
+    const userId = req.params.userid;
+    const query = 'SELECT * FROM reviews WHERE userid = ?';
+    // Execute the query
+    db.all(query, [userId], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to fetch user reviews' });
+        }
+        // Send the user's reviews as a JSON response
+        res.json(rows);
+    });
+})
+
+app.get('/api/users' , (req, res) => {
+    const query = 'SELECT * FROM users';
+    // Execute the query
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to fetch user' });
+        }
+        rows.forEach((row) => {
+            usersDict[row.userid] = row; // Populate games dictionary
+        });
+        // Send the user's details as a JSON response
+        res.json(rows);
+    });
+})
+
+// Function to calculate and update average scores for all games
+function updateAverageScores() {
+    // Query to get all game IDs
+    const getGamesQuery = 'SELECT id FROM game';
+
+    db.all(getGamesQuery, [], (err, rows) => {
+        if (err) {
+            console.error('Error fetching games:', err);
+            return;
+        }
+
+        // For each game, calculate the average score
+        rows.forEach((game) => {
+            const gameId = game.id;
+
+            // SQL query to get the average rating for each game
+            const getAvgRatingQuery = 'SELECT AVG(rating) AS averageRating FROM reviews WHERE gameid = ?';
+
+            db.get(getAvgRatingQuery, [gameId], (err, row) => {
+                if (err) {
+                    console.error('Error calculating average rating for game', gameId, err);
+                    return;
+                }
+
+                const averageRating = row.averageRating || null; // Default to null if no reviews
+
+                // SQL query to update the average score in the "game" table
+                const updateQuery = 'UPDATE game SET averagescore = ? WHERE id = ?';
+
+                db.run(updateQuery, [averageRating, gameId], function (err) {
+                    if (err) {
+                        console.error('Error updating average score for game', gameId, err);
+                }});
+            });
+        });
+    });
+}
+
+
 // Handle review submissions
 app.post('/submit-review', (req, res) => {
     const { title, recommend, rating, content, userid, gameid } = req.body;
@@ -96,22 +201,23 @@ app.post('/submit-review', (req, res) => {
 
     // Insert data into the `reviews` table
     const query = `
-        INSERT INTO reviews (title, recommend, rating, content, userid, gameid)
-        VALUES (?, ?, ?, ?, ?, ?)`;
+    INSERT INTO reviews (title, recommend, rating, content, userid, gameid)
+    VALUES (?, ?, ?, ?, ?, ?)`;
     db.run(query, [title, recommend, rating, content, userid, gameid], function (err) {
         if (err) {
             console.error('Error inserting review data:', err.message);
             return res.status(500).json({ message: 'Internal server error.' });
         }
 
+        updateAverageScores();
+        // Return the reviewId (auto-generated by SQLite)
         res.status(200).json({
             message: 'Review submitted successfully!',
-            reviewId: this.lastID // Return the newly inserted review ID
+            reviewId: this.lastID // This will be the newly generated review ID
         });
     });
 });
 
-// god is dead and its my fault (chatgpt sign in logic begins)
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
@@ -129,28 +235,42 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 
-// Simulated database - replace this with your real database
-const users = [
-    { id: 1, username: "testuser", password: "$2a$10$Wz7IxJ8GkBL9w8eAAz.XLO/2I57jRftT5hQClz57p4ka6NMXvKDwS" } // password: "password123"
-];
-
 // Login Route
-app.post("/login", async (req, res) => {
+// Login Route
+app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
     // Check if user exists
-    const user = users.find(u => u.username === username);
-    if (!user) return res.status(400).send("Invalid username or password");
+    const query = 'SELECT * FROM users WHERE username = ?';
+    db.get(query, [username], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: "Error retrieving user" });
+        }
 
-    // Compare password
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).send("Invalid username or password");
+        if (!result) {
+            return res.status(400).json({ error: "Invalid username or password" });
+        }
 
-    // Set session and cookie
-    req.session.user = { id: user.id, username: user.username };
-    res.cookie("isLoggedIn", true); // Optional cookie to detect login on frontend
-    res.send({ message: "Login successful", user: req.session.user });
+        // Hash the password from the database for testing purposes
+        bcrypt.hash(result.password, 10, async (err, hashedPassword) => {
+            if (err) {
+                return res.status(500).json({ error: "Error hashing password" });
+            }
+
+            // Compare the provided password with the hashed password
+            const validPassword = await bcrypt.compare(password, hashedPassword);
+            if (!validPassword) {
+                return res.status(400).json({ error: "Invalid username or password" });
+            }
+
+            // Set session and cookie
+            req.session.user = { id: result.userid, username: result.username };
+            res.cookie("isLoggedIn", true); // Optional cookie to detect login on frontend
+            res.send({ message: "Login successful", user: req.session.user });
+        });
+    });
 });
+
 
 // Logout Route
 app.post("/logout", (req, res) => {
@@ -160,19 +280,15 @@ app.post("/logout", (req, res) => {
 });
 
 // Check Login Status
-app.get("/status", (req, res) => {
-    if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user });
-    } else {
-        res.send({ loggedIn: false });
-    }
+app.get("/api/status", (req, res) => {
+    res.json({
+        loggedIn: !!req.session.user,
+        userid: req.session.user?.id || null  // Assuming `id` is the user identifier
+    });
 });
-// mew daily (chatgpt sign in logic ends)
 
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
+    updateAverageScores();
 });
-
-
-
