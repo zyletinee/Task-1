@@ -1,48 +1,54 @@
-// check login
-	async function checkLogin() {
-		try {
-			const response = await fetch('/api/status');
-			const data = await response.json();
+// Declare global variables
+let loggedIn = false;
+let loggedID = null;
 
-			if (data.loggedIn) {
-				console.log('User is logged in. User ID:', data.userid);
-				return { loggedIn: true, userid: data.userid };
-			} else {
-				console.log('User is not logged in.');
-				return { loggedIn: false, userid: null };
-			}
-		} catch (error) {
-			console.error('Error checking login status:', error);
-			return { loggedIn: false, userid: null };
-		}
-	}
+// Function to check login status
+async function checkLogin() {
+    try {
+        const response = await fetch('/api/status');
+        if (!response.ok) {
+            throw new Error('Failed to check login status');
+        }
 
+        const data = await response.json();
 
-	// checkLogin()
-	const loggedIn = false;
+        // Update global variables
+        loggedIn = data.loggedIn;
+        loggedID = data.loggedIn ? data.userid : null;
+    } catch (error) {
+        console.error('Error checking login status:', error);
+    }
+}
+
+async function initialize() {
+    await checkLogin();
+    updateNavbar();
+}
+
+// Call the function to initialize global variables and update navbar
+initialize();
 
 //navbar
-	function updateNavbar() {
-	  const navRight = document.querySelector('.nav-right');
-	  navRight.innerHTML = ''; // Clear existing buttons
+function updateNavbar() {
+  const navRight = document.getElementById("navDropdown")
+  navRight.innerHTML = ''; // Clear existing buttons
 
-	  if (loggedIn) {
-		// Show Profile and Settings buttons
-		navRight.innerHTML = `
-		  <a href="/profile"class="navbar_buttons">Profile</a>
-		  <a href="/settings"class="navbar_buttons">Settings</a>
-		`;
-	  } else {
-		// Show Login and Signup buttons
-		navRight.innerHTML = `
-		  <a href="/Login" class="navbar_buttons">Login</a>
-		  <a href="/signup"class="navbar_buttons">Signup</a>
-		`;
-	  }
-	}
-
-	// Run the function to set up the navbar
-	updateNavbar();
+  if (loggedIn) {
+    // Show Profile and Settings buttons
+    navRight.innerHTML = `
+      <a href="/profile/${loggedID}" class="navbar_buttons">Profile</a>
+      <a href="/settings" class="navbar_buttons">Settings</a>
+    `;
+    console.log("loggedinnav")
+  } else {
+    // Show Login and Signup buttons
+    navRight.innerHTML = `
+      <a href="/Login" class="navbar_buttons">Login</a>
+      <a href="/signup"class="navbar_buttons">Signup</a>
+    `;
+    console.log("loggedoutnav")
+  }
+}
 
 
 // search
@@ -74,7 +80,7 @@
 	const links = [
 		"/search", 
 		"/game/$26/", 
-		"/GamePage"  
+		"https://www.pcgamer.com/games/action/the-yakuza-studio-is-making-a-new-action-game-set-in-1915-japan/"
 	];
 
 	link.href = links[currentImg];
