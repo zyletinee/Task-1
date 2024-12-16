@@ -1,294 +1,695 @@
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+html {
+    scrollbar-width: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-const app = express();
-const PORT = 3000;
+html, body {
+	margin: 0;
+	padding: 0;
+}
 
-let gamesDict = {};
-let usersDict = {};
+body {
+	background-color: rgb(255,255,255);
+	font-family: verdana;
+	color: black;
+	font-size: 100%;
+	background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
 
-// Serve static files from the "Public" directory
-app.use(express.static(path.join(__dirname, 'Public')));
+.navbar {
+	background-color: rgb(53,134,0);
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	overflow: hidden;
+	margin-bottom: 60px;
+	top: 0;
+	z-index: 2;
+}
 
-// Middleware to parse JSON body
-app.use(express.json());
+.navbar_buttons {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 20px 16px;
+	margin-right: 20px;
+	text-decoration: none;
+	float: right;
+}
 
-app.get('/', (req, res) => {
-    res.redirect('/home');
-});
+.navbar_buttons:hover {
+	background-color: rgb(99,193,50);
+	color: black;
+}
 
-// Serve the home page
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'Home.html'));
-});
+.navbar p {
+	float: left;
+	color: white;
+	margin-left: 20px;
+}
 
-// Serve the search page
-app.get('/search', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'search.html'));
-});
+footer {
+	background-color: #286400;
+	height: 120px;
+	margin: -10px -8px;
+	padding-top: 35px;
+	min-width: 100%;
+}
 
-// Serve the login page
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'Login.html'));
-});
+footer a {
+	color: #FFFFFF;
+	margin-left: 2%;
+	margin-bottom: 15px;
+}
 
-// Serve the signup page
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'SignUp.html'));
-});
+.search {
+	margin-top: 15px;
+	height: 20px;
+	width: 200px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-// Serve the settings page
-app.get('/settings', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'Settings.html'));
-});
+.search input {
+	height: 20px;
+}
 
-// Handle game page requests
-app.get('/game/:gameID/:gameName?', (req, res) => {
-    const gameID = req.params.gameID;
-    const game = gamesDict[gameID];
+.login_box {
+	background-color: #D9D9D9;
+	width: 30%;
+	margin-left:auto;
+	margin-right:auto;
+	padding-top: 10px;
+	border-radius: 10px;
+	filter: drop-shadow(0 0 0.5rem black);
+}
 
-    if (game) {
-        // Redirect to the correct game URL if gameName is missing or incorrect
-        const correctGameName = game.name.replace(/ /g, "-");
-        if (!req.params.gameName || req.params.gameName.toLowerCase() !== correctGameName.toLowerCase()) {
-            res.redirect(`/game/${gameID}/${correctGameName}`);
-        } else {
-            res.sendFile(path.join(__dirname, 'Public', 'GamePage.html'));
-        }
-    } else {
-        res.redirect('/search');
-    }
-});
+.credentials input {
+	display: block;
+	margin-left:auto;
+	margin-right:auto;
+	width: 90%;
+	height: 30px;
+	margin-top: 10px;
+}
 
-//Handle profile page requests
-app.get('/profile/:userID/:username?', (req, res) => {
-    const userID = req.params.userID;
-    const user = usersDict[userID];
+.main {
+	margin-top: 50px;
+	margin-bottom: 120px;
+	height: 100%;
+	flex: 1;
+}
 
-    if (user) {
-        // Redirect to the correct profile URL if username is missing or incorrect
-        const correctUsername = user.username.replace(/ /g, "-");
-        if (!req.params.username || req.params.username.toLowerCase()!== correctUsername.toLowerCase()) {
-            res.redirect(`/profile/${userID}/${correctUsername}`);
-        } else {
-            res.sendFile(path.join(__dirname, 'Public', 'Profile.html'));
-        }
-    } else {
-        res.redirect('/home');
-    }
-});
+.slider {
+	width: 100%;
+	height: 510px;
+	position: relative;
+	background-color: black;
+	width: 100%;
+}
 
-// Database path
-const dbPath = path.join(__dirname, 'Databases', 'grn.db');
+.slider img {
+	width: 1920px;
+	height: 500px;
+	position: absolute;
+	top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -51%); 
+	padding: 0px;
+	display: block;
+	margin-bottom: -10px;
+}
 
-// Initialize database connection globally
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-    }
-});
+.slider img:first-child {
+	z-index: 1;
+}
 
-// Endpoint to fetch API results and populate the dictionary
-app.get('/api/gameresults', (req, res) => {
-    const query = 'SELECT * FROM game';
-    db.all(query, [], (err, rows) => {
-        if (err) {
-            console.error('Error fetching game data:', err.message);
-            return res.status(500).json({ error: 'Failed to fetch data' });
-        }
+.slider img:nth-child(2) {
+	z-index: 0;
+}
 
-        rows.forEach((row) => {
-            gamesDict[row.id] = row; // Populate games dictionary
-        });
+.slider_button {
+	text-align: center;
+	position: relative;
+	background-color: #D9D9D9;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin: -10px -8px;
+	
+}
 
-        res.json(rows); // Send game data as JSON
-    });
-});
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	margin-top: 1px;
+	background-color: #286400;
+	border-radius: 50%;
+	display: inline-block;
+}
 
-app.get('/api/gamereviews/:gameid', (req, res) => {
-    const gameId = req.params.gameid;
-    const query = 'SELECT * FROM reviews WHERE gameid = ?';
-    // Execute the query
-    db.all(query, [gameId], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to fetch reviews' });
-        }
-        
-        // Send the reviews as a JSON response
-        res.json(rows);
-    });
+.active,.dot:hover {
+	background-color: #63C132;
+}
 
-})
+.homeButtons {
+	background-color: #9EE37D;
+	display: block;
+	color: white;
+	text-align: center;
+	font-size: 25px;
+	width: 300px;
+	height: 75px;
+	line-height: 75px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	filter: drop-shadow(0 0 0.5rem black);
+}
 
-app.get('/api/userreviews/:userid', (req, res) => {
-    const userId = req.params.userid;
-    const query = 'SELECT * FROM reviews WHERE userid = ?';
-    // Execute the query
-    db.all(query, [userId], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to fetch user reviews' });
-        }
-        // Send the user's reviews as a JSON response
-        res.json(rows);
-    });
-})
+.homeButtons a {
+	color: white;
+}
 
-app.get('/api/users' , (req, res) => {
-    const query = 'SELECT * FROM users';
-    // Execute the query
-    db.all(query, [], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to fetch user' });
-        }
-        rows.forEach((row) => {
-            usersDict[row.userid] = row; // Populate games dictionary
-        });
-        // Send the user's details as a JSON response
-        res.json(rows);
-    });
-})
+.content {
+    margin: auto;
+    max-width: 55%;
+    height: 90%;
+    min-width: 1200px;
+}
 
-// Function to calculate and update average scores for all games
-function updateAverageScores() {
-    // Query to get all game IDs
-    const getGamesQuery = 'SELECT id FROM game';
+.identifiers {
+    color: black;
+    font-size: 30;
+}
 
-    db.all(getGamesQuery, [], (err, rows) => {
-        if (err) {
-            console.error('Error fetching games:', err);
-            return;
-        }
-
-        // For each game, calculate the average score
-        rows.forEach((game) => {
-            const gameId = game.id;
-
-            // SQL query to get the average rating for each game
-            const getAvgRatingQuery = 'SELECT AVG(rating) AS averageRating FROM reviews WHERE gameid = ?';
-
-            db.get(getAvgRatingQuery, [gameId], (err, row) => {
-                if (err) {
-                    console.error('Error calculating average rating for game', gameId, err);
-                    return;
-                }
-
-                const averageRating = row.averageRating || null; // Default to null if no reviews
-
-                // SQL query to update the average score in the "game" table
-                const updateQuery = 'UPDATE game SET averagescore = ? WHERE id = ?';
-
-                db.run(updateQuery, [averageRating, gameId], function (err) {
-                    if (err) {
-                        console.error('Error updating average score for game', gameId, err);
-                }});
-            });
-        });
-    });
+.bodytext {
+    color: rgb(78, 78, 78);
+    font-size: 25;
 }
 
 
-// Handle review submissions
-app.post('/submit-review', (req, res) => {
-    const { title, recommend, rating, content, userid, gameid } = req.body;
+.titletext {
+    color: 286400;
+    font-size: 45;
+}
 
-    // Validate input
-    if (!title || recommend === undefined || !rating || !content || !userid || !gameid) {
-        return res.status(400).json({ message: 'All fields are required.' });
-    }
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
 
-    // Insert data into the `reviews` table
-    const query = `
-    INSERT INTO reviews (title, recommend, rating, content, userid, gameid)
-    VALUES (?, ?, ?, ?, ?, ?)`;
-    db.run(query, [title, recommend, rating, content, userid, gameid], function (err) {
-        if (err) {
-            console.error('Error inserting review data:', err.message);
-            return res.status(500).json({ message: 'Internal server error.' });
-        }
+.result {
+    list-style-type: none;
+    padding: 10px;
+    display: flex;
+    width: 97%;
+    height: automatic;
+    overflow: hidden;
+    background-color: D9D9D9;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-        updateAverageScores();
-        // Return the reviewId (auto-generated by SQLite)
-        res.status(200).json({
-            message: 'Review submitted successfully!',
-            reviewId: this.lastID // This will be the newly generated review ID
-        });
-    });
-});
+.result:hover {
+    box-shadow: 0 0 5px 2px rgb(0, 76, 0);
+}
 
-const bodyParser = require("body-parser");
-const bcrypt = require("bcryptjs");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken"); // For token-based authentication
+.resulttext {
+    display: grid;
+    margin-left: 20px;
+    overflow-wrap: anywhere;
+    width: 65%;
+    gap: 0; /* No spacing between grid items */
+}
 
-// Middleware setup
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(session({
-    secret: "your-secret-key", // Change to a strong secret
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false } // Set to true if using HTTPS
-}));
-
-// Login Route
-// Login Route
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
-
-    // Check if user exists
-    const query = 'SELECT * FROM users WHERE username = ?';
-    db.get(query, [username], (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: "Error retrieving user" });
-        }
-
-        if (!result) {
-            return res.status(400).json({ error: "Invalid username or password" });
-        }
-
-        // Hash the password from the database for testing purposes
-        bcrypt.hash(result.password, 10, async (err, hashedPassword) => {
-            if (err) {
-                return res.status(500).json({ error: "Error hashing password" });
-            }
-
-            // Compare the provided password with the hashed password
-            const validPassword = await bcrypt.compare(password, hashedPassword);
-            if (!validPassword) {
-                return res.status(400).json({ error: "Invalid username or password" });
-            }
-
-            // Set session and cookie
-            req.session.user = { id: result.userid, username: result.username };
-            res.cookie("isLoggedIn", true); // Optional cookie to detect login on frontend
-            res.send({ message: "Login successful", user: req.session.user });
-        });
-    });
-});
+.resulttext > * {
+    margin: 0; /* Removes default margin from child elements */
+    padding: 0; /* Removes default padding from child elements */
+}
 
 
-// Logout Route
-app.post("/logout", (req, res) => {
-    req.session.destroy();
-    res.clearCookie("isLoggedIn");
-    res.send({ message: "Logout successful" });
-});
+#noresult {
+    list-style-type: none;
+    font-size: 40;
+    font-weight: 20;
+    text-align: center;
+}
 
-// Check Login Status
-app.get("/api/status", (req, res) => {
-    res.json({
-        loggedIn: !!req.session.user,
-        userid: req.session.user?.id || null  // Assuming `id` is the user identifier
-    });
-});
+a {
+    text-decoration: none;
+}
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-    updateAverageScores();
-});
+.platdiv {
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;    
+}
+
+.platimgborder {
+    background-color: rgba(167, 192, 194, 0.764);
+    padding: 5px;
+    margin-right: 10px;
+    max-width: 250px;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.platimg {
+    max-width: 100px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+    padding: 5px;
+}
+
+
+.miscinfo {
+    float: right;
+    border-color: black;
+    width: 25%;
+    margin-right: 30px;
+    color: grey;
+    text-align: right;
+    font-size: 25;
+}
+
+.thumbnailsearch {
+    padding: 5px;
+    width: 225px;
+    height: 300px;
+    border-radius: 20px;
+}
+
+.filtercontainer {
+    margin-left: 30px;
+    display: inline-block;
+}
+
+.filtercontainer:hover .filterbutton{
+    background-color: lightgreen;
+}
+
+.filtercontainer button{
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: black solid transparent;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.filters .selectAllButton {
+    font-size: 15px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.filters .selectAllButton:hover {
+    background-color: lightgreen;
+}
+
+.filtercontainer .filters {
+    position: absolute;
+    background-color: white;
+    min-width: 250px;
+    box-shadow: 0px 10px 30px 5px grey ;
+    display: none; 
+    flex-direction: column; 
+    height: auto; 
+    border-radius: 5px;
+}
+
+.filtercontainer:hover .filters {
+    display: grid;
+}
+
+.filtercontainer .filters ul{
+    list-style-type: none;
+    display: block;
+    padding: 5px 7px;
+    background-color: white;
+}
+
+.filtercontainer .filters ul li label {
+    cursor: pointer;
+    display: block;
+}
+
+.filtercontainer .filters .filterlabeltext {
+    margin-left: 2px;
+    font-size: 20px;
+}
+
+.filtercontainer .filters .filtercount {
+    float: right;
+    margin-right: 2px;
+    font-size: 20px;
+    color: rgb(170, 170, 170);
+}
+
+.filtercontainer .filters .orderoption {
+    border: none;
+    background-color: white;
+    border-radius: 0px;
+}
+
+.filtercontainer .filters .orderoption:hover {
+    background-color: lightgreen;
+}
+
+.minmaxrange {
+    position: relative;
+    height: 30px; /* Total height of the component */
+    width: 100%;
+}
+
+.rangefill {
+    position: absolute;
+    height: 6px;
+    background-color: lightgreen;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2; /* Above the gray bar but below the handles */
+    border-radius: 3px;
+}
+
+.range-bar {
+    position: absolute;
+    height: 6px;
+    background-color: lightgrey;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; /* Below everything else */
+    border-radius: 3px;
+    width: 100%;
+}
+
+.range {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent; /* No background for the slider track */
+    width: 100%;
+    height: 25px; /* Large enough clickable area */
+    z-index: 3;
+    pointer-events: none;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: green;
+    cursor: pointer;
+    z-index: 4;
+    pointer-events: auto; /* Allow interaction */
+    position: relative;
+    top: -5px; /* Adjust for vertical alignment */
+    left: -2px
+}
+
+.range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: transparent;
+    border-radius: 3px;
+}
+
+.minmax {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.minmax div {
+    display: flex;
+    flex-direction: column; /* Align label and input vertically */
+    margin-left: -10px; 
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.minmax input {
+    width: 50px; /* Set a reasonable width for inputs */
+    text-align: center; /* Center-align input text */
+    margin-left: 8.5px;
+    width: 70px;
+    height: 25px;
+    font-size: 15px;
+}
+
+#slidernum {
+    font-size: 20px;
+}
+
+#backButton {
+    position: fixed;
+    color: white;
+    font-size: 20px;
+    margin-left: 30px;
+    display: block;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px black;
+    background-color: red;
+    cursor: pointer;
+}
+
+.gameTopContainer {
+    margin-top: 90px;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	margin-bottom: 0;
+    justify-content: space-between;
+    color: #0b6000;
+}
+
+.gameCoverArtItem {
+    width: 500px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right:0;
+    box-shadow: 0px 0px 20px 5px #414141;
+}
+
+.gameInfoContainer {
+	background-color: #9EE37D;
+	display: grid;
+	width: 100%;
+	max-height: 700px;
+	margin-left: 30px;
+	border-radius: 10px;
+    font-size: 30px;
+    padding: 15px;
+}
+
+.gameInfoText {
+	margin-left: 20px;
+	margin-top: 10px;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+.gameDescription {
+	margin-top: -30px;
+	background-color: #dfffd1;
+	border-radius: 5px;
+    font-size: 20px;
+}
+
+#descriptionText {
+    padding: 0px 10px 0px 10px;
+}
+
+.categories {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.categoryList {
+    list-style-type: none;
+    margin-left: -36px;
+    font-size: 25px;
+}
+
+.categInfo {
+    color: #414141
+    ;
+}
+
+.categInfo a {
+    cursor: pointer;
+}
+
+.reviewListTitle {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
+.reviewFormContainer {
+    background-color: #9EE37D;
+    width: 100%;
+    margin: auto;
+    margin-top: 50px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviewFormContainer textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    background-color: #dfffd1;
+    color: black;
+    font-size: 20px;
+}
+
+.reviewFormContainer form {
+    width: 100%;
+    padding: 30px;
+    display: grid;
+}
+
+.reviewMisc {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewFormContainer form label {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.reviewFormContainer form input[type="text"] {
+    width: 30%;
+    height: 30px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: #dfffd1;
+    color: black;
+}
+
+.reviewFormContainer form select {
+    width: 80px;
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.reviewFormContainer form input[type="submit"] {
+    width: 220px;
+    height: 75px;
+    font-size: 30px;
+    float: right;
+}
+
+.recommendButton {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#recommendContainer {
+    display: grid;
+}
+
+#recommendInput label {
+    padding: 10px 20px;
+    border: 2px solid #9EE37D;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    margin-right: 10px;
+}
+
+#recommendInput input[type="radio"] {
+    display: none;;
+}
+
+#ratingContainer {
+    display: grid;
+}
+
+.gameBottomContainer {
+	width: 100%;
+}
+
+.gameBottomContainer {
+	display: flex;
+	height: auto;
+	width: 96%;
+	margin-left: 2%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.gameReviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.gameReviewItem {
+	list-style-type: none;
+	display: flex;
+	width: 100%;
+	height: auto;
+	background-color: #9EE37D;
+	margin-bottom: 20px;
+	border-radius: 25px;
+	flex-direction: row;
+	justify-content: flex-start;
+	color: black;
+}
+
+.gameReviewInfoContainer {
+	background-color: #ffffff;
+	border-radius: 5px;
+	margin: 2%;
+	margin-left: 0;
+	width:  98%;
+	height: auto;
+}
+
+.gameReviewInfoText {
+	margin-left: 2%;
+	overflow: wrap;
+}
