@@ -17,5 +17,6 @@ After downloading the full package, follow these steps.
     - body-parser
     - cookie-parser
     - jsonwebtoken
+    If you forget any of these, you'll get an error that will let you know what you're missing (i.e. "Error: cannot find module '[module name]'").
 4. Run `node [full filepath]\server.js` in the command line.
 5. The command line will return `Server running at http://localhost:3000`; type `http://localhost:3000/home` in your browser.
