@@ -10,5 +10,6 @@ Storyboard link available [here](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6
     - Express
     - Multer
     - Passport
+    - Bcrypt
 4. Run `node [full filepath]\server.js`.
 5. The command line will return `Server running at http://localhost:3000`; type `http://localhost:3000/home`.
