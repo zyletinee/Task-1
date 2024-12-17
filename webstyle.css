@@ -1,0 +1,874 @@
+html {
+    scrollbar-width: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	background-color: rgb(255,255,255);
+	font-family: Arial, Helvetica, sans-serif;
+	color: black;
+	font-size: 100%;
+	background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+
+.navbar {
+	background-color: rgb(53,134,0);
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	overflow: hidden;
+	margin: 0px -8px;
+	margin-bottom: 60px;
+	top: 0;
+	z-index: 2;
+}
+
+.navbar_buttons {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 20px 16px;
+	margin-right: 20px;
+	text-decoration: none;
+	float: right;
+}
+
+.navbar_buttons:hover {
+	background-color: rgb(99,193,50);
+	color: black;
+}
+
+.navbar p {
+	float: left;
+	color: white;
+	margin-left: 20px;
+}
+
+footer {
+	background-color: #286400;
+	height: 120px;
+	margin: -10px -8px;
+	padding-top: 35px;
+}
+
+footer a {
+	color: #FFFFFF;
+	margin-left: 2%;
+	margin-bottom: 15px;
+}
+
+.search {
+	margin-top: 15px;
+}
+
+.search input {
+	height: 20px;
+	width: 200px;
+	display: block;
+	margin-left: auto;
+	margin-right:44.5%;
+}
+
+.login_box {
+	background-color: #D9D9D9;
+	width: 30%;
+	margin-left:auto;
+	margin-right:auto;
+	padding-top: 10px;
+	border-radius: 10px;
+	filter: drop-shadow(0 0 0.5rem black);
+}
+
+.credentials input {
+	display: block;
+	margin-left:auto;
+	margin-right:auto;
+	width: 90%;
+	height: 30px;
+	margin-top: 10px;
+}
+
+.main {
+	margin-top: 60px;
+}
+
+.slider {
+	width: 100%;
+	height: 510px;
+	position: relative;
+}
+
+.slider img {
+	width: 101%;
+	height: 500px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin: 0 -8px;
+	margin-bottom: -10px;
+}
+
+.slider img:first-child {
+	z-index: 1;
+}
+
+.slider img:nth-child(2) {
+	z-index: 0;
+}
+
+.slider_button {
+	text-align: center;
+	position: relative;
+	background-color: #D9D9D9;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin: -10px -8px;
+	
+}
+
+.dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	margin-top: 1px;
+	background-color: #286400;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.active,.dot:hover {
+	background-color: #63C132;
+}
+
+.homeButtons {
+	background-color: #9EE37D;
+	display: block;
+	color: white;
+	text-align: center;
+	font-size: 25px;
+	width: 300px;
+	height: 75px;
+	line-height: 75px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	filter: drop-shadow(0 0 0.5rem grey);
+}
+
+.homeButtons a {
+	color: white;
+}
+
+.content {
+    margin: auto;
+    max-width: 55%;
+    height: 90%;
+    min-width: 1200px;
+}
+
+.identifiers {
+    color: black;
+    font-size: 30;
+}
+
+.bodytext {
+    color: rgb(78, 78, 78);
+    font-size: 25;
+}
+
+
+.titletext {
+    color: 286400;
+    font-size: 45;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 95%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.result {
+    list-style-type: none;
+    padding: 10px;
+    display: flex;
+    width: 97%;
+    height: automatic;
+    overflow: hidden;
+    background-color: D9D9D9;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.result:hover {
+    box-shadow: 0 0 5px 2px rgb(0, 76, 0);
+}
+
+.resulttext {
+    display: grid;
+    margin-left: 20px;
+    overflow-wrap: anywhere;
+    width: 65%;
+    gap: 0; /* No spacing between grid items */
+}
+
+.resulttext > * {
+    margin: 0; /* Removes default margin from child elements */
+    padding: 0; /* Removes default padding from child elements */
+}
+
+
+#noresult {
+    list-style-type: none;
+    font-size: 40;
+    font-weight: 20;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.platdiv {
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;    
+}
+
+.platimgborder {
+    background-color: rgba(167, 192, 194, 0.764);
+    padding: 5px;
+    margin-right: 10px;
+    max-width: 250px;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.platimg {
+    max-width: 100px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+    padding: 5px;
+}
+
+
+.miscinfo {
+    float: right;
+    border-color: black;
+    width: 25%;
+    margin-right: 30px;
+    color: grey;
+    text-align: right;
+    font-size: 25;
+}
+
+.thumbnailsearch {
+    padding: 5px;
+    width: 225px;
+    height: 300px;
+    border-radius: 20px;
+}
+
+.filtercontainer {
+    margin-left: 30px;
+    display: inline-block;
+}
+
+.filtercontainer:hover .filterbutton{
+    background-color: lightgreen;
+}
+
+.filtercontainer button{
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: black solid transparent;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.filters .selectAllButton {
+    font-size: 15px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.filters .selectAllButton:hover {
+    background-color: lightgreen;
+}
+
+.filtercontainer .filters {
+    position: absolute;
+    background-color: white;
+    min-width: 250px;
+    box-shadow: 0px 10px 30px 5px grey ;
+    display: none; 
+    flex-direction: column; 
+    height: auto; 
+    border-radius: 5px;
+}
+
+.filtercontainer:hover .filters {
+    display: grid;
+}
+
+.filtercontainer .filters ul{
+    list-style-type: none;
+    display: block;
+    padding: 5px 7px;
+    background-color: white;
+}
+
+.filtercontainer .filters ul li label {
+    cursor: pointer;
+    display: block;
+}
+
+.filtercontainer .filters .filterlabeltext {
+    margin-left: 2px;
+    font-size: 20px;
+}
+
+.filtercontainer .filters .filtercount {
+    float: right;
+    margin-right: 2px;
+    font-size: 20px;
+    color: rgb(170, 170, 170);
+}
+
+.filtercontainer .filters .orderoption {
+    border: none;
+    background-color: white;
+    border-radius: 0px;
+}
+
+.filtercontainer .filters .orderoption:hover {
+    background-color: lightgreen;
+}
+
+.minmaxrange {
+    position: relative;
+    height: 30px; /* Total height of the component */
+    width: 100%;
+}
+
+.rangefill {
+    position: absolute;
+    height: 6px;
+    background-color: lightgreen;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2; /* Above the gray bar but below the handles */
+    border-radius: 3px;
+}
+
+.range-bar {
+    position: absolute;
+    height: 6px;
+    background-color: lightgrey;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; /* Below everything else */
+    border-radius: 3px;
+    width: 100%;
+}
+
+.range {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent; /* No background for the slider track */
+    width: 100%;
+    height: 25px; /* Large enough clickable area */
+    z-index: 3;
+    pointer-events: none;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: green;
+    cursor: pointer;
+    z-index: 4;
+    pointer-events: auto; /* Allow interaction */
+    position: relative;
+    top: -5px; /* Adjust for vertical alignment */
+    left: -2px
+}
+
+.range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: transparent;
+    border-radius: 3px;
+}
+
+.minmax {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.minmax div {
+    display: flex;
+    flex-direction: column; /* Align label and input vertically */
+    margin-left: -10px; 
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.minmax input {
+    width: 50px; /* Set a reasonable width for inputs */
+    text-align: center; /* Center-align input text */
+    margin-left: 8.5px;
+    width: 70px;
+    height: 25px;
+    font-size: 15px;
+}
+
+#slidernum {
+    font-size: 20px;
+}
+
+#backButton {
+    position: fixed;
+    color: #0b6000;
+    font-size: 20px;
+    margin-left: 30px;
+    display: block;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px black;
+    background-color: #9EE37D;
+    cursor: pointer;
+}
+
+.gameTopContainer {
+    margin-top: 90px;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	margin-bottom: 0;
+    justify-content: space-between;
+    color: #0b6000;
+}
+
+.gameCoverArtItem {
+    width: 500px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right:0;
+    box-shadow: 0px 0px 20px 5px #414141;
+}
+
+.gameInfoContainer {
+	background-color: #9EE37D;
+	display: grid;
+	width: 100%;
+	max-height: 700px;
+	margin-left: 30px;
+	border-radius: 10px;
+    font-size: 30px;
+    padding: 15px;
+}
+
+.gameInfoText {
+	margin-left: 20px;
+	margin-top: 10px;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+.gameDescription {
+	margin-top: -30px;
+	background-color: #dfffd1;
+	border-radius: 5px;
+    font-size: 20px;
+}
+
+#descriptionText {
+    padding: 0px 10px 0px 10px;
+}
+
+.categories {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.categoryList {
+    list-style-type: none;
+    margin-left: -36px;
+    font-size: 25px;
+}
+
+.categInfo {
+    color: #414141
+    ;
+}
+
+.categInfo a {
+    cursor: pointer;
+}
+
+.reviewListTitle {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
+.reviewFormContainer {
+    background-color: #9EE37D;
+    width: 100%;
+    margin: auto;
+    margin-top: 50px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reviewFormContainer textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    background-color: #dfffd1;
+    color: black;
+    font-size: 20px;
+}
+
+.reviewFormContainer form {
+    width: 100%;
+    padding: 30px;
+    display: grid;
+}
+
+.reviewMisc {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reviewFormContainer form label {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.reviewFormContainer form input[type="text"] {
+    width: 30%;
+    height: 30px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: #dfffd1;
+    color: black;
+}
+
+.reviewFormContainer form select {
+    width: 80px;
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.reviewFormContainer form input[type="submit"] {
+    width: 220px;
+    height: 75px;
+    font-size: 30px;
+    float: right;
+}
+
+.recommendButton {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#recommendContainer {
+    display: grid;
+}
+
+#recommendInput label {
+    padding: 10px 20px;
+    border: 2px solid #9EE37D;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    margin-right: 10px;
+}
+
+#recommendInput input[type="radio"] {
+    display: none;;
+}
+
+#ratingContainer {
+    display: grid;
+}
+
+/* profile css */
+
+.topContainer {
+	display: flex;
+	width: 100%;
+	height: 40%;
+	margin-top: 50px;
+	justify-content: flex-start;
+	flex-flow: row wrap;
+
+}
+
+.avatarItem {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+}	
+
+.pfp {
+    border-radius: 50%;
+	width: 100%;
+	height: 100%;
+}
+
+/* Top right container and items */
+.infoContainer {
+	display: flex;
+	width: 76%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	margin-top: 2%;
+	flex-direction: column;
+	gap: 25px;
+}
+
+#usernameContainer {
+	background-color: #9EE37D;
+	border-radius: 20px;
+}
+
+#usernameText {
+	margin-left: 3%;
+}
+
+.bioContainer {
+	background-color:#9EE37D;
+	border-radius:20px;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 2%;
+}
+
+.bioContents {
+	margin: 3%;
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+}
+	
+/* bottom container */
+
+.bottomContainerText {
+	margin-left: 2%;
+	height: auto;
+}
+
+.reviewsContainer {
+
+	display: flex;
+	height: auto;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.reviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.reviewItem {
+	list-style-type: none;
+    display: flex;
+	justify-content: flex-start;
+	flex-direction: row;
+    width: 100%;
+    height: auto;
+    background-color: #9EE37D;
+    border-radius: 10px;
+}
+
+.thumbnailContainer {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+	border-radius: 5px;
+}
+
+.thumbnailImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+.reviewInfoContainer {
+	display: flex;
+	align-items: flex-start;
+	flex-flow: column wrap;
+	gap: 15px;
+	margin: 2% 2% 2% 0;
+	width:  98%;
+	height: auto;
+}
+
+.reviewInfoText {
+	margin-left: 25px;
+	overflow: wrap;
+}
+
+.reviewTitleContainer {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 100%;
+}
+
+.reviewRatingContainer {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 15px;
+}
+
+.reviewRating {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 25%;
+}
+
+.reviewRecommend {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 35%;
+}
+
+.reviewBodyContainer {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 100%;
+}
+
+#reviewUsernameText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* settings css */
+
+.settingsContentContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	margin-left: 0.9%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.settingsHeaderContainer {
+	background-color: #D9D9D9;
+	margin: 2%;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 0;
+}
+
+.settingsHeaderText {
+    margin-left: 25px;
+    margin-bottom: 0;
+}
+
+.settingsOptionsContainer {
+    display: flex;
+    flex-direction: column;
+	background-color: #D9D9D9;
+	border-radius: 0 0 10px 10px;
+	margin: 2%;
+	margin-top: 0;
+}
+
+.profileOptionsContainer {
+    background-color: white;
+    margin: 25px;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.profileOptionsItem {
+    margin-left: 25px;
+}
+
+.bioEditor {
+	width: 96%;
+	padding: 10px;
+	font-size: 1em;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	size: 96%
+}
+
+.privacyOptionsContainer {
+    background-color: white;
+    margin: 25px;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.privacyOptionsItem {
+	margin-left: 2%;
+	margin-bottom: 2%;
+    width: 100%;
+}
+
+#bioForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#bioButton {
+    height: 200px;
+    width: 500px;
+}
+
+#save {
+    height: 35px;
+    width: 100px;
+}
