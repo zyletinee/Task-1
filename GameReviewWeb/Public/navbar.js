@@ -24,7 +24,7 @@ function updateNavbar() {
 	if (loggedIn) {
 		navRight.innerHTML = `
 			<button class="profileButton">
-				<img src="/Assets/pfp_${loggedID}.png" id="navPfp" alt="Profile Picture"></img>
+				<img id="navPfp" alt="Profile Picture"></img>
 			</button>
 			<div id="navDropdown">
 				<a href="/profile/${loggedID}/" class="navbar_buttons">Profile</a>
@@ -32,7 +32,17 @@ function updateNavbar() {
 				<button id="logoutButton" class="navbar_buttons" style="background-color: transparent; font-size: 20px">Logout</button>
 			</div>
 		`;
+		const navPFP = document.getElementById("navPfp");
+		const profilePicUrl = `/Assets/pfp_${loggedID}.png`;
 
+		// Check if the profile picture exists
+		fetch(profilePicUrl, { method: "HEAD" })
+			.then((response) => {
+				navPFP.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+			})
+			.catch(() => {
+				navPFP.src = "/Assets/Default-PFP.png";
+			});
 		const logoutButton = document.getElementById("logoutButton");
 		logoutButton.addEventListener('click', async (e) => {
 			e.preventDefault();

@@ -46,6 +46,89 @@ const genreIDs = {
     12: "Social"
 };
 
+// Declare global variables
+let loggedIn = false;
+let loggedID = null;
+
+// Function to check login status
+async function checkLogin() {
+    try {
+        const response = await fetch('/api/status');
+        if (!response.ok) {
+            throw new Error('Failed to check login status');
+        }
+
+        const data = await response.json();
+
+        // Update global variables
+        loggedIn = data.loggedIn;
+        loggedID = data.loggedIn ? data.userid : null;
+    } catch (error) {
+        console.error('Error checking login status:', error);
+    }
+}
+
+async function initialize() {
+    await checkLogin();
+    updateNavbar();
+}
+
+// Call the function to initialize global variables and update navbar
+initialize();
+
+//navbar
+// Function to update the navbar
+function updateNavbar() {
+	const navRight = document.getElementById("nav-right");
+	navRight.innerHTML = ''; // Clear existing buttons
+
+	if (loggedIn) {
+		navRight.innerHTML = `
+			<button class="profileButton">
+				<img id="navPfp" alt="Profile Picture"></img>
+			</button>
+			<div id="navDropdown">
+				<a href="/profile/${loggedID}" class="navbar_buttons">Profile</a>
+				<a href="/settings" class="navbar_buttons">Settings</a>
+				<button id="logoutButton" class="navbar_buttons" style="background-color: transparent; font-size: 20px">Logout</button>
+			</div>
+		`;
+        const navPFP = document.getElementById("navPfp");
+        const profilePicUrl = `/Assets/pfp_${loggedID}.png`;
+
+        // Check if the profile picture exists
+        fetch(profilePicUrl, { method: "HEAD" })
+            .then((response) => {
+                navPFP.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+            })
+            .catch(() => {
+                navPFP.src = "/Assets/Default-PFP.png";
+            });
+		const logoutButton = document.getElementById("logoutButton");
+		logoutButton.addEventListener('click', async (e) => {
+			e.preventDefault();
+
+			try {
+				const response = await fetch('/logout', { method: 'POST' });
+				if (response.ok) {
+					alert('Logout successful!');
+					window.location.href = '/';
+				} else {
+					alert('Failed to log out.');
+				}
+			} catch (error) {
+				console.error('Error logging out:', error);
+				alert('An error occurred while logging out.');
+			}
+		});
+	} else {
+		navRight.innerHTML = `
+			<a href="/Login" class="navbar_buttons">Login</a>
+			<a href="/signup" class="navbar_buttons">Signup</a>
+		`;
+	}
+}
+
 function styleDate(date) {
     const arr = date.split('');
     const year = arr.slice(0, 4).join("");
@@ -61,15 +144,26 @@ const bioTitle = document.getElementById("bioTitle")
 const pReviewTitle = document.getElementById("personalReviewTitle")
 
 async function loadUserPage() {
+    const tabtitle = document.getElementById("tabtitle");
     const pathArray = window.location.pathname.split('/');
     const userID = pathArray[2]
     const username = pathArray[3].replace(/-/g, " ");
     const response = await fetch(`/api/users`);
     const users = await response.json();
     const user = users[userID-1];
+    tabtitle.textContent = `${username} - Game Reviews Now!`
 
     // Set the profile picture, username, and bio
-    profilePic.src = `/Assets/pfp_${userID}.png`
+    const userPFP = document.getElementById("userPfp");
+    const profilePicUrl = `/Assets/pfp_${userID}.png`; // Use userID instead of loggedID
+    // Check if the profile picture exists
+    fetch(profilePicUrl, { method: "HEAD" })
+        .then((response) => {
+            userPFP.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+        })
+        .catch(() => {
+            userPFP.src = "/Assets/Default-PFP.png";
+        });
     uname.textContent = username;
     userBio.textContent = user.bio;
     bioTitle.textContent = `About ${username}`;
@@ -77,6 +171,7 @@ async function loadUserPage() {
 
     loadReviews(userID)
 }
+
 
 async function loadReviews(userID) {
     try {
@@ -140,6 +235,44 @@ async function loadReviews(userID) {
             reviewTitle.textContent = review.title; // Review title
             reviewTitleContainer.appendChild(reviewTitle);
 
+            // Create the delete button if logged in user made the review
+            if (loggedIn && userID == loggedID) {
+                console.log('created button');
+                // Create the delete button
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('deleteReview');
+                deleteButton.textContent = 'Delete';
+
+                // Add an event listener to handle deletion
+                deleteButton.addEventListener('click', async () => {
+                    try {
+                        const response = await fetch('/delete-review', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ reviewid: review.reviewid })
+                        });
+
+                        const result = await response.json(); // Parse JSON response
+
+                        if (response.ok) {
+                            alert(result.message);
+                            reviewList.removeChild(li); // Remove the review from the list
+                            window.location.reload();
+                        } else {
+                            alert(result.message || 'Failed to delete review.');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting review:', error);
+                        alert('An error occurred while deleting the review.');
+                    }
+                });
+
+                // Append the delete button to the review item
+                reviewTitleContainer.appendChild(deleteButton);
+            }
+
             // Create the rating container
             const reviewRatingContainer = document.createElement('div');
             reviewRatingContainer.classList.add('reviewRatingContainer');
@@ -188,13 +321,5 @@ async function loadReviews(userID) {
     }
 }
 
-loadUserPage();
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetch('/navbar.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("navbar-container").innerHTML = html;
-        })
-        .catch(err => console.error("Error loading navbar:", err));
-});
+loadUserPage();

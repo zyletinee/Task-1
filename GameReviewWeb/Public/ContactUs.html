@@ -8,15 +8,8 @@
 
 <body>
     <!-- nav bar -->
-<div class="navbar" autofocus>	
-    <a href="/Home/"><img id="logo" src="Assets\grn_logo.png" style="height: 100%; float: left; margin-left: 10px"></a>
-    <a href="/Login/" class="navbar_buttons">Login</a></li>
-    <a href="/Signup/" class="navbar_buttons">Signup</a></li>
-  
-		<div class="search">
-			<input type="text" name="search" id="search" placeholder="Search" autocomplete="off">
-		</div> 
-</div>
+    <div id="navbar-container"></div>
+	<script src="/navbar.js" defer></script>
 
 <!-- Page Divs -->
     <div class="contentContainer">
@@ -25,5 +18,16 @@
             If you have any queries, you can contact us at grnadmin@gamereviews.com!
         </p>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('/navbar.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("navbar-container").innerHTML = html;
+                })
+                .catch(err => console.error("Error loading navbar:", err));
+            
+        });
+    </script>
 </body>
 </html>

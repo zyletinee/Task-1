@@ -8,8 +8,8 @@ var timer = setInterval(changeSlide, interval);
 
 const links = [
 	"/search",
-	"/game/$26/",
-	"/GamePage"
+	"/game/26/",
+	"https://www.pcgamer.com/games/action/the-yakuza-studio-is-making-a-new-action-game-set-in-1915-japan/"
 ];
 
 link.href = links[currentImg];
@@ -41,3 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Error loading navbar:", err));
 });
+
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+	  navigator.serviceWorker.register('/service-worker.js', { scope: '/Public/' })
+		.then(registration => {
+		  console.log('Service Worker registered with scope:', registration.scope);
+		})
+		.catch(error => {
+		  console.error('Service Worker registration failed:', error);
+		});
+	});
+};

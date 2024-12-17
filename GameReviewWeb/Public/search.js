@@ -102,7 +102,7 @@ function updateNavbar() {
 	if (loggedIn) {
 		navRight.innerHTML = `
 			<button class="profileButton">
-				<img src="/Assets/pfp_${loggedID}.png" id="navPfp" alt="Profile Picture"></img>
+				<img id="navPfp" alt="Profile Picture"></img>
 			</button>
 			<div id="navDropdown">
 				<a href="/profile/${loggedID}" class="navbar_buttons">Profile</a>
@@ -110,7 +110,17 @@ function updateNavbar() {
 				<button id="logoutButton" class="navbar_buttons" style="background-color: transparent; font-size: 20px">Logout</button>
 			</div>
 		`;
+        const navPFP = document.getElementById("navPfp");
+        const profilePicUrl = `/Assets/pfp_${loggedID}.png`;
 
+        // Check if the profile picture exists
+        fetch(profilePicUrl, { method: "HEAD" })
+            .then((response) => {
+                navPFP.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+            })
+            .catch(() => {
+                navPFP.src = "/Assets/Default-PFP.png";
+            });
 		const logoutButton = document.getElementById("logoutButton");
 		logoutButton.addEventListener('click', async (e) => {
 			e.preventDefault();
@@ -233,7 +243,7 @@ let filters = {
     publishers: [],
     scores: [],
     platforms: [],
-    sort: "Relevance",
+    sort: "",
     searchTerm: ""
 };
 
@@ -258,6 +268,9 @@ function loadFiltersFromURL() {
     filters.platforms = urlParams.get('platforms') ? urlParams.get('platforms').split(',') : [];
     filters.sort = urlParams.get('sort') || 'Relevance';
     filters.searchTerm = urlParams.get('search') || '';
+
+    // Update the sort UI
+    updateSortUI();
 }
 
 
@@ -391,7 +404,7 @@ async function loadSearchResults(event) {
         } else {
             const sortby = event.target.innerHTML;
             filters.sort = String(sortby);
-            document.getElementById("sortorder").innerHTML = sortby + " ▾";
+            updateSortUI();
         }
 
         // Update URL with new filters
@@ -436,7 +449,7 @@ async function loadSearchResults(event) {
 
             return genreMatch && developerMatch && publisherMatch && platformMatch && scoreMatch;
         });
-        
+
         const { countedGenres, countedDevs, countedPubs, countedPlats } = countFilters(namesMatch);
         generateFilters(countedGenres, "genres", "genreList");
         generateFilters(countedDevs, "developers", "devList");
@@ -461,11 +474,11 @@ async function loadSearchResults(event) {
 
         } else {
             const selectedSort = filters.sort;
-        
+
             matchingResults.sort((a, b) => {
                 if (selectedSort === "Relevance") {
-                    const aFullMatch = a.name.toLowerCase().includes(truncated);
-                    const bFullMatch = b.name.toLowerCase().includes(truncated);
+                    const aFullMatch = a.name.toLowerCase().includes(searchTerm.toLowerCase());
+                    const bFullMatch = b.name.toLowerCase().includes(searchTerm.toLowerCase());
                     if (aFullMatch && !bFullMatch) return -1;
                     if (!aFullMatch && bFullMatch) return 1;
                     return 0;
@@ -493,7 +506,7 @@ async function loadSearchResults(event) {
                 list.appendChild(newItem);
             });
         };
-        
+
         const slidernum = document.getElementById("slidernum");
         slidernum.textContent = `${matchingResults.length} Results`;
 
@@ -520,18 +533,18 @@ function updateRange(initial=false) {
         minSlider.value = min
         maxSlider.value = max
     };
-    
+
     const minPercent = (min / minSlider.max) * 100;
     const maxPercent = (max / maxSlider.max) * 100;
 
     rangeFill.style.left = `${minPercent}%`;
     rangeFill.style.width = `${maxPercent - minPercent}%`;
-    
+
     minValue.value = (min / 10).toFixed(1);
     maxValue.value = (max / 10).toFixed(1);
     filters.scores = [parseFloat(minValue.value), parseFloat(maxValue.value)];
     updateURLWithFilters();
-        
+
     loadSearchResults(null);
 }
 
@@ -585,4 +598,17 @@ Object.entries(filters).forEach(([k, v]) => {
             sAllBtn.textContent = "Clear All";
         }
     }
+});
+
+// Add a new function to update the sort UI
+function updateSortUI() {
+    const sortOrder = document.getElementById("sortorder");
+    if (sortOrder) {
+        sortOrder.innerHTML = filters.sort + " ▾";
+    }
+}
+
+// Call loadFiltersFromURL when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadSearchResults();
 });

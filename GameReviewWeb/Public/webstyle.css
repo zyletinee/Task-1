@@ -4,6 +4,11 @@ html {
     scroll-behavior: smooth;
 }
 
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
 body {
     background-color: rgb(255, 255, 255);
     font-family: verdana;
@@ -24,7 +29,6 @@ body {
     width: 100%;
     height: 60px;
     overflow: visible;
-    margin: 0px -8px;
     margin-bottom: 60px;
     top: 0;
     z-index: 2;
@@ -104,13 +108,10 @@ body {
 
 footer {
     background-color: #286400;
-    height: 120px;
-    margin: -10px -8px;
-    padding-top: 35px;
-    background-color: #286400;
 	height: 120px;
-	margin: -10px -8px;
 	padding-top: 35px;
+	width: 100%;
+    position: relative;
 }
 
 footer a {
@@ -133,10 +134,12 @@ footer a {
     height: 30px;
     width: 250px;
     display: block;
+
 }
 
 .login_box {
     background-color: #D9D9D9;
+    margin-top: 150px;
     width: 30%;
     margin-left: auto;
     margin-right: auto;
@@ -154,6 +157,19 @@ footer a {
     margin-top: 10px;
 }
 
+#loginMessage {
+    width: 50%; 
+    color: red; 
+    font-size: 10px; 
+    margin-left: 40px;
+}
+
+.noAccountLink {
+    float: right;
+    margin-right: 20px;
+    padding-bottom: 10px;
+}
+
 .main {
     margin-top: 60px;
     margin-top: 50px;
@@ -163,22 +179,22 @@ footer a {
 }
 
 .slider {
-    width: 100%;
-    height: 510px;
-    position: relative;
-    width: 100%;
-	height: 510px;
+    height: 310px;
 	position: relative;
+	background-color: black;
+	width: 100%;
 }
 
 .slider img {
-  width: 1920px;
-	height: 500px;
+	height: 100%;
 	position: absolute;
-	top: 0;
-	left: 0;
+    overflow-x: hidden;
+	top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -51%); 
 	padding: 0px;
-	margin: 0 -8px;
+	display: flex;
+    flex-shrink: 0;
 	margin-bottom: -10px;
 }
 
@@ -197,8 +213,6 @@ footer a {
     top: 0;
     left: 0;
     padding: 0px;
-    margin: -10px -8px;
-
 }
 
 .dot {
@@ -237,9 +251,8 @@ footer a {
 
 .content {
     margin: auto;
-    max-width: 55%;
-    height: 90%;
-    min-width: 1200px;
+    width: 55%;
+    height: 100%;
 }
 
 .identifiers {
@@ -261,7 +274,7 @@ footer a {
 .container {
     display: flex;
     flex-direction: column;
-    height: 95%;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -539,15 +552,16 @@ a {
 
 #backButton {
     position: fixed;
-    color: #0b6000;
+    color: white;
     font-size: 20px;
+    margin-top: 80px;
     margin-left: 30px;
     display: block;
     width: 100px;
     height: 50px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px black;
-    background-color: #9EE37D;
+    background-color: red;
     cursor: pointer;
 }
 
@@ -733,68 +747,32 @@ a {
 /* profile css */
 
 .topContainer {
-	display: flex;
-	width: 100%;
-	height: 40%;
-	margin-top: 50px;
-	justify-content: flex-start;
-	flex-flow: row wrap;
+    margin-top: 90px;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 0;
+    justify-content: space-between;
+    color: #0b6000;
 
 }
 
 .avatarItem {
-	width: 20%;
-	height: 20%;
-	margin: 2%;
-}	
+    width: 400px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right: 0;
+    flex-shrink: 0;
+    margin: auto;
+}
 
 .pfp {
+    display: flex;
+    margin: auto;
     border-radius: 50%;
-	width: 100%;
-	height: 100%;
-}
-
-/* Top right container and items */
-.infoContainer {
-	display: flex;
-	width: 76%;
-	height: auto;
-	margin: 0;
-	padding: 0;
-	margin-top: 2%;
-	flex-direction: column;
-	gap: 25px;
-}
-
-#usernameContainer {
-	background-color: #9EE37D;
-	border-radius: 20px;
-}
-
-#usernameText {
-	margin-left: 3%;
-}
-
-.bioContainer {
-	background-color:#9EE37D;
-	border-radius:20px;
-	width: 100%;
-	height: 100%;
-	margin-bottom: 2%;
-}
-
-.bioContents {
-	margin: 3%;
-	margin-top: 0;
-	width: 100%;
-	height: 100%;
-}
-	
-/* bottom container */
-
-.bottomContainerText {
-	margin-left: 2%;
-	height: auto;
+    width: 300px;
+    height: 300px;
+    background-color: white;
 }
 
 #reviewUsernameText {
@@ -841,8 +819,6 @@ a {
     width: 100%;
     height: 100%;
 }
-
-/* review template */
 
 .reviewsContainer {
 
@@ -943,20 +919,20 @@ a {
 /* settings css */
 
 .settingsContentContainer {
-	display: flex;
-	width: 98%;
-	height: 40%;
-	margin-top: 50px;
-	margin-left: 0.9%;
-	justify-content: flex-start;
-	flex-flow: column wrap;
+    display: flex;
+    width: 98%;
+    height: 40%;
+    margin-top: 50px;
+    margin-left: 0.9%;
+    justify-content: flex-start;
+    flex-flow: column wrap;
 }
 
 .settingsHeaderContainer {
-	background-color: #D9D9D9;
-	margin: 2%;
-	border-radius: 10px 10px 0 0;
-	margin-bottom: 0;
+    background-color: #D9D9D9;
+    margin: 2%;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
 }
 
 .settingsHeaderText {
@@ -967,10 +943,11 @@ a {
 .settingsOptionsContainer {
     display: flex;
     flex-direction: column;
-	background-color: #D9D9D9;
-	border-radius: 0 0 10px 10px;
-	margin: 2%;
-	margin-top: 0;
+    background-color: #D9D9D9;
+    border-radius: 0 0 10px 10px;
+    margin: 2%;
+    margin-top: 0;
+    height: fit-content;
 }
 
 .profileOptionsContainer {
@@ -985,13 +962,13 @@ a {
 }
 
 .bioEditor {
-	width: 96%;
-	padding: 10px;
-	font-size: 1em;
-	margin: 10px 0;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	size: 96%
+    width: 96%;
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    size: 96%
 }
 
 .privacyOptionsContainer {
@@ -1002,8 +979,8 @@ a {
 }
 
 .privacyOptionsItem {
-	margin-left: 2%;
-	margin-bottom: 2%;
+    margin-left: 2%;
+    margin-bottom: 2%;
     width: 100%;
 }
 

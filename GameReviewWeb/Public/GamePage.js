@@ -85,7 +85,7 @@ function updateNavbar() {
 	if (loggedIn) {
 		navRight.innerHTML = `
 			<button class="profileButton">
-				<img src="/Assets/pfp_${loggedID}.png" id="navPfp" alt="Profile Picture"></img>
+				<img id="navPfp" alt="Profile Picture"></img>
 			</button>
 			<div id="navDropdown">
 				<a href="/profile/${loggedID}" class="navbar_buttons">Profile</a>
@@ -93,7 +93,17 @@ function updateNavbar() {
 				<button id="logoutButton" class="navbar_buttons" style="background-color: transparent; font-size: 20px">Logout</button>
 			</div>
 		`;
+        const navPFP = document.getElementById("navPfp");
+        const profilePicUrl = `/Assets/pfp_${loggedID}.png`;
 
+        // Check if the profile picture exists
+        fetch(profilePicUrl, { method: "HEAD" })
+            .then((response) => {
+                navPFP.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+            })
+            .catch(() => {
+                navPFP.src = "/Assets/Default-PFP.png";
+            });
 		const logoutButton = document.getElementById("logoutButton");
 		logoutButton.addEventListener('click', async (e) => {
 			e.preventDefault();
@@ -171,7 +181,9 @@ async function loadGamePage() {
     const response = await fetch("/api/gameresults");
     const games = await response.json();
     const game = games[gameID-1];
-
+    const tabtitle = document.getElementById("tabtitle");
+    
+    tabtitle.textContent = `${gameName} - Game Reviews Now!`
     ratingLink.innerText = `${game.averagescore}/5`;
     writeReview.innerText = `Write a Review for ${gameName}`
     devLink.innerText = game.developer
@@ -186,7 +198,16 @@ async function loadGamePage() {
     description.innerText = game.description;
     if (loggedIn) {
         reviewProfile.href = `/profile/${loggedID}`;
-        reviewProfileImg.src = `/Assets/pfp_${loggedID}.png`;
+        const profilePicUrl = `/Assets/pfp_${loggedID}.png`;
+
+        // Check if the profile picture exists
+        fetch(profilePicUrl, { method: "HEAD" })
+            .then((response) => {
+                reviewProfileImg.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+            })
+            .catch(() => {
+                reviewProfile.src = "/Assets/Default-PFP.png";
+            });
     } else {
         reviewContainer.innerHTML = `
             <p style="font-size: 20px;">
@@ -228,19 +249,13 @@ async function loadGamePage() {
 
 async function loadReviews(gameId) {
     try {
-        // Fetch reviews from the API endpoint
-        const response = await fetch(`/api/gamereviews/${gameId}`);
+        // Fetch reviews with user data from the API endpoint
+        const response = await fetch(`/api/joined-reviews/${gameId}`);
         if (!response.ok) {
             throw new Error('Failed to load reviews');
         }
 
-        const responseUser = await fetch(`/api/users`);
-        if (!responseUser.ok) {
-            throw new Error('Failed to load user');
-        }
-
         const reviews = await response.json();
-        const users = await responseUser.json();
 
         // Get the review list container
         const reviewList = document.getElementById('reviewList');
@@ -259,8 +274,6 @@ async function loadReviews(gameId) {
         }
         // Loop through the reviews and create the HTML dynamically
         reviews.forEach(review => {
-            const user = users.find(user => user.userid === parseInt(review.userid));
-
             // Create the list item <li>
             const li = document.createElement('li');
             li.classList.add('reviewItem');
@@ -275,17 +288,27 @@ async function loadReviews(gameId) {
             const thumbnailContainer = document.createElement('div');
             thumbnailContainer.classList.add('avatarItem');
             const thumbnailLink = document.createElement('a');
-            thumbnailLink.href = `/profile/${user.userid}/${user.username}`; // Replace with actual link if needed
+            thumbnailLink.href = `/profile/${review.userid}/${review.username}`; // Use user data from the review
             const thumbnailImage = document.createElement('img');
             thumbnailImage.classList.add('pfp');
-            thumbnailImage.src = `/Assets/pfp_${user.userid}.png` // Replace with profile picture later
+            const profilePicUrl = `/Assets/pfp_${review.userid}.png`;
+
+            fetch(profilePicUrl, { method: 'HEAD' })
+                .then(response => {
+                    thumbnailImage.src = response.ok ? profilePicUrl : '/Assets/Default-PFP.png';
+                })
+                .catch(() => {
+                    thumbnailImage.src = '/Assets/Default-PFP.png';
+                });
+
             thumbnailImage.alt = 'User Profile Picture';
             const username = document.createElement("h1");
-            username.id = "reviewUsernameText"
-            username.innerText = user.username
+            username.id = "reviewUsernameText";
+            username.innerText = review.username; // Use user data from the review
             thumbnailLink.appendChild(thumbnailImage);
             thumbnailLink.appendChild(username);
             thumbnailContainer.appendChild(thumbnailLink);
+
 
             // Create the review info container
             const reviewInfoContainer = document.createElement('div');
@@ -301,7 +324,7 @@ async function loadReviews(gameId) {
             reviewTitleContainer.appendChild(reviewTitle);
 
             // Create the delete button if logged in user made the review
-            if (loggedIn && user.userid === loggedID) {
+            if (loggedIn && review.userid === loggedID) {
                 // Create the delete button
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('deleteReview');
@@ -317,9 +340,9 @@ async function loadReviews(gameId) {
                             },
                             body: JSON.stringify({ reviewid: review.reviewid })
                         });
-                
+
                         const result = await response.json(); // Parse JSON response
-                        
+
                         if (response.ok) {
                             alert(result.message);
                             reviewList.removeChild(li); // Remove the review from the list
@@ -336,6 +359,7 @@ async function loadReviews(gameId) {
                 // Append the delete button to the review item
                 reviewTitleContainer.appendChild(deleteButton);
             }
+
 
             // Create the rating container
             const reviewRatingContainer = document.createElement('div');

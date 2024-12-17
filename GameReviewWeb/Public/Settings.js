@@ -1,4 +1,84 @@
-// front end
+// Declare global variables
+let loggedIn = false;
+let loggedID = null;
+// Function to check login status
+async function checkLogin() {
+    try {
+        const response = await fetch('/api/status');
+        if (!response.ok) {
+            throw new Error('Failed to check login status');
+        }
+        const data = await response.json();
+        console.log('Login status:', data); // Debugging line
+        loggedIn = data.loggedIn;
+        loggedID = data.userid;
+    } catch (error) {
+        console.error('Error checking login status:', error);
+    }
+}
+
+
+async function initialize() {
+    await checkLogin();
+    updateNavbar();
+}
+
+// Call the function to initialize global variables and update navbar
+window.addEventListener('DOMContentLoaded', initialize);
+
+
+//navbar
+// Function to update the navbar
+function updateNavbar() {
+	const navRight = document.getElementById("nav-right");
+	navRight.innerHTML = ''; // Clear existing buttons
+
+	if (loggedIn) {
+		navRight.innerHTML = `
+			<button class="profileButton">
+				<img id="navPfp" alt="Profile Picture"></img>
+			</button>
+			<div id="navDropdown">
+				<a href="/profile/${loggedID}" class="navbar_buttons">Profile</a>
+				<a href="/settings" class="navbar_buttons">Settings</a>
+				<button id="logoutButton" class="navbar_buttons" style="background-color: transparent; font-size: 20px">Logout</button>
+			</div>
+		`;
+        const navPFP = document.getElementById("navPfp");
+        const profilePicUrl = `/Assets/pfp_${loggedID}.png`;
+
+        // Check if the profile picture exists
+        fetch(profilePicUrl, { method: "HEAD" })
+            .then((response) => {
+                navPFP.src = response.ok ? profilePicUrl : "/Assets/Default-PFP.png";
+            })
+            .catch(() => {
+                navPFP.src = "/Assets/Default-PFP.png";
+            });
+		const logoutButton = document.getElementById("logoutButton");
+		logoutButton.addEventListener('click', async (e) => {
+			e.preventDefault();
+
+			try {
+				const response = await fetch('/logout', { method: 'POST' });
+				if (response.ok) {
+					alert('Logout successful!');
+					window.location.href = '/';
+				} else {
+					alert('Failed to log out.');
+				}
+			} catch (error) {
+				console.error('Error logging out:', error);
+				alert('An error occurred while logging out.');
+			}
+		});
+	} else {
+		navRight.innerHTML = `
+			<a href="/Login" class="navbar_buttons">Login</a>
+			<a href="/signup" class="navbar_buttons">Signup</a>
+		`;
+	}
+}
 
 // previewing pfp function
 document.getElementById('uploadPfp').addEventListener('change', function(event) {
@@ -10,6 +90,76 @@ document.getElementById('uploadPfp').addEventListener('change', function(event) 
     }
 });
 
+document.getElementById("pfpForm").addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const profilePicture = formData.get('profilePicture');
+
+    if (!profilePicture) {
+        alert('Please select a profile picture.');
+        return;
+    }
+
+    if (!profilePicture.type.startsWith('image/png')) {
+        alert('Please select a PNG image.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/upload-pfp', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload profile picture');
+        }
+
+        const data = await response.json();
+        alert(data.message);
+        window.location.href = `/profile/${loggedID}`;
+    } catch (error) {
+        console.error('Error uploading profile picture:', error);
+        alert('An error occurred while uploading the profile picture.');
+    }
+});
+
+document.getElementById("passwordForm").addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const oldPassword = formData.get('oldPassword');
+    const newPassword = formData.get('newPassword');
+
+    if (!oldPassword || !newPassword) {
+        alert('Please enter both old and new passwords.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/update-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update password');
+        }
+
+        const data = await response.json();
+        alert(data.message);
+        window.location.href = `/profile/${loggedID}`;
+    } catch (error) {
+        console.error('Error updating password:', error);
+        alert('An error occurred while updating your password.');
+    }
+});
+
 // changing bio function
 document.querySelector('#bioForm').addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -17,80 +167,11 @@ document.querySelector('#bioForm').addEventListener('submit', async function(eve
     const response = await fetch('/update-bio', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bio: bioText })
+        body: JSON.stringify({ 
+            bio: bioText,
+        })
     });
     const result = await response.json();
     alert(result.message);
-});
-
-// back end 
-
-// using multer api to upload and save pfp
-const multer = require('multer');
-const upload = multer({ dest: 'Databases/' }); // Set upload folder
-const bcrypt = require('bcrypt');
-
-app.post('/upload-pfp', upload.single('profilePicture'), (req, res) => {
-    const file = req.file;
-    if (!file) return res.status(400).json({ message: 'No file uploaded' });
-    // save file info to the database (e.g., file.path, userID)
-    res.json({ message: 'Profile picture updated successfully' });
-});
-
-// updating bio
-async function updateBioInDB(userID, bio) {
-    const query = 'UPDATE users SET bio = ? WHERE userid = ?';
-    await db.execute(query, [bio, userID]); 
-}
-
-app.post('/update-bio', async (req, res) => {
-    const { bio } = req.body;
-    const userID = req.user.id;
-    // update the bio in the database
-    try {
-        await updateBioInDB(userID, bio);
-        res.json({ message: 'Bio updated successfully!' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to update bio.' });
-    }
-});
-
-// updating password in db
-
-async function getUserFromDB(userID) {
-    const query = 'SELECT * FROM users WHERE userid = ?';
-    const [rows] = await db.execute(query, [userID]);
-    return rows[0]; // return the user's row
-}
-
-async function updatePasswordInDB(userID, hashedPassword) {
-    const query = 'UPDATE users SET password = ? WHERE userid = ?';
-    await db.execute(query, [hashedPassword, userID]);
-}
-
-app.post('/update-password', async (req, res) => {
-    const { oldPassword, newPassword } = req.body;
-    const userID = getUserFromDB(userID)
-
-    try {
-        const user = await getUserFromDB(userID);
-
-        // Verify old password
-        const isMatch = await bcrypt.compare(oldPassword, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Old password is incorrect' });
-        }
-
-        // Hash new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-        // Update password in DB
-        await updatePasswordInDB(userID, hashedPassword);
-
-        res.json({ message: 'Password updated successfully!' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to update password.' });
-    }
+    window.location.href = `/profile/${loggedID}`;
 });

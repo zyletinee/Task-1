@@ -1,6 +1,13 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const multer = require('multer');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = 3000;
@@ -8,11 +15,40 @@ const PORT = 3000;
 let gamesDict = {};
 let usersDict = {};
 
-// Serve static files from the "Public" directory
 app.use(express.static(path.join(__dirname, 'Public')));
-
-// Middleware to parse JSON body
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({
+    secret: 'your-secret-key', // Replace with your own secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set secure to true in production
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
+    const user = await getUserFromDB(id);
+    done(null, user);
+});
+
+
+
+// Database path
+const dbPath = path.join(__dirname, 'Databases', 'grn.db');
+
+// Initialize database connection globally
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error('Error connecting to the database:', err.message);
+    } else {
+        console.log('Connected to the SQLite database.');
+    }
+});
 
 // Route to handle review deletion
 app.delete('/delete-review', (req, res) => {
@@ -43,6 +79,15 @@ app.get('/', (req, res) => {
 // Serve the home page
 app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'Public', 'Home.html'));
+});
+
+// About us and contact pages
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Public', 'AboutUs.html'));
+})
+
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Public', 'ContactUs.html'));
 });
 
 // Serve the search page
@@ -101,18 +146,6 @@ app.get('/profile/:userID/:username?', (req, res) => {
     });
 });
 
-
-// Database path
-const dbPath = path.join(__dirname, 'Databases', 'grn.db');
-
-// Initialize database connection globally
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-    }
-});
 
 // Endpoint to fetch API results and populate the dictionary
 app.get('/api/gameresults', (req, res) => {
@@ -241,24 +274,26 @@ app.post('/submit-review', (req, res) => {
     });
 });
 
+// Endpoint to fetch joined reviews and user data
+app.get('/api/joined-reviews/:gameid', (req, res) => {
+    const gameId = req.params.gameid;
+    const query = `
+        SELECT reviews.reviewid, reviews.title, reviews.recommend, reviews.rating, reviews.content, reviews.userid, users.username
+        FROM reviews
+        JOIN users ON reviews.userid = users.userid
+        WHERE reviews.gameid = ?
+    `;
+    
+    db.all(query, [gameId], (err, rows) => {
+        if (err) {
+            console.error('Error fetching joined reviews:', err.message);
+            return res.status(500).json({ error: 'Failed to fetch reviews' });
+        }
 
-
-const bodyParser = require("body-parser");
-const bcrypt = require("bcryptjs");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken"); // For token-based authentication
-
-// Middleware setup
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(session({
-    secret: "your-secret-key", // Change to a strong secret
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false } // Set to true if using HTTPS
-}));
+        // Send the joined reviews and user data as a JSON response
+        res.json(rows);
+    });
+});
 
 // Login Route
 app.post("/login", (req, res) => {
@@ -266,7 +301,7 @@ app.post("/login", (req, res) => {
 
     // Check if user exists
     const query = 'SELECT * FROM users WHERE username = ?';
-    db.get(query, [username], (err, result) => {
+    db.get(query, [username], async (err, result) => {
         if (err) {
             return res.status(500).json({ error: "Error retrieving user" });
         }
@@ -275,26 +310,55 @@ app.post("/login", (req, res) => {
             return res.status(400).json({ error: "Invalid username or password" });
         }
 
-        // Hash the password from the database for testing purposes
-        bcrypt.hash(result.password, 10, async (err, hashedPassword) => {
-            if (err) {
-                return res.status(500).json({ error: "Error hashing password" });
-            }
+        // Compare the provided password with the stored hashed password
+        const validPassword = await bcrypt.compare(password, result.password);
+        if (!validPassword) {
+            return res.status(400).json({ error: "Invalid username or password" });
+        }
 
-            // Compare the provided password with the hashed password
-            const validPassword = await bcrypt.compare(password, hashedPassword);
-            if (!validPassword) {
-                return res.status(400).json({ error: "Invalid username or password" });
-            }
-
-            // Set session and cookie
-            req.session.user = { id: result.userid, username: result.username };
-            res.cookie("isLoggedIn", true); // Optional cookie to detect login on frontend
-            res.send({ message: "Login successful", user: req.session.user });
-        });
+        // Set session and cookie
+        req.session.user = { id: result.userid, username: result.username };
+        res.cookie("isLoggedIn", true); // Optional cookie to detect login on frontend
+        res.send({ message: "Login successful", user: req.session.user });
     });
 });
 
+app.post('/api/signup', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'All fields are required.' });
+    }
+
+    try {
+        // Check if the username already exists
+        const queryCheck = 'SELECT * FROM users WHERE username = ?';
+        db.get(queryCheck, [username], async (err, user) => {
+            if (err) {
+                return res.status(500).json({ error: 'Database error.' });
+            }
+            if (user) {
+                return res.status(400).json({ error: 'Username already exists.' });
+            }
+
+            // Hash the password and insert new user
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const queryInsert = `INSERT INTO users (username, password) VALUES (?, ?)`;
+
+            db.run(queryInsert, [username, hashedPassword], function (err) {
+                if (err) {
+                    return res.status(500).json({ error: 'Failed to create user.' });
+                }
+
+                // Auto-login the user after successful signup
+                req.session.user = { id: this.lastID, username };
+                res.status(201).json({ message: 'Signup successful!' });
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error.' });
+    }
+});
 
 // Logout Route
 app.post("/logout", (req, res) => {
@@ -316,6 +380,119 @@ app.get("/api/status", (req, res) => {
     });
 
 });
+
+// Multer configuration
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, 'Public', 'Assets')); // Directory where the file will be saved
+    },
+    filename: (req, file, cb) => {
+        if (!req.session.user || !req.session.user.id) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+        const userId = req.session.user.id;
+        const standardizedFileName = `pfp_${userId}.png`;
+        cb(null, standardizedFileName); // Set the file name
+    }
+});
+
+const upload = multer({ storage });
+
+// Profile picture upload
+app.post('/upload-pfp', upload.single('profilePicture'), (req, res) => {
+    const file = req.file;
+    if (!file) return res.status(400).json({ message: 'No file uploaded' });
+    // Save file info to the database (e.g., file.path, userID)
+    res.json({ message: 'Profile picture updated successfully' });
+});
+
+// Updating bio
+async function updateBioInDB(userID, bio) {
+    const query = 'UPDATE users SET bio = ? WHERE userid = ?';
+    await db.run(query, [bio, userID]); 
+}
+
+app.post('/update-bio', async (req, res) => {
+    const { bio } = req.body;
+    const userID = req.session.user?.id; // Access the userID from the session
+
+    if (!userID || !bio) {
+        return res.status(400).json({ message: 'Invalid request data' });
+    }
+
+    try {
+        await updateBioInDB(userID, bio);
+        res.json({ message: 'Bio updated successfully!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update bio.' });
+    }
+});
+
+
+async function updatePasswordInDB(userID, hashedPassword) {
+    const query = 'UPDATE users SET password = ? WHERE userid = ?';
+    await db.run(query, [hashedPassword, userID]);
+}
+
+// Updating password in the database
+async function getUserFromDB(userID) {
+    const query = 'SELECT * FROM users WHERE userid = ?';
+    const row = await db.get(query, [userID]);
+    return row;
+}
+
+app.post('/update-password', async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const userID = req.session.user?.id;
+
+    if (!userID || !oldPassword || !newPassword) {
+        return res.status(400).json({ message: 'Invalid request data' });
+    }
+
+    try {
+        // Fetch the user from the database
+        const query = 'SELECT * FROM users WHERE userid = ?';
+        
+        // Use db.get for a single row
+        const row = await new Promise((resolve, reject) => {
+            db.get(query, [userID], (err, row) => {
+                if (err) reject(err);
+                resolve(row);
+            });
+        });
+
+        if (!row) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Verify old password
+        const isMatch = await bcrypt.compare(oldPassword, row.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Old password is incorrect' });
+        }
+
+        // Hash new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update password in DB
+        const updateQuery = 'UPDATE users SET password = ? WHERE userid = ?';
+        await new Promise((resolve, reject) => {
+            db.run(updateQuery, [hashedPassword, userID], (err) => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
+
+        res.json({ message: 'Password updated successfully!' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update password.' });
+    }
+});
+
+
 
 // Start the server
 app.listen(PORT, () => {

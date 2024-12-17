@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<link rel="stylesheet" href="/webstyle.css">
+	<link rel="manifest" href="/manifest.json">
 <header>
-  <title>
-  Task 1 Website
-  </title>
+  <title>Game Reviews Now!</title>
 </header>
 <body>
 	<div id="navbar-container"></div>
 	<script src="/navbar.js" defer></script>
-	<br>
-	<br>
-	<br>
-	<div style="height: 100px;"></div>
 	<div class="login_box" style="height: 290px;">
 		<form id="credentials" class="credentials">
 			<input type="text" name="username" id="username" placeholder="Username" autocomplete="off" required>
-			<input type="text" name="password" id="password" placeholder="Password" autocomplete="off" required>
+			<input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password" required>
+			<p id="loginMessage"></p>
 			<button type="submit" class="homeButtons" form="credentials" style="margin-top: 50px; cursor: pointer;">Log in</button>
 		</form> 
-		
+		<a class="noAccountLink" href="/signup">Don't have an account?</a>
 	</div>
-	<p id="loginMessage" style="text-align: center; margin-left: auto; margin-right: auto; width: 50%; color: red; font-size: 64px; background-color: rgba(100,100,100, .75);">something about the<br>event listener is<br>breaking the<br>code</p>
 	<script src="/Login.js"></script>
 </body>
 </html>

@@ -6,85 +6,35 @@
 	<title>
 	Game Reviews Now!
 	</title>
-	<img src="/Assets/grn.png">
 </header>
 
 <body>
 	<div id="navbar-container"></div>
-	<script src="navbar.js" defer></script>
+	<script src="/navbar.js" defer></script>
 	
 <!-- main content -->
 	<div class="main">
 	<!-- image slider -->
 		<div class="slider">
-			<a id="slider-link" href="#"><img id="img-1" src="Assets\therefore_i_am.jpg" alt="Green"/></a>
-			<img id="img-2" src="Assets\specter_built_different.jpg" alt="Specter"/>
-			<img id="img-3" src="Assets\rui_explodes_your_balls.png" alt="Rui"/>
+			<a id="slider-link" href="#"><img id="img-1" src="/Assets/review.png" alt="Review"/></a>
+			<img id="img-2" src="/Assets/featured_game.png" alt="Featured game"/>
+			<img id="img-3" src="/Assets/news.png" alt="News"/>
 		</div>
 		<div class="slider_button">
 			<span class="dot active" onclick="changeSlide(0)"></span>
 			<span class="dot" onclick="changeSlide(1)"></span>
 			<span class="dot" onclick="changeSlide(2)"></span>
 		</div>
-		<!-- image slider js -->
-		<script>
-			var imgs = document.querySelectorAll('.slider img');
-			var dots = document.querySelectorAll('.dot');
-			var link = document.getElementById('slider-link');
-			var currentImg = 0; // index of the first image 
-			const interval = 5000; // duration(speed) of the slide
-			var timer = setInterval(changeSlide, interval);	
-			
-			const links = [
-				"Home.html", 
-				"search.html", 
-				"GamePage.html"  
-			];
-			
-			function changeSlide(n) {
-				for (var i = 0; i < imgs.length; i++) { // reset
-					imgs[i].style.opacity = 0; // makes inactive images invisible
-					dots[i].className = dots[i].className.replace(' active', '');
-				}
-
-				currentImg = (currentImg + 1) % imgs.length; // update the index number
-
-				if (n != undefined) { // if a button is clicked
-					clearInterval(timer);
-					timer = setInterval(changeSlide, interval);
-					currentImg = n;
-}
-
-				imgs[currentImg].style.opacity = 1;
-				dots[currentImg].className += ' active';
-				link.href = links[currentImg];
-			}
-		</script>
-	<!-- image slider end -->	
-		<div>
-			<p style="text-align: center; font-size: 48px;">
-				review games now or else
-			</p>
-			<a href="Search.html">
-				<div class="homeButtons">
-					<p>
-						Review a Game
-					</p>
-				</div>
-			</a>
-			<a href="Home.html">
-				<div class="homeButtons">
-					<p>
-						Suggest a Game
-					</p>
-				</div>
+	<div style="height: 50px;"></div>
+		<div class="homeButtons">
+			<a href="/Search">
+				<p>Browse Games</p>
 			</a>
 		</div>
 	</div>
-	<div style="height: 100px;"></div>
 	<footer>
-		<a href="https://www.youtube.com/watch?v=EtgNPaI8S60">About Us</a><br><br>
-		<a href="https://www.youtube.com/watch?v=2dbR2JZmlWo">Contact Us</a>
+		<a href="/about">About Us</a><br><br>
+		<a href="/contact">Contact Us</a>
 	</footer>
 <script src="/Home.js"></script>
 </body>
