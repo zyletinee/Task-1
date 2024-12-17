@@ -4,11 +4,6 @@ html {
     scroll-behavior: smooth;
 }
 
-html, body {
-	margin: 0;
-	padding: 0;
-}
-
 body {
     background-color: rgb(255, 255, 255);
     font-family: verdana;
@@ -116,7 +111,6 @@ footer {
 	height: 120px;
 	margin: -10px -8px;
 	padding-top: 35px;
-	min-width: 100%;
 }
 
 footer a {
@@ -139,7 +133,6 @@ footer a {
     height: 30px;
     width: 250px;
     display: block;
-
 }
 
 .login_box {
@@ -176,19 +169,16 @@ footer a {
     width: 100%;
 	height: 510px;
 	position: relative;
-	background-color: black;
-	width: 100%;
 }
 
 .slider img {
-    width: 1920px;
+  width: 1920px;
 	height: 500px;
 	position: absolute;
-	top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -51%); 
+	top: 0;
+	left: 0;
 	padding: 0px;
-	display: block;
+	margin: 0 -8px;
 	margin-bottom: -10px;
 }
 
@@ -549,7 +539,7 @@ a {
 
 #backButton {
     position: fixed;
-    color: white;
+    color: #0b6000;
     font-size: 20px;
     margin-left: 30px;
     display: block;
@@ -557,7 +547,7 @@ a {
     height: 50px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px black;
-    background-color: red;
+    background-color: #9EE37D;
     cursor: pointer;
 }
 
@@ -743,32 +733,120 @@ a {
 /* profile css */
 
 .topContainer {
-    margin-top: 90px;
-    display: flex;
-    width: 100%;
-    height: fit-content;
-    margin-bottom: 0;
-    justify-content: space-between;
-    color: #0b6000;
+	display: flex;
+	width: 100%;
+	height: 40%;
+	margin-top: 50px;
+	justify-content: flex-start;
+	flex-flow: row wrap;
 
 }
 
 .avatarItem {
-    width: 400px;
-    max-height: 700px;
-    overflow-x: hidden;
-    margin-right: 0;
-    flex-shrink: 0;
-    margin: auto;
-}
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+}	
 
 .pfp {
-    display: flex;
-    margin: auto;
     border-radius: 50%;
-    width: 300px;
-    height: 300px;
-    background-color: white;
+	width: 100%;
+	height: 100%;
+}
+
+/* Top right container and items */
+.infoContainer {
+	display: flex;
+	width: 76%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	margin-top: 2%;
+	flex-direction: column;
+	gap: 25px;
+}
+
+#usernameContainer {
+	background-color: #9EE37D;
+	border-radius: 20px;
+}
+
+#usernameText {
+	margin-left: 3%;
+}
+
+.bioContainer {
+	background-color:#9EE37D;
+	border-radius:20px;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 2%;
+}
+
+.bioContents {
+	margin: 3%;
+	margin-top: 0;
+	width: 100%;
+	height: 100%;
+}
+	
+/* bottom container */
+
+.bottomContainerText {
+	margin-left: 2%;
+	height: auto;
+}
+
+.reviewsContainer {
+	display: flex;
+	height: auto;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.reviewsList {
+	list-style-type: none;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.reviewItem {
+	list-style-type: none;
+    display: flex;
+	justify-content: flex-start;
+	flex-direction: row;
+    width: 100%;
+    height: auto;
+    background-color: #9EE37D;
+    border-radius: 10px;
+}
+
+.thumbnailContainer {
+	width: 20%;
+	height: 20%;
+	margin: 2%;
+	border-radius: 5px;
+}
+
+.thumbnailImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+.reviewInfoContainer {
+	display: flex;
+	align-items: flex-start;
+	flex-flow: column wrap;
+	gap: 15px;
+	margin: 2% 2% 2% 0;
+	width:  98%;
+	height: auto;
+}
+
+.reviewInfoText {
+	margin-left: 25px;
+	overflow: wrap;
 }
 
 #reviewUsernameText {
@@ -815,7 +893,6 @@ a {
     width: 100%;
     height: 100%;
 }
-
 .reviewsContainer {
 
     display: flex;
@@ -972,4 +1049,124 @@ a {
     background-color: lightgoldenrodyellow;
     margin-left: 4%;
     margin-bottom: 2%;
+}
+
+.reviewTitleContainer {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 100%;
+}
+
+.reviewRatingContainer {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 15px;
+}
+
+.reviewRating {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 25%;
+}
+
+.reviewRecommend {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 35%;
+}
+
+.reviewBodyContainer {
+	background-color: #dfffd1;
+	border-radius: 5px;
+	width: 100%;
+}
+
+#reviewUsernameText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* settings css */
+
+.settingsContentContainer {
+	display: flex;
+	width: 98%;
+	height: 40%;
+	margin-top: 50px;
+	margin-left: 0.9%;
+	justify-content: flex-start;
+	flex-flow: column wrap;
+}
+
+.settingsHeaderContainer {
+	background-color: #D9D9D9;
+	margin: 2%;
+	border-radius: 10px 10px 0 0;
+	margin-bottom: 0;
+}
+
+.settingsHeaderText {
+    margin-left: 25px;
+    margin-bottom: 0;
+}
+
+.settingsOptionsContainer {
+    display: flex;
+    flex-direction: column;
+	background-color: #D9D9D9;
+	border-radius: 0 0 10px 10px;
+	margin: 2%;
+	margin-top: 0;
+}
+
+.profileOptionsContainer {
+    background-color: white;
+    margin: 25px;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.profileOptionsItem {
+    margin-left: 25px;
+}
+
+.bioEditor {
+	width: 96%;
+	padding: 10px;
+	font-size: 1em;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	size: 96%
+}
+
+.privacyOptionsContainer {
+    background-color: white;
+    margin: 25px;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+.privacyOptionsItem {
+	margin-left: 2%;
+	margin-bottom: 2%;
+    width: 100%;
+}
+
+#bioForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#bioButton {
+    height: 200px;
+    width: 500px;
+}
+
+#save {
+    height: 35px;
+    width: 100px;
 }
