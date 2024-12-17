@@ -4,6 +4,11 @@ html {
     scroll-behavior: smooth;
 }
 
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
 body {
     background-color: rgb(255, 255, 255);
     font-family: verdana;
@@ -13,6 +18,9 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
+    display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .navbar {
@@ -104,6 +112,11 @@ footer {
     height: 120px;
     margin: -10px -8px;
     padding-top: 35px;
+    background-color: #286400;
+	height: 120px;
+	margin: -10px -8px;
+	padding-top: 35px;
+	min-width: 100%;
 }
 
 footer a {
@@ -113,8 +126,13 @@ footer a {
 }
 
 .search {
-    margin-top: 15px;
     margin: auto;
+    margin-top: 15px;
+	height: 20px;
+	width: 200px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .search input {
@@ -145,23 +163,33 @@ footer a {
 
 .main {
     margin-top: 60px;
+    margin-top: 50px;
+	margin-bottom: 120px;
+	height: 100%;
+	flex: 1;
 }
 
 .slider {
     width: 100%;
     height: 510px;
     position: relative;
+    width: 100%;
+	height: 510px;
+	position: relative;
+	background-color: black;
+	width: 100%;
 }
 
 .slider img {
-    width: 101%;
-    height: 500px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0px;
-    margin: 0 -8px;
-    margin-bottom: -10px;
+    width: 1920px;
+	height: 500px;
+	position: absolute;
+	top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -51%); 
+	padding: 0px;
+	display: block;
+	margin-bottom: -10px;
 }
 
 .slider img:first-child {
