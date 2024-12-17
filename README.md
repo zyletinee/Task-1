@@ -6,13 +6,14 @@ Storyboard link available [here](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6
 1. Download the node.js installer through [this link](https://nodejs.org/en/download/prebuilt-installer) and run the file.
 2. Install SQLite using the command line using `npm install sqlite3`.
 3. Similarly, you will need to install several APIs and packages with the same command (`npm install [module name]`):
-    - Require
-    - Express
-    - Express-session
-    - Multer
-    - Passport
-    - Bcryptjs
+    - require
+    - express
+    - express-session
+    - multer
+    - passport
+    - bcryptjs
     - body-parser
     - cookie-parser
+    - jsonwebtoken
 4. Run `node [full filepath]\server.js` in the command line.
 5. The command line will return `Server running at http://localhost:3000`; type `http://localhost:3000/home` in your browser.
