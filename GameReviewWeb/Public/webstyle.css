@@ -1,183 +1,220 @@
 html {
     scrollbar-width: none;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-html, body {
-	margin: 0;
-	padding: 0;
+    scroll-behavior: smooth;
 }
 
 body {
-	background-color: rgb(255,255,255);
-	font-family: verdana;
-	color: black;
-	font-size: 100%;
-	background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
+    background-color: rgb(255, 255, 255);
+    font-family: verdana;
+    color: black;
+    font-size: 100%;
+    background-image: linear-gradient(rgba(126, 207, 82, 0.7), rgba(103, 86, 255, 0.4)), url("Assets/background.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
 }
 
 .navbar {
-	background-color: rgb(53,134,0);
-	position: fixed;
-	width: 100%;
-	height: 60px;
-	overflow: hidden;
-	margin-bottom: 60px;
-	top: 0;
-	z-index: 2;
+    background-color: rgb(53, 134, 0);
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    overflow: visible;
+    margin: 0px -8px;
+    margin-bottom: 60px;
+    top: 0;
+    z-index: 2;
+    display: flex;
 }
 
 .navbar_buttons {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 20px 16px;
-	margin-right: 20px;
-	text-decoration: none;
-	float: right;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 16px;
+    text-decoration: none;
+    float: right;
+    cursor: pointer;
 }
 
 .navbar_buttons:hover {
-	background-color: rgb(99,193,50);
-	color: black;
+    background-color: rgb(99, 193, 50);
+    color: black;
 }
 
 .navbar p {
-	float: left;
-	color: white;
-	margin-left: 20px;
+    float: left;
+    color: white;
+    margin-left: 20px;
+}
+
+#nav-right {
+    display: flex;
+    width: 70px;
+    height: 60px;
+    flex-shrink: 0;
+    margin-right: 100px;
+}
+
+.profileButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#navPfp {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    flex-shrink: 0;
+}
+
+#navDropdown {
+    position: absolute;
+    width: 100px;
+    display: none; 
+    z-index: 999; 
+    top: 60px; 
+    background-color: #333;
+}
+
+#nav-right:hover #navDropdown {
+    display: grid
+}
+
+#navDropdown a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    height: fit-content;
+}
+
+#navDropdown a:hover {
+    background-color: #286400;
 }
 
 footer {
-	background-color: #286400;
-	height: 120px;
-	margin: -10px -8px;
-	padding-top: 35px;
-	min-width: 100%;
+    background-color: #286400;
+    height: 120px;
+    margin: -10px -8px;
+    padding-top: 35px;
 }
 
 footer a {
-	color: #FFFFFF;
-	margin-left: 2%;
-	margin-bottom: 15px;
+    color: #FFFFFF;
+    margin-left: 2%;
+    margin-bottom: 15px;
 }
 
 .search {
-	margin-top: 15px;
-	height: 20px;
-	width: 200px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+    margin-top: 15px;
+    margin: auto;
 }
 
 .search input {
-	height: 20px;
+    height: 30px;
+    width: 250px;
+    display: block;
+
 }
 
 .login_box {
-	background-color: #D9D9D9;
-	width: 30%;
-	margin-left:auto;
-	margin-right:auto;
-	padding-top: 10px;
-	border-radius: 10px;
-	filter: drop-shadow(0 0 0.5rem black);
+    background-color: #D9D9D9;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    border-radius: 10px;
+    filter: drop-shadow(0 0 0.5rem black);
 }
 
 .credentials input {
-	display: block;
-	margin-left:auto;
-	margin-right:auto;
-	width: 90%;
-	height: 30px;
-	margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    height: 30px;
+    margin-top: 10px;
 }
 
 .main {
-	margin-top: 50px;
-	margin-bottom: 120px;
-	height: 100%;
-	flex: 1;
+    margin-top: 60px;
 }
 
 .slider {
-	width: 100%;
-	height: 510px;
-	position: relative;
-	background-color: black;
-	width: 100%;
+    width: 100%;
+    height: 510px;
+    position: relative;
 }
 
 .slider img {
-	width: 1920px;
-	height: 500px;
-	position: absolute;
-	top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -51%); 
-	padding: 0px;
-	display: block;
-	margin-bottom: -10px;
+    width: 101%;
+    height: 500px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0px;
+    margin: 0 -8px;
+    margin-bottom: -10px;
 }
 
 .slider img:first-child {
-	z-index: 1;
+    z-index: 1;
 }
 
 .slider img:nth-child(2) {
-	z-index: 0;
+    z-index: 0;
 }
 
 .slider_button {
-	text-align: center;
-	position: relative;
-	background-color: #D9D9D9;
-	top: 0;
-	left: 0;
-	padding: 0px;
-	margin: -10px -8px;
-	
+    text-align: center;
+    position: relative;
+    background-color: #D9D9D9;
+    top: 0;
+    left: 0;
+    padding: 0px;
+    margin: -10px -8px;
+
 }
 
 .dot {
-	cursor: pointer;
-	height: 15px;
-	width: 15px;
-	margin: 0 2px;
-	margin-top: 1px;
-	background-color: #286400;
-	border-radius: 50%;
-	display: inline-block;
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    margin-top: 1px;
+    background-color: #286400;
+    border-radius: 50%;
+    display: inline-block;
 }
 
-.active,.dot:hover {
-	background-color: #63C132;
+.active,
+.dot:hover {
+    background-color: #63C132;
 }
 
 .homeButtons {
-	background-color: #9EE37D;
-	display: block;
-	color: white;
-	text-align: center;
-	font-size: 25px;
-	width: 300px;
-	height: 75px;
-	line-height: 75px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom: 20px;
-	filter: drop-shadow(0 0 0.5rem black);
+    background-color: #9EE37D;
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    width: 300px;
+    height: 75px;
+    line-height: 75px;
+    margin: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 0.5rem grey);
 }
 
 .homeButtons a {
-	color: white;
+    color: white;
 }
 
 .content {
@@ -219,7 +256,7 @@ footer a {
     width: 97%;
     height: automatic;
     overflow: hidden;
-    background-color: D9D9D9;
+    background-color: #D9D9D9;
     margin-bottom: 20px;
     border-radius: 25px;
     flex-direction: row;
@@ -235,12 +272,14 @@ footer a {
     margin-left: 20px;
     overflow-wrap: anywhere;
     width: 65%;
-    gap: 0; /* No spacing between grid items */
+    gap: 0;
 }
 
-.resulttext > * {
-    margin: 0; /* Removes default margin from child elements */
-    padding: 0; /* Removes default padding from child elements */
+.resulttext>* {
+    margin: 0;
+    /* Removes default margin from child elements */
+    padding: 0;
+    /* Removes default padding from child elements */
 }
 
 
@@ -258,12 +297,12 @@ a {
 .platdiv {
     display: flex;
     max-width: 100%;
-    flex-direction: row;    
+    flex-direction: row;
 }
 
 .platimgborder {
     background-color: rgba(167, 192, 194, 0.764);
-    padding: 5px;
+    padding: 0px 5px 0px 5px;
     margin-right: 10px;
     max-width: 250px;
     max-height: 60px;
@@ -300,6 +339,7 @@ a {
     width: 225px;
     height: 300px;
     border-radius: 20px;
+    flex-shrink: 0;
 }
 
 .filtercontainer {
@@ -307,11 +347,11 @@ a {
     display: inline-block;
 }
 
-.filtercontainer:hover .filterbutton{
+.filtercontainer:hover .filterbutton {
     background-color: lightgreen;
 }
 
-.filtercontainer button{
+.filtercontainer button {
     background-color: white;
     color: black;
     padding: 10px 15px;
@@ -336,10 +376,9 @@ a {
     position: absolute;
     background-color: white;
     min-width: 250px;
-    box-shadow: 0px 10px 30px 5px grey ;
-    display: none; 
-    flex-direction: column; 
-    height: auto; 
+    box-shadow: 0px 10px 30px 5px grey;
+    display: none;
+    height: auto;
     border-radius: 5px;
 }
 
@@ -347,11 +386,14 @@ a {
     display: grid;
 }
 
-.filtercontainer .filters ul{
+.filtercontainer .filters ul {
     list-style-type: none;
     display: block;
     padding: 5px 7px;
     background-color: white;
+    max-height: 250px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 .filtercontainer .filters ul li label {
@@ -383,7 +425,8 @@ a {
 
 .minmaxrange {
     position: relative;
-    height: 30px; /* Total height of the component */
+    height: 30px;
+    /* Total height of the component */
     width: 100%;
 }
 
@@ -393,7 +436,8 @@ a {
     background-color: lightgreen;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 2; /* Above the gray bar but below the handles */
+    z-index: 2;
+    /* Above the gray bar but below the handles */
     border-radius: 3px;
 }
 
@@ -403,7 +447,8 @@ a {
     background-color: lightgrey;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1; /* Below everything else */
+    z-index: 1;
+    /* Below everything else */
     border-radius: 3px;
     width: 100%;
 }
@@ -412,9 +457,11 @@ a {
     position: absolute;
     -webkit-appearance: none;
     appearance: none;
-    background: transparent; /* No background for the slider track */
+    background: transparent;
+    /* No background for the slider track */
     width: 100%;
-    height: 25px; /* Large enough clickable area */
+    height: 25px;
+    /* Large enough clickable area */
     z-index: 3;
     pointer-events: none;
 }
@@ -428,9 +475,11 @@ a {
     background-color: green;
     cursor: pointer;
     z-index: 4;
-    pointer-events: auto; /* Allow interaction */
+    pointer-events: auto;
+    /* Allow interaction */
     position: relative;
-    top: -5px; /* Adjust for vertical alignment */
+    top: -5px;
+    /* Adjust for vertical alignment */
     left: -2px
 }
 
@@ -448,15 +497,18 @@ a {
 
 .minmax div {
     display: flex;
-    flex-direction: column; /* Align label and input vertically */
-    margin-left: -10px; 
+    flex-direction: column;
+    /* Align label and input vertically */
+    margin-left: -10px;
     padding-left: 10px;
     font-size: 20px;
 }
 
 .minmax input {
-    width: 50px; /* Set a reasonable width for inputs */
-    text-align: center; /* Center-align input text */
+    width: 50px;
+    /* Set a reasonable width for inputs */
+    text-align: center;
+    /* Center-align input text */
     margin-left: 8.5px;
     width: 70px;
     height: 25px;
@@ -483,44 +535,45 @@ a {
 
 .gameTopContainer {
     margin-top: 90px;
-	display: flex;
-	width: 100%;
-	height: fit-content;
-	margin-bottom: 0;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 0;
     justify-content: space-between;
     color: #0b6000;
 }
 
 .gameCoverArtItem {
-    width: 500px;
+    width: 400px;
     max-height: 700px;
     overflow-x: hidden;
-    margin-right:0;
+    margin-right: 0;
     box-shadow: 0px 0px 20px 5px #414141;
+    flex-shrink: 0;
 }
 
 .gameInfoContainer {
-	background-color: #9EE37D;
-	display: grid;
-	width: 100%;
-	max-height: 700px;
-	margin-left: 30px;
-	border-radius: 10px;
+    background-color: #9EE37D;
+    display: grid;
+    width: 100%;
+    max-height: 700px;
+    margin-left: 30px;
+    border-radius: 10px;
     font-size: 30px;
     padding: 15px;
 }
 
 .gameInfoText {
-	margin-left: 20px;
-	margin-top: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
     font-size: 50px;
     padding-bottom: 20px;
 }
 
 .gameDescription {
-	margin-top: -30px;
-	background-color: #dfffd1;
-	border-radius: 5px;
+    margin-top: -30px;
+    background-color: #dfffd1;
+    border-radius: 5px;
     font-size: 20px;
 }
 
@@ -540,8 +593,7 @@ a {
 }
 
 .categInfo {
-    color: #414141
-    ;
+    color: #414141;
 }
 
 .categInfo a {
@@ -554,7 +606,7 @@ a {
 }
 
 .reviewFormContainer {
-    background-color: #9EE37D;
+    background-color: #D9D9D9;
     width: 100%;
     margin: auto;
     margin-top: 50px;
@@ -565,12 +617,18 @@ a {
     align-items: center;
 }
 
+.reviewFormContainer p{
+    display: flex;
+    margin: auto;
+    padding: 60px 0px 50px 0px;
+}
+
 .reviewFormContainer textarea {
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
     height: 200px;
     resize: none;
-    background-color: #dfffd1;
+    background-color: white;
     color: black;
     font-size: 20px;
 }
@@ -597,7 +655,7 @@ a {
     height: 30px;
     padding: 5px;
     font-size: 20px;
-    background-color: #dfffd1;
+    background-color: white;
     color: black;
 }
 
@@ -627,6 +685,11 @@ a {
 
 #recommendContainer {
     display: grid;
+    margin-left: 10px;
+}
+
+#recommendContainer label {
+    font-size: 25px;
 }
 
 #recommendInput label {
@@ -641,55 +704,244 @@ a {
 }
 
 #recommendInput input[type="radio"] {
-    display: none;;
+    display: none;
+    ;
 }
 
 #ratingContainer {
     display: grid;
 }
 
-.gameBottomContainer {
-	width: 100%;
+/* profile css */
+
+.topContainer {
+    margin-top: 90px;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 0;
+    justify-content: space-between;
+    color: #0b6000;
+
 }
 
-.gameBottomContainer {
-	display: flex;
-	height: auto;
-	width: 96%;
-	margin-left: 2%;
-	justify-content: flex-start;
-	flex-flow: column wrap;
+.avatarItem {
+    width: 400px;
+    max-height: 700px;
+    overflow-x: hidden;
+    margin-right: 0;
+    flex-shrink: 0;
+    margin: auto;
 }
 
-.gameReviewsList {
-	list-style-type: none;
-	margin-left: 0;
-	padding-left: 0;
+.pfp {
+    display: flex;
+    margin: auto;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    background-color: white;
 }
 
-.gameReviewItem {
-	list-style-type: none;
-	display: flex;
-	width: 100%;
-	height: auto;
-	background-color: #9EE37D;
-	margin-bottom: 20px;
-	border-radius: 25px;
-	flex-direction: row;
-	justify-content: flex-start;
-	color: black;
+#reviewUsernameText {
+    text-align: center;
+    font-size: 30px;
 }
 
-.gameReviewInfoContainer {
-	background-color: #ffffff;
-	border-radius: 5px;
-	margin: 2%;
-	margin-left: 0;
-	width:  98%;
-	height: auto;
+/* Top right container and items */
+.infoContainer {
+    display: flex;
+    width: 76%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    margin-top: 50px;
+    flex-direction: column;
+    gap: 25px;
 }
 
-.gameReviewInfoText {
-	margin-left: 2%;
-	overflow: wrap;
+#usernameContainer {
+    background-color: #9EE37D;
+    border-radius: 20px;
+}
+
+#usernameText {
+    padding-left: 30px;
+}
+
+.bioContainer {
+    background-color: #9EE37D;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 2%;
+}
+
+.biocontainer h1 {
+    padding-left: 30px;
+}
+
+.bioContents {
+    padding: 0px 0px 30px 30px;
+    margin-top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.reviewsContainer {
+
+    display: flex;
+    height: auto;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+}
+
+.reviewsList {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.reviewItem {
+    list-style-type: none;
+    display: flex;
+    width: 100%;
+    height: automatic;
+    overflow: hidden;
+    background-color: #9EE37D;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.thumbnailContainer {
+    width: 300px;
+    border-radius: 5px;
+    padding: 30px;
+    flex-shrink: 0;
+}
+
+.thumbnailImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.reviewInfoContainer {
+    display: grid;
+    overflow-wrap: anywhere;
+    width: 100%;
+}
+
+.reviewInfoText {
+    margin-left: 25px;
+    overflow: wrap;
+    padding-right: 20px;
+}
+
+.reviewTitleContainer {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteReview {
+    height: fit-content;
+    padding: 10px;
+    background-color: red;
+    margin: auto 0;
+}
+
+.reviewRatingContainer {
+    margin-top: 20px;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 25px;
+}
+
+.reviewRating {
+    background-color: #dfffd1;
+    border-radius: 5px;
+    width: fit-content;
+    padding-right: 40px;
+}
+
+.reviewRecommend {
+    background-color: #dfffd1;
+    border-radius: 5px;
+    width: fit-content;
+    padding-right: 40px;
+}
+
+.reviewBodyContainer {
+    background-color: #dfffd1;
+    border-radius: 5px;
+    width: 95%;
+    height: 270px;
+}
+
+/* settings css */
+
+.settingsContentContainer {
+    display: flex;
+    width: 98%;
+    height: 40%;
+    margin-top: 50px;
+    margin-left: 0.9%;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+}
+
+.settingsHeaderContainer {
+    background-color: #D9D9D9;
+    margin: 2%;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
+}
+
+.settingsHeaderText {
+    margin-left: 2%
+}
+
+.settingsOptionsContainer {
+    background-color: #D9D9D9;
+    border-radius: 0 0 10px 10px;
+    margin: 2%;
+    margin-top: 0;
+}
+
+.profileOptionsContainer {
+    width: auto;
+    height: auto;
+}
+
+.profileOptionsItem {
+    background-color: aquamarine;
+    margin-left: 4%;
+    margin-bottom: 2%;
+}
+
+.bioEditor {
+    width: 96%;
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    size: 96%
+}
+
+.privacyOptionsContainer {
+    width: auto;
+    height: auto;
+}
+
+.privacyOptionsItem {
+    background-color: lightgoldenrodyellow;
+    margin-left: 4%;
+    margin-bottom: 2%;
 }

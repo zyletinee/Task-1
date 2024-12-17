@@ -14,6 +14,28 @@ app.use(express.static(path.join(__dirname, 'Public')));
 // Middleware to parse JSON body
 app.use(express.json());
 
+// Route to handle review deletion
+app.delete('/delete-review', (req, res) => {
+    const { reviewid } = req.body;
+    if (!reviewid) {
+        return res.status(400).json({ message: 'Review ID is required.' });
+    }
+
+    const query = 'DELETE FROM reviews WHERE reviewid = ?';
+
+    db.run(query, [reviewid], function (err) {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to delete review.' });
+        }
+
+        if (this.changes > 0) {
+            res.status(200).json({ message: 'Review deleted successfully!' });
+        } else {
+            res.status(404).json({ message: 'Review not found.' });
+        }
+    });
+});
+
 app.get('/', (req, res) => {
     res.redirect('/home');
 });
@@ -61,23 +83,24 @@ app.get('/game/:gameID/:gameName?', (req, res) => {
     }
 });
 
-//Handle profile page requests
 app.get('/profile/:userID/:username?', (req, res) => {
     const userID = req.params.userID;
-    const user = usersDict[userID];
 
-    if (user) {
-        // Redirect to the correct profile URL if username is missing or incorrect
-        const correctUsername = user.username.replace(/ /g, "-");
-        if (!req.params.username || req.params.username.toLowerCase()!== correctUsername.toLowerCase()) {
-            res.redirect(`/profile/${userID}/${correctUsername}`);
-        } else {
-            res.sendFile(path.join(__dirname, 'Public', 'Profile.html'));
+    const query = 'SELECT * FROM users WHERE userid = ?';
+    db.get(query, [userID], (err, user) => {
+        if (err || !user) {
+            return res.redirect('/home'); // Redirect if user not found or error occurs
         }
-    } else {
-        res.redirect('/home');
-    }
+
+        const correctUsername = user.username.replace(/ /g, "-").toLowerCase();
+        if (!req.params.username || req.params.username.toLowerCase() !== correctUsername) {
+            return res.redirect(`/profile/${userID}/${correctUsername}`);
+        }
+
+        res.sendFile(path.join(__dirname, 'Public', 'Profile.html'));
+    });
 });
+
 
 // Database path
 const dbPath = path.join(__dirname, 'Databases', 'grn.db');
@@ -116,7 +139,7 @@ app.get('/api/gamereviews/:gameid', (req, res) => {
         if (err) {
             return res.status(500).json({ error: 'Failed to fetch reviews' });
         }
-        
+
         // Send the reviews as a JSON response
         res.json(rows);
     });
@@ -175,7 +198,7 @@ function updateAverageScores() {
                     return;
                 }
 
-                const averageRating = row.averageRating || null; // Default to null if no reviews
+                const averageRating = Math.round(row.averageRating * 10)/10 || null; // Default to null if no reviews
 
                 // SQL query to update the average score in the "game" table
                 const updateQuery = 'UPDATE game SET averagescore = ? WHERE id = ?';
@@ -218,6 +241,8 @@ app.post('/submit-review', (req, res) => {
     });
 });
 
+
+
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
@@ -235,7 +260,6 @@ app.use(session({
     cookie: { secure: false } // Set to true if using HTTPS
 }));
 
-// Login Route
 // Login Route
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
@@ -274,10 +298,15 @@ app.post("/login", (req, res) => {
 
 // Logout Route
 app.post("/logout", (req, res) => {
-    req.session.destroy();
-    res.clearCookie("isLoggedIn");
-    res.send({ message: "Logout successful" });
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send({ message: "Error logging out" });
+        }
+        res.clearCookie("isLoggedIn");
+        res.send({ message: "Logout successful" });
+    });
 });
+
 
 // Check Login Status
 app.get("/api/status", (req, res) => {
@@ -285,10 +314,22 @@ app.get("/api/status", (req, res) => {
         loggedIn: !!req.session.user,
         userid: req.session.user?.id || null  // Assuming `id` is the user identifier
     });
+
 });
 
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
     updateAverageScores();
+    const query = 'SELECT * FROM users';
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            console.error('Error preloading users:', err);
+            return;
+        }
+        rows.forEach(row => {
+            usersDict[row.userid] = row; // Populate users dictionary
+        });
+        console.log('Users preloaded.');
+    });
 });

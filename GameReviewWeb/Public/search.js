@@ -64,6 +64,79 @@ const genreIDs = {
     15: "Sandbox"
 };
 
+// Declare global variables
+let loggedIn = false;
+let loggedID = null;
+
+// Function to check login status
+async function checkLogin() {
+    try {
+        const response = await fetch('/api/status');
+        if (!response.ok) {
+            throw new Error('Failed to check login status');
+        }
+
+        const data = await response.json();
+
+        // Update global variables
+        loggedIn = data.loggedIn;
+        loggedID = data.loggedIn ? data.userid : null;
+    } catch (error) {
+        console.error('Error checking login status:', error);
+    }
+}
+
+async function initialize() {
+    await checkLogin();
+    updateNavbar();
+}
+
+// Call the function to initialize global variables and update navbar
+initialize();
+
+//navbar
+function updateNavbar() {
+	const navRight = document.getElementById("nav-right");
+	navRight.innerHTML = ''; // Clear existing buttons
+
+	if (loggedIn) {
+		navRight.innerHTML = `
+			<button class="profileButton">
+				<img src="/Assets/pfp_${loggedID}.png" id="navPfp" alt="Profile Picture"></img>
+			</button>
+			<div id="navDropdown">
+				<a href="/profile/${loggedID}" class="navbar_buttons">Profile</a>
+				<a href="/settings" class="navbar_buttons">Settings</a>
+				<button id="logoutButton" class="navbar_buttons" style="background-color: transparent; font-size: 20px">Logout</button>
+			</div>
+		`;
+
+		const logoutButton = document.getElementById("logoutButton");
+		logoutButton.addEventListener('click', async (e) => {
+			e.preventDefault();
+
+			try {
+				const response = await fetch('/logout', { method: 'POST' });
+				if (response.ok) {
+					alert('Logout successful!');
+					window.location.href = '/';
+				} else {
+					alert('Failed to log out.');
+				}
+			} catch (error) {
+				console.error('Error logging out:', error);
+				alert('An error occurred while logging out.');
+			}
+		});
+	} else {
+		navRight.innerHTML = `
+			<a href="/Login" class="navbar_buttons">Login</a>
+			<a href="/signup" class="navbar_buttons">Signup</a>
+		`;
+	}
+}
+
+
 function generateStyledLI(idx, title, date, dev, genre, publisher, score, plat) {
     const newHyperlink = document.createElement("a");
     newHyperlink.href = `/game/${idx}/${title.replace(/ /g, "-")}`; 
@@ -122,7 +195,12 @@ function generateStyledLI(idx, title, date, dev, genre, publisher, score, plat) 
     const dateP = document.createElement("p");
     dateP.textContent = styleDate(date.toString());
     const rateP = document.createElement("p");
-    rateP.textContent = `Rating: ${score}/5`;
+    if (score !== null) {
+        rateP.textContent = `Rating: ${score}/5`;
+    } else {
+        rateP.textContent = "No Reviews";
+    }
+    
 
     divmisc.appendChild(dateP);
     divmisc.appendChild(rateP);
@@ -329,7 +407,6 @@ async function loadSearchResults(event) {
         const response = await fetch('/api/gameresults');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const results = await response.json();
-
         let keywordRegex = new RegExp(keywords.join('|'), 'i');
         let namesMatch = results.filter(result => {
             const nameMatch = keywordRegex.test(result.name);
