@@ -1,7 +1,7 @@
 # Task 1 - Game Review Website 
 ## Links/resources
 Storyboard link available [here](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6tivo/errm-what-the-software?node-id=0-1&node-type=canvas&t=GjsXLj45NbczPVXD-0).
-Directory structure available [here](https://zyletinee.s-ul.eu/dgHwzCd9) and algorithms available [here](https://zyletinee.s-ul.eu/fHoP8srb)
+Directory structure available [here](https://zyletinee.s-ul.eu/dgHwzCd9) and algorithms available [here](https://zyletinee.s-ul.eu/fHoP8srb).
 
 ## Running the website
 After downloading the full package, follow these steps.
