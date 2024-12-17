@@ -1,14 +1,10 @@
 # Task 1 - Game Review Website 
-[storyboard link](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6tivo/errm-what-the-software?node-id=0-1&node-type=canvas&t=GjsXLj45NbczPVXD-0)
+Storyboard link available [here](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6tivo/errm-what-the-software?node-id=0-1&node-type=canvas&t=GjsXLj45NbczPVXD-0).
 
-# To do list
-*Home Page*
-- Style sheet + nav bar
+# Running the website
 
-*Profile & Game*
-- Dynamic pages
-
-*Databases*
-- Finalise list of 25 games
-- Create database
-
+1. Download the node.js installer through [this link](https://nodejs.org/en/download/prebuilt-installer) and run the file.
+2. Install SQLite using the command line using `npm install sqlite3`.
+3. Similarly, install the 'require' module using the command `npm install require` and the 'express' module using `npm install express`.
+4. Run `node [full filepath]\server.js`.
+5. The command line will return `Server running at http://localhost:3000`; type `http://localhost:3000/home`.
