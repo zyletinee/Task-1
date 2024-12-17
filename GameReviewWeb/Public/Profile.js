@@ -321,5 +321,14 @@ async function loadReviews(userID) {
     }
 }
 
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+        const query = searchInput.value.trim();
+        if (query !== '') {
+            window.location.href = `/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=${encodeURIComponent(query)}`;
+        }
+    }
+});
 
 loadUserPage();

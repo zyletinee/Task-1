@@ -160,6 +160,16 @@ document.getElementById("passwordForm").addEventListener('submit', async functio
     }
 });
 
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+        const query = searchInput.value.trim();
+        if (query !== '') {
+            window.location.href = `/search?genres=&developers=&publishers=&scores=0%2C5&platforms=&sort=Relevance&search=${encodeURIComponent(query)}`;
+        }
+    }
+});
+
 // changing bio function
 document.querySelector('#bioForm').addEventListener('submit', async function(event) {
     event.preventDefault();
