@@ -8,8 +8,11 @@ Storyboard link available [here](https://www.figma.com/design/uQ2JnGr9XZXFZzvTu6
 3. Similarly, you will need to install several APIs and packages with the same command (`npm install [module name]`):
     - Require
     - Express
+    - Express-session
     - Multer
     - Passport
-    - Bcrypt
+    - Bcryptjs
+    - body-parser
+    - cookie-parser
 4. Run `node [full filepath]\server.js` in the command line.
 5. The command line will return `Server running at http://localhost:3000`; type `http://localhost:3000/home` in your browser.
